@@ -1,44 +1,64 @@
 import React from "react";
+import { useState, useContext } from 'react';
+import { authContext } from '../AuthProvider';
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { loginUser } = useContext(authContext); // the login method
+
+  // updating input fields
+  const onEmailChange = function (event) {
+    setEmail(event.target.value);
+  };
+
+  // updating input fields
+  const onPasswordChange = function (event) {
+    setPassword(event.target.value);
+  };
+
+  // if email exists, login with the provided email and password
+  const onSubmit = function (event) {
+    event.preventDefault();
+    if (email && password) {
+      loginUser(email, password);
+    }
+    
+  };
+
   return (
-    <form>
-      <h3>Login</h3>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          placeholder="Enter email"
-        ></input>
-        <small id="emailHelp" class="form-text text-muted">
-          We'll never share your email with anyone else.
-        </small>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="exampleInputPassword1"
-          placeholder="Password"
-        ></input>
-      </div>
-      <div class="form-check">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="exampleCheck1"
-        ></input>
-        <label class="form-check-label" for="exampleCheck1">
-          Check me out
-        </label>
-      </div>
-      <button type="submit" class="btn btn-primary">
-        Submit
-      </button>
-    </form>
+    <div className="login">
+      <form onSubmit={onSubmit}>
+        <h3>Login</h3>
+          <p>
+            <label for="emailInput">Email address</label>
+            <input
+              type="email"
+              name="login"
+              class="form-control"
+              id="emailInput"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              value={email}
+              onChange={onEmailChange}
+            ></input>
+          </p>
+          <p>
+            <label for="passwordInput">Password</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="passwordInput"
+              placeholder="Password"
+              value={password}
+              onChange={onPasswordChange}
+            ></input>
+          </p>
+        <button type="submit" className="submit">
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }

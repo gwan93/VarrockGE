@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { useEffect } from "react";
 import './App.css';
 import axios from "axios";
@@ -11,31 +11,35 @@ import Widget from './screens/widget';
 import WidgetID from './screens/widget-id';
 import User from './screens/user';
 import Collections from './screens/collections';
+import history from './History';
 
 
 function App() {
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    Promise.all([
-      axios.get("/widget"),
-    ])
+  //   Promise.all([
+  //     axios.get('/user/:id'),
+  //     axios.get('/user/:id/collections/:id'),
+  //     axios.get('/widget'),
+  //     axios.get('/widget/:id')
+  //   ])
 
-    .then(all => {
-      console.log(all)
-    })
-    .catch(err => {
-      console.log('@@@@@@@@@@@@@@@@', err)
-    })
+  //   .then(all => {
+  //     console.log('AHHHHHHHIMLOGGING', all)
+  //   })
+  //   .catch(err => {
+  //     console.log('@@@@@@@@@@@@@@@@', err)
+  //   })
 
 
-  }, []);
+  // }, []);
 
 
    
   return (
       <main>
-        <BrowserRouter>
+        <Router history = {history}>
       <Switch>
           <Route path="/admin" exact>
           <Admin
@@ -48,14 +52,14 @@ function App() {
 
           <Route path="/widget/:id"><WidgetID/></Route>
 
-          <Route path="/user/:id" exact><User/></Route>
+          <Route path="/user/:id/collections" exact><User/></Route>
 
           <Route path="/user/:id/collections/:id"><Collections/></Route>
 
           <Route path="/"><Home/></Route>
 
            </Switch>
-           </BrowserRouter>
+           </Router>
         </main>
         
     );
