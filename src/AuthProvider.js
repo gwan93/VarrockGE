@@ -18,10 +18,11 @@ export default function AuthProvider(props) {
   const loginUser = function (email, password) {
     axios.post('/login', { email, password })
     .then(response => {
-      alert('User succesfully logged in. (from authprovider.js, loginuser function')
+      console.log('User succesfully logged in. (from authprovider.js, loginuser function')
+      console.log(response);
       setUser({ email, id, name: "Test User" })
       setAuth(true)
-      history.push("/widget");
+      history.push("/widgets");
     })
     .catch(err => {
       console.log('Your credentials were not valid. Please try again', err)
