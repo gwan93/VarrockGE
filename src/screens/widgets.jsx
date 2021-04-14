@@ -5,7 +5,7 @@ import Widget from './widget';
 export default function Widgets(){
   return(
     <div>
-      <h2>These are all of our Widgets</h2>
+      <h2>These are all of our Widgets!</h2>
 
       <nav>
         <Link to="/widgets/1">Product #1</Link>

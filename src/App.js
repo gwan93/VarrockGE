@@ -1,8 +1,7 @@
 
 import { Router, Route, Switch, Link } from 'react-router-dom';
-import React, { useEffect } from "react";
+import React from "react";
 import './App.css';
-import axios from "axios";
 
 import Admin from './screens/admin';
 import Login from './screens/login';
@@ -13,22 +12,6 @@ import history from './History';
 
 export default function App() {
 
-  useEffect(() => {
-
-    Promise.all([
-      axios.get('/user/:id'),
-      axios.get('/user/:id/collections/:id'),
-      axios.get('/widgets'),
-      axios.get('/widgets/:id')
-    ])
-    .then(all => {
-      console.log('AHHHHHHHIMLOGGING', all)
-    })
-    .catch(err => {
-      console.log('@@@@@@@@@@@@@@@@', err)
-    })
-  }, []);
-   
   return (
     <main>
       <Router history = {history}>

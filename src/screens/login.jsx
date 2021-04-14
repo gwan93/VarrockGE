@@ -31,11 +31,11 @@ export default function Login() {
       <form onSubmit={onSubmit}>
         <h3>Login</h3>
           <p>
-            <label for="emailInput">Email address</label>
+            <label htmlFor="emailInput">Email address</label>
             <input
               type="email"
               name="login"
-              class="form-control"
+              className="form-control"
               id="emailInput"
               aria-describedby="emailHelp"
               placeholder="Enter email"
@@ -44,11 +44,11 @@ export default function Login() {
             ></input>
           </p>
           <p>
-            <label for="passwordInput">Password</label>
+            <label htmlFor="passwordInput">Password</label>
             <input
               type="password"
               name="password"
-              class="form-control"
+              className="form-control"
               id="passwordInput"
               placeholder="Password"
               value={password}
