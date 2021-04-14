@@ -9,10 +9,10 @@ export default function AuthProvider(props) {
   // The wrapper provides all the state for the app
   const [auth, setAuth] = useState(false);
 
-  console.log('history is', history);
+  // console.log('history is', history);
   const [id, setId] = useState();
   const [user, setUser] = useState({ email: "", name: "", });
-  console.log("initializing auth")
+  // console.log("initializing auth")
 
   // Perform login process for the user & save authID, etc
   const loginUser = function (email, password) {
