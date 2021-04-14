@@ -64,7 +64,7 @@ export default function AuthProvider(props) {
 
     Promise.all([
       axios.get('/user/:id'),
-      axios.get('/user/:id/collections'),
+      axios.get('/user/1/collections'),
       axios.get('/widgets'),
     ])
     .then(all => {
@@ -76,9 +76,20 @@ export default function AuthProvider(props) {
       // Set state based on the response
       setState(prev => ({
         ...prev,
+        collections: collectionsData.data,
         widgets: widgetsData.data
 
       }))
+      for (const id in collectionsData.data) {
+        console.log('id is', id)
+        axios.get(`/user/1/collections/${collectionsData.id}`)
+        .then(response => {
+          console.log('idcollectionsthingforgio', response.data)
+          setState(prev => ({
+            ...prev,
+          }))
+        })
+      }
     })
     .catch(err => {
       console.log('@@@@@@@@@@@@@@@@', err)
