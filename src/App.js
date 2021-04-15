@@ -9,6 +9,8 @@ import Widgets from './screens/widgets';
 import User from './screens/user';
 import history from './History';
 import Navigation from './screens/navigation';
+import Cart from './screens/cart';
+
 
 
 
