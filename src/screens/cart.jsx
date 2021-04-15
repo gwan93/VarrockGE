@@ -1,14 +1,16 @@
 import { authContext } from '../AuthProvider';
-import React, {useContext} from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 
 
 
 export default function Cart(){
-  const { state } = useContext(authContext);
+  const { state, setState } = useContext(authContext);
   const { itemsInCart } = state;
   const stateWidgets = state.widgets;
+  const [ checkoutSuccess, setCheckoutSuccess ] = useState(false)
 
-  console.log('Cart items', itemsInCart);
+  // console.log('Cart items', itemsInCart);
 
   // Uses the widget data stored within state to return
   // a filtered array that consists of items only in the cart
@@ -44,26 +46,49 @@ export default function Cart(){
 
   const emptyCart = (state) => {
     console.log('emptying cart');
-  };
-
-  const transferOwnership = (cartItemDetails) => {
-    console.log('transferring ownership of items');
-    console.log(cartItemDetails)
-
+    setState(prev => ({
+      ...prev,
+      itemsInCart: []
+    }))
   };
 
   const checkout = (state, cartItemDetails) => {
-    emptyCart(state);
-    transferOwnership(cartItemDetails);
+    // console.log('transferring ownership of items');
+    // console.log('state.user.id', state.user.id);
+    // console.log('cartItemDetails', cartItemDetails)
+
+    // Create array of items to transfer ownership (aka to be bought)
+    const postObject = [];
+    cartItemDetails.map(cartItem => {
+      const cartObject = {
+        userID: state.user.id,
+        widgetID: cartItem.id,
+        boughtForPriceCents: cartItem.current_sell_price_cents 
+      };
+      postObject.push(cartObject);
+    });
+    
+    // Submit that array along with the post request
+    axios.post(`/widgets/checkout`, postObject)
+    .then(response => {
+      // console.log('in response)')
+      setCheckoutSuccess(true);
+      if (response.status === 200) {
+        emptyCart(state)
+      };
+    })
+    .catch(err => console.log('Error purchasing', err));
   };
 
   return (
     <div>
+      {checkoutSuccess && <h2>Thank you for your purchase!</h2>}
+
       <h2>Cart</h2>
 
       {itemsInCart.length !== 0 && showWidgets}
       {itemsInCart.length !== 0 && <h2>Total: ${cartSubtotal / 100}</h2>}
-      {itemsInCart.length !== 0 && <button onClick={checkout}>Check Out</button>}
+      {itemsInCart.length !== 0 && <button onClick={() => checkout(state, cartItemDetails)}>Check Out</button>}
 
       {itemsInCart.length === 0 && <h2>No items in cart.</h2>}
     </div>
