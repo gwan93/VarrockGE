@@ -12,12 +12,12 @@ export default function Cart(){
 
   // Uses the widget data stored within state to return
   // a filtered array that consists of items only in the cart
-  const stateWidgetsFiltered = stateWidgets.filter(widget => {
+  const cartItemDetails = stateWidgets.filter(widget => {
     return itemsInCart.includes(widget.id);
   })
 
   // These are the filtered widgets' details to be displayed
-  const showWidgets = stateWidgetsFiltered.map(widget => {
+  const showWidgets = cartItemDetails.map(widget => {
     return (
       <div>
         <ul>
@@ -37,16 +37,33 @@ export default function Cart(){
 
   // Calculate subtotal for all the widgets in the cart
   const widgetPriceArray = [];
-  stateWidgetsFiltered.map(widget => widgetPriceArray.push(widget.current_sell_price_cents))
+  cartItemDetails.map(widget => widgetPriceArray.push(widget.current_sell_price_cents))
   const cartSubtotal = widgetPriceArray.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
   }, 0);
 
+  const emptyCart = (state) => {
+    console.log('emptying cart');
+  };
+
+  const transferOwnership = (cartItemDetails) => {
+    console.log('transferring ownership of items');
+    console.log(cartItemDetails)
+
+  };
+
+  const checkout = (state, cartItemDetails) => {
+    emptyCart(state);
+    transferOwnership(cartItemDetails);
+  };
+
   return (
     <div>
       <h2>Cart</h2>
-      {showWidgets}
-      <h2>Total: ${cartSubtotal / 100}</h2>
+
+      {itemsInCart.length !== 0 && showWidgets}
+      {itemsInCart.length !== 0 && <h2>Total: ${cartSubtotal / 100}</h2>}
+      {itemsInCart.length !== 0 && <button onClick={checkout}>Check Out</button>}
 
       {itemsInCart.length === 0 && <h2>No items in cart.</h2>}
     </div>
