@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { authContext } from '../AuthProvider';
 
-export default function Login() {
+export default function Login({setNavbar}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(authContext); // the login method
@@ -25,6 +25,10 @@ export default function Login() {
     }
     
   };
+//hides nav bar
+  useEffect(() => {
+    setNavbar(true);
+  });
 
   return (
     <div className="login">

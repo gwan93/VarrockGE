@@ -1,6 +1,6 @@
 
-import { Router, Route, Switch, Link } from 'react-router-dom';
-import React from "react";
+import { Router, Route, Switch } from 'react-router-dom';
+import React, { useState }  from "react";
 import './App.css';
 
 import Admin from './screens/admin';
@@ -9,29 +9,26 @@ import Home from './screens/home';
 import Widgets from './screens/widgets';
 import User from './screens/user';
 import history from './History';
+import Navigation from './screens/navigation';
 
-export default function App() {
+
+
+export default function App(props) {
+  const [isNavbarHidden, setIsNavbarHidden] = useState(false);
 
   return (
     <main>
+      
       <Router history = {history}>
-        <nav>
-          <Link to="/">Home </Link>
-          <Link to="/admin">Admin </Link>
-          <Link to="/login">Login </Link>
-          <Link to="/widgets">Widgets </Link>
-          <Link to="/idk">idk</Link>
-          <Link to="/logout">Logout </Link>
-        </nav>
-
+      {isNavbarHidden ? null : <Navigation/>}
         <Switch>
-          <Route path="/admin" exact><Admin/></Route>
-          <Route path="/login"><Login/> </Route>
+          <Route path="/admin" component={Admin}></Route>
           <Route path="/widgets" component={Widgets}></Route>
-          <Route path="/user/:id/collections" component={User}></Route>
-          <Route path="/"><Home/></Route>
+          <Route path="/user/:id/collections" component={User}><Navigation /></Route>
+          <Route path="/login" render={() => <Login  setNavbar={setIsNavbarHidden}  />}/>
+          <Route exact path="/" render={() => <Home setNavbar={setIsNavbarHidden}  />}/>
         </Switch>
       </Router>
     </main>
-  );
+  )
 }
