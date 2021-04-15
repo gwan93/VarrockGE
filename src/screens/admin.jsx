@@ -3,7 +3,7 @@ import axios from "axios";
 import { authContext } from '../AuthProvider';
 
 export default function Admin(props) {
-  const { state, setState } = useContext(authContext)
+  const { setState } = useContext(authContext)
   const [name, setName] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [description, setDescription] = useState("");
