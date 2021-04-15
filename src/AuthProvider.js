@@ -91,14 +91,16 @@ export default function AuthProvider(props) {
             const stateCollections = []
             for (const collectionPromiseResult of collectionPromisesResults) {
               // const collection = collectionPromisesResult.data;
-              //if our collection does not have any widgets, we will need to find a way to define the behaviour because index 0 will not exist.
+              //if our collection does not have any widgets, we will need to find a way to define the behaviour because index 0 will not exist. // FIXED BY GIO :D
               //96 - 100 should actually be returned by the API in this format. We should just have to use line 101. 
-              const collection = {
-                collectionName: collectionPromiseResult.data[0].list_name,
-                collectionDescription: collectionPromiseResult.data[0].list_description,
-                widgets: collectionPromiseResult.data
-              };
-              stateCollections.push(collection);
+              if (collectionPromiseResult.data.length !== 0) {
+                const collection = {
+                  collectionName: collectionPromiseResult.data[0].list_name,
+                  collectionDescription: collectionPromiseResult.data[0].list_description,
+                  widgets: collectionPromiseResult.data
+                };
+                stateCollections.push(collection);
+              }
             }
             setState(prev => ({
               ...prev,
