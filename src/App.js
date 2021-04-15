@@ -27,7 +27,6 @@ export default function App() {
       <Navigation />
           <Route path="/admin" component={Admin}></Route>
           <Route path="/widgets" component={Widgets}></Route>
-          <Route path="/cart" component={Cart}></Route>
           <Route path="/user/:id/collections" component={User}></Route>
           <Route path="/cart" component={Cart}></Route>
           </div>
