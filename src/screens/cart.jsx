@@ -65,7 +65,7 @@ export default function Cart(){
         widgetID: cartItem.id,
         boughtForPriceCents: cartItem.current_sell_price_cents 
       };
-      postObject.push(cartObject);
+      return postObject.push(cartObject);
     });
     
     // Submit that array along with the post request
