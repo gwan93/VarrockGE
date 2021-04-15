@@ -6,13 +6,9 @@ import { authContext } from '../AuthProvider';
 export default function Widgets(){
   const { state } = useContext(authContext)
 
-  console.log('state.widgets are', state.widgets);
-  console.log(state.widgets[0])
-
   const widgetList = state.widgets.map((widget) => {
-    console.log(widget['id'])
     return (
-      <Link to={`/widgets/${widget['id']}`}>Widget {widget['id']} </Link>
+      <Link key={`${widget['id']}`} to={`/widgets/${widget['id']}`}>Widget {widget['id']} </Link>
     )
   })
   return(
