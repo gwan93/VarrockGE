@@ -125,7 +125,7 @@ export default function AuthProvider(props) {
   }, []);
 
   // authContext will expose these items
-  const userData = { auth, user, loginUser, logoutUser };
+  const userData = { state, setState, auth, user, loginUser, logoutUser };  
 
   // We can use this component to wrap any content we want to share this context
   return (
