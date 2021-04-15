@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { authContext } from '../AuthProvider';
+
 
 
 export default function Widget(props){
+  const { state, setState } = useContext(authContext)
   const {widgetID} = useParams();
 
   // Set local widget state
@@ -19,6 +22,16 @@ export default function Widget(props){
     })
   }, [widgetID]);
 
+  const addToCart = () => {
+    // Add this widget's id to state.itemsInCart
+    const currentCart = [...state.itemsInCart]
+    currentCart.push(widget.id);
+    setState(prev => ({
+      ...prev,
+      itemsInCart: currentCart
+    }))
+  };
+
   return(
     <div>
       <h3>Widget ID is #{widgetID}</h3>
@@ -33,6 +46,10 @@ export default function Widget(props){
         <li>For_sale_by_owner: {widget.for_sale_by_owner}</li>
         <li>Current_sell_price_cents: {widget.current_sell_price_cents}</li>
       </ul>
+      <button onClick={addToCart}>
+        Add to Cart
+      </button>
+
     </div>
   )
 }
