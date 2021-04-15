@@ -19,7 +19,7 @@ export default function App() {
       <Navigation />
 
         <Switch>
-          <Route path="/admin" exact><Admin/></Route>
+          <Route path="/admin" component={Admin}></Route>
           <Route path="/login"><Login/> </Route>
           <Route path="/widgets" component={Widgets}></Route>
           <Route path="/user/:id/collections" component={User}></Route>
