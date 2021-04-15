@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 import uuid from 'react-uuid';
 import axios from 'axios';
-import history  from './History';
+import history from './History';
+import { Cookies } from 'react-cookie';
 
 export default function AuthProvider(props) {
   // This is the wrapper
