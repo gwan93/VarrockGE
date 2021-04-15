@@ -9,20 +9,14 @@ import Home from './screens/home';
 import Widgets from './screens/widgets';
 import User from './screens/user';
 import history from './History';
+import Navigation from './screens/navigation'
 
 export default function App() {
 
   return (
     <main>
       <Router history = {history}>
-        <nav>
-          <Link to="/">Home </Link>
-          <Link to="/admin">Admin </Link>
-          <Link to="/login">Login </Link>
-          <Link to="/widgets">Widgets </Link>
-          <Link to="/idk">idk</Link>
-          <Link to="/logout">Logout </Link>
-        </nav>
+      <Navigation />
 
         <Switch>
           <Route path="/admin" exact><Admin/></Route>
