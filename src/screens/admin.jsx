@@ -1,7 +1,9 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import { authContext } from '../AuthProvider';
 
 export default function Admin(props) {
+  const { state, setState } = useContext(authContext)
   const [name, setName] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [description, setDescription] = useState("");
@@ -42,6 +44,10 @@ export default function Admin(props) {
     axios
       .post("/widgets", { name, categoryID, description, rarityID, cost })
       .then((response) => {
+        setState(prev => ({
+          ...prev,
+          widgets: [...prev.widgets, response.data]
+        }))
         console.log("Added successfully");
         console.log("response", response);
       })
