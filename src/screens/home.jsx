@@ -10,10 +10,6 @@ export default function Home({setNavbar}) {
     history.push('/widgets')
   }
   
-  //hides nav bar
-  useEffect(() => {
-    setNavbar(true);
-  });
   return (
     <div>
       <h3>Home Page</h3>

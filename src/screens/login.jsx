@@ -25,10 +25,6 @@ export default function Login({setNavbar}) {
     }
     
   };
-//hides nav bar
-  useEffect(() => {
-    setNavbar(true);
-  });
 
   return (
     <div className="login">

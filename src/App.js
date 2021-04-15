@@ -1,6 +1,5 @@
 
 import { Router, Route, Switch } from 'react-router-dom';
-import React, { useState }  from "react";
 import './App.css';
 
 import Admin from './screens/admin';
@@ -13,21 +12,22 @@ import Navigation from './screens/navigation';
 
 
 
-export default function App(props) {
-  const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+export default function App() {
 
   return (
-    <main>
-      
+
+      <main>
       <Router history = {history}>
-      {isNavbarHidden ? null : <Navigation/>}
-        <Switch>
+      <Switch>
+          <Route path="/login"><Login/> </Route>
+          <Route exact path="/"component={Home}></Route>
+        <div>
+      <Navigation />
           <Route path="/admin" component={Admin}></Route>
           <Route path="/widgets" component={Widgets}></Route>
-          <Route path="/user/:id/collections" component={User}><Navigation /></Route>
-          <Route path="/login" render={() => <Login  setNavbar={setIsNavbarHidden}  />}/>
-          <Route exact path="/" render={() => <Home setNavbar={setIsNavbarHidden}  />}/>
-        </Switch>
+          <Route path="/user/:id/collections" component={User}></Route>
+          </div>
+          </Switch>
       </Router>
     </main>
   )
