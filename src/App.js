@@ -29,6 +29,7 @@ export default function App() {
           <Route path="/widgets" component={Widgets}></Route>
           <Route path="/cart" component={Cart}></Route>
           <Route path="/user/:id/collections" component={User}></Route>
+          <Route path="/cart" component={Cart}></Route>
           </div>
           </Switch>
       </Router>
