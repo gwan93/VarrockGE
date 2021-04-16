@@ -1,12 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { authContext } from '../AuthProvider';
 
 export default function Collection(){
   
   const userID = useParams().id;
   const { collectionID } = useParams();
-  const [ state, setState ] = useState({
+  const { state } = useContext(authContext);
+  const [ collection, setCollection ] = useState({
     userProfile: {},
     collectionName: "",
     collectionDesc: "",
@@ -14,22 +16,22 @@ export default function Collection(){
   });
 
   const setCollectionName = (event) => {
-    setState(prev => ({
+    setCollection(prev => ({
       ...prev,
       collectionName: event.target.value
     }));
   };
 
   const setCollectionDesc = (event) => {
-    setState(prev => ({
+    setCollection(prev => ({
       ...prev,
       collectionDesc: event.target.value
     }));
   };
 
-  const setCollectionItems = (event) => {
-    console.log('setCollectionItems');
-  };
+  // const setCollectionItems = (event) => {
+  //   console.log('setCollectionItems');
+  // };
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -48,19 +50,44 @@ export default function Collection(){
     .then(all => {
       const [userResponse, collectionResponse] = all;
       // console.log(userResponse.data)
-      // console.log(collectionResponse.data)
-      setState(prev => ({
-        ...prev,
-        userProfile: userResponse.data,
-        collectionName: collectionResponse.data[0].list_name,
-        collectionDesc: collectionResponse.data[0].list_description,
-        collectionItems: collectionResponse.data
-      }))
+      if (collectionResponse.data[0]) {
+        setCollection(prev => ({
+          ...prev,
+          userProfile: userResponse.data,
+          collectionName: collectionResponse.data[0].list_name,
+          collectionDesc: collectionResponse.data[0].list_description,
+          collectionItems: collectionResponse.data
+        }))
+      } else {
+        setCollection(prev => ({
+          ...prev,
+          userProfile: userResponse.data,
+          collectionName: "",
+          collectionDesc: "",
+          collectionItems: []
+        }))
+      }
     })
   }, [userID, collectionID]);
 
-  const displayCollections = state.collectionItems.map(item => {
-    // console.log('Item name:', item)
+  const usersWidgetsDetails = state.widgets.filter(widget => {
+    return state.myWidgets.includes(widget.id);
+  })
+
+  const displayWidgets = usersWidgetsDetails.map(widget => {
+    // console.log(widget);
+    return(
+      <p>
+        <input type="checkbox" name={`${widget.name}`}></input>
+        <label htmlFor={`${widget.name}`}>{widget.name}</label>
+      </p>
+    );
+  })
+
+  let displayCollections = [];
+  if (collection.collectionItems.length !== 0) {
+    displayCollections = collection.collectionItems.map(item => {
+      // console.log('Item name:', item)
       return (
         <div>
           <ul>
@@ -82,33 +109,30 @@ export default function Collection(){
         </div>
       );
     });
-  
+  }
+  // console.log('displayCollections', displayCollections)
   
   return(
     <div>
-      <h2>User: {state.userProfile.email}</h2>
+      <h2>User: {collection.userProfile.email}</h2>
 
       <form onSubmit={onSubmit}>
         <label htmlFor="nameInput">Collection Name: </label>
-        <input type="text" className="form-control" id="nameInput" onChange={setCollectionName} value={state.collectionName}/>
+        <input type="text" className="form-control" id="nameInput" onChange={setCollectionName} value={collection.collectionName}/>
         <br></br>
         <label htmlFor="descInput">Collection Description: </label>
-        <input type="text" className="form-control" id="descInput" onChange={setCollectionDesc} value={state.collectionDesc}/>
+        <input type="text" className="form-control" id="descInput" onChange={setCollectionDesc} value={collection.collectionDesc}/>
 
-        <h3>Widgets</h3>
+        <h3>Select widget(s) below to add to this collection</h3>
         <ul>
-          <li>Widget1 []</li>
-          <li>Widget2 []</li>
-          <li>...</li>
+          {displayWidgets}
         </ul>
-      
         <button type="submit" className="submit">Submit</button>
-    </form>
+      </form>
 
-      <h3>Collections:</h3>
+      <h3>Widgets:</h3>
       {displayCollections}
-      {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
+      {(!displayCollections || displayCollections.length === 0) && <h4>This collection does not have any widgets yet</h4>}
     </div>
   );
-
 }
