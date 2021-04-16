@@ -29,17 +29,7 @@ export default function Widget(props) {
     }));
     console.log("stateystate", state);
   };
-  const checkCart = () => {
-    const currentCart = [...state.itemsInCart];
-    for (let cartItem of currentCart) {
-      
-    }
-  }
-  //this functions just checks if there's anything in the cart. In the jsx, we can 
-  //do a for each, and then 
-  //if card is owned and For_sale_by_owner is false, remove add to cart button, and (stretch) add message saying card is owned by
-  //x
-  //so once the button is clicked, we disable the button. That disabled button can be styled differently.
+
   return (
     <div>
       <h3>Widget ID is #{widgetID}</h3>
@@ -54,6 +44,7 @@ export default function Widget(props) {
         <li>For_sale_by_owner: {widget.for_sale_by_owner}</li>
         <li>Current_sell_price_cents: {widget.current_sell_price_cents}</li>
       </ul>
+
       <button onClick={addToCart}>Add to Cart</button>
     </div>
   );
