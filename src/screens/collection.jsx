@@ -29,14 +29,17 @@ export default function Collection(){
     }));
   };
 
-  // const setCollectionItems = (event) => {
-  //   console.log('setCollectionItems');
-  // };
-
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('Clicked')
-    //axios Post request;
+    const postObject = {
+      listName: collection.collectionName,
+      listDesc: collection.collectionDesc,
+      listItems: collection.collectionItems
+    }
+    axios.post(`/user/${userID}/collections`, postObject)
+    .then(response => {
+      console.log('post response', response);
+    })
   }
 
   // Retrieve collections from user
@@ -49,7 +52,6 @@ export default function Collection(){
     ])
     .then(all => {
       const [userResponse, collectionResponse] = all;
-      // console.log(userResponse.data)
       if (collectionResponse.data[0]) {
         setCollection(prev => ({
           ...prev,
@@ -70,16 +72,29 @@ export default function Collection(){
     })
   }, [userID, collectionID]);
 
+  // Addsremoves the id integer from collection.collectionItems array
+  const checkToggleWidget = (id) => {
+    if (collection.collectionItems.includes(id)) {
+      const index = collection.collectionItems.indexOf(id);
+      if (index > -1) {
+        collection.collectionItems.splice(index, 1);
+      }
+    } else {
+      collection.collectionItems.push(id);
+    }
+    // console.log('collection.collectionItems', collection.collectionItems)
+  };
+
   const usersWidgetsDetails = state.widgets.filter(widget => {
     return state.myWidgets.includes(widget.id);
   })
 
+  // console.log('usersWidgetsDetails', usersWidgetsDetails)
   const displayWidgets = usersWidgetsDetails.map(widget => {
-    // console.log(widget);
     return(
       <p>
-        <input type="checkbox" name={`${widget.name}`}></input>
-        <label htmlFor={`${widget.name}`}>{widget.name}</label>
+        <input type="checkbox" name={`${widget.name}`} onClick={()=>checkToggleWidget(widget.id)}></input>
+        <label htmlFor={`${widget.name}`}>{widget.name} {widget.id}</label>
       </p>
     );
   })
