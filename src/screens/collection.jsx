@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-export default function Collections(){
+export default function Collection(){
   
   const userID = useParams().id;
   const [ userProfile, setUserProfile ] = useState({});
@@ -50,12 +50,36 @@ export default function Collections(){
   if (userProfile.collections) {
     displayCollections = userProfile.collections.map(collection => {
       console.log('!@@#$', collection)
+      const collectionWidgets = collection.widgets.map(widget => {
+        return (
+          <div>
+            <ul>
+              <li>Name: {widget.name}</li>
+              <li>Current_sell_price_cents: {widget.current_sell_price_cents}</li>
+              <li>Description: {widget.description}</li>
+              <li>For_sale_by_owner: {widget.for_sale_by_owner}</li>
+              <li>hash:{widget.hash}</li>
+              <li>MSRP_cents: {widget.msrp_cents}</li>
+              <li>Rarity_id: {widget.rarity_id}</li>
+              <li>Subcategory_id: {widget.subcategory_id}</li>
+              <li>widget_id: {widget.widget_id}</li>
+              <form>
+                <label>Sell price: </label>
+                <input></input>
+              </form>
+              <button>Sell</button>
+
+            </ul>
+          </div>
+        );
+      });
   
       return (
         <div>
-          <Link to={`/user/${userID}/collections/${collection.collectionID}`}>
+          <Link to={`/user/${userID}/collections/${collection.collectionID}`} collectionWidgets={collectionWidgets}>
             <h2>{collection.collectionName} (collectionID: {collection.collectionID})</h2>
           </Link>
+          <h2>{collectionWidgets}</h2>
         </div>
       );
     });
@@ -64,6 +88,18 @@ export default function Collections(){
   return(
     <div>
       <h2>User: {userProfile.email}</h2>
+
+      Change list Name input field
+      change list description input field
+      <h3>Widgets</h3>
+      <ul>
+        <li>Widget1 []</li>
+        <li>Widget2 []</li>
+        <li>...</li>
+
+      </ul>
+
+      <button>Save</button>
       <h3>Collections:</h3>
       {displayCollections}
       {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
@@ -71,22 +107,3 @@ export default function Collections(){
   );
 
 }
-
-
-// /user/2
-// Email
-// Wallet balance
-// A link that goes to collections -> /user/2/collections
-// Show all the widgets a user owns here
-
-// /user/2/collections
-// Dont even show widgets here
-// Pokemon collections (collectionID) -> /user/2/collections/1
-// Yugioh collections (collectionID) -> /user/2/collections/1
-// New Collection -> /user/2/collections/new
-
-// /user/2/collections/new AND /user/2/collections/1
-// Show all the widgets a user owns here
-// A form to change list name
-// Form to change list desc
-// Button to submit
