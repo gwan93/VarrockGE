@@ -1,4 +1,3 @@
-
 import { Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
@@ -10,9 +9,6 @@ import User from './screens/user';
 import history from './History';
 import Navigation from './screens/navigation';
 import Cart from './screens/cart';
-
-
-
 
 export default function App() {
 
@@ -27,7 +23,7 @@ export default function App() {
       <Navigation />
           <Route path="/admin" component={Admin}></Route>
           <Route path="/widgets" component={Widgets}></Route>
-          <Route path="/user/:id/collections" component={User}></Route>
+          <Route exact path="/user/:id/collections" component={User}></Route>
           <Route path="/cart" component={Cart}></Route>
           </div>
           </Switch>
