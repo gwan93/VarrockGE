@@ -17,11 +17,13 @@ export default function Collections(){
     ])
     .then(all => {
       const [userResponse, collectionsResponse] = all;
+      console.log('collectionsResponse', collectionsResponse)
       setUserProfile(prev => ({
         ...prev,
         id: userResponse.data.id,
         email: userResponse.data.email
       }));
+      
       const collectionPromises = collectionsResponse.data.map(aCollectionData => axios.get(`/user/1/collections/${aCollectionData.id}`));
       Promise.all(collectionPromises)
       .then(collectionPromisesResults => {

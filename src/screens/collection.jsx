@@ -12,8 +12,11 @@ export default function Collection(){
     userProfile: {},
     collectionName: "",
     collectionDesc: "",
-    collectionItems: []
+    collectionItems: [],
+    checkedItems: []
   });
+
+  console.log('collectionid', collectionID)
 
   const setCollectionName = (event) => {
     setCollection(prev => ({
@@ -29,23 +32,12 @@ export default function Collection(){
     }));
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const postObject = {
-      listName: collection.collectionName,
-      listDesc: collection.collectionDesc,
-      listItems: collection.collectionItems
-    }
-    axios.post(`/user/${userID}/collections`, postObject)
-    .then(response => {
-      console.log('post response', response);
-    })
-  }
-
   // Retrieve collections from user
   // update userProfile to an object that includes the user's email,
   // user id, and a collection array
   useEffect(() => {
+
+    // Retrieve User info and Collection Item data
     Promise.all([
       axios.get(`/user/${userID}`),
       axios.get(`/user/${userID}/collections/${collectionID}`)
@@ -53,13 +45,21 @@ export default function Collection(){
     .then(all => {
       const [userResponse, collectionResponse] = all;
       if (collectionResponse.data[0]) {
+
+        const widgetIDArray = [];
+        for (const widget of collectionResponse.data) {
+          widgetIDArray.push(widget.widget_id);
+        }
+
         setCollection(prev => ({
           ...prev,
           userProfile: userResponse.data,
           collectionName: collectionResponse.data[0].list_name,
           collectionDesc: collectionResponse.data[0].list_description,
-          collectionItems: collectionResponse.data
+          collectionItems: collectionResponse.data,
+          checkedItems: widgetIDArray
         }))
+
       } else {
         setCollection(prev => ({
           ...prev,
@@ -72,28 +72,55 @@ export default function Collection(){
     })
   }, [userID, collectionID]);
 
-  // Addsremoves the id integer from collection.collectionItems array
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const postObject = {
+      listName: collection.collectionName,
+      listDesc: collection.collectionDesc,
+      listItems: collection.checkedItems
+    }
+    if (collectionID === 'new') {
+      // Create new list
+      axios.post(`/user/${userID}/collections`, postObject)
+      .then(response => {
+        console.log('post create response', response);
+      })
+    } else {
+      // Update existing list
+      axios.post(`/user/${userID}/collections/${collectionID}`, postObject)
+      .then(response => {
+        console.log('post edit response', response);
+      })
+    }
+  }
+
+  // Addsremoves the id integer from collection.checkedItems array
   const checkToggleWidget = (id) => {
-    if (collection.collectionItems.includes(id)) {
-      const index = collection.collectionItems.indexOf(id);
+    if (collection.checkedItems.includes(id)) {
+      const index = collection.checkedItems.indexOf(id);
       if (index > -1) {
-        collection.collectionItems.splice(index, 1);
+        collection.checkedItems.splice(index, 1);
       }
     } else {
-      collection.collectionItems.push(id);
+      collection.checkedItems.push(id);
     }
-    // console.log('collection.collectionItems', collection.collectionItems)
+    console.log('collection.checkedItems after toggling', collection.checkedItems)
+    // console.log('collection.checkedItems', collection.checkedItems)
   };
 
+  
   const usersWidgetsDetails = state.widgets.filter(widget => {
     return state.myWidgets.includes(widget.id);
   })
 
-  // console.log('usersWidgetsDetails', usersWidgetsDetails)
+
   const displayWidgets = usersWidgetsDetails.map(widget => {
+    // console.log('collection.checkedItems', collection.checkedItems)
+    // console.log('widget.id', collection.checkedItems.includes(widget.id))
+
     return(
       <p>
-        <input type="checkbox" name={`${widget.name}`} onClick={()=>checkToggleWidget(widget.id)}></input>
+        <input type="checkbox" defaultChecked={collection.checkedItems.includes(widget.id)} name={`${widget.name}`} onClick={()=>checkToggleWidget(widget.id)}></input>
         <label htmlFor={`${widget.name}`}>{widget.name} {widget.id}</label>
       </p>
     );
