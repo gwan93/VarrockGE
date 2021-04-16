@@ -24,10 +24,12 @@ export default function AuthProvider(props) {
     },
     widgets: [], // an array of objects
     collections: [], // an array of objects
-    itemsInCart: [] // an array of objects
+    itemsInCart: [], // an array of objects
+    myWidgets: []
   })
+  console.log('state', state)
 
-  console.log('@@@', state);
+  // console.log('@@@', state);
   // document.cookie="line=line26"
   // console.log('reading cookie', Cookies.get('session'));
 
@@ -63,22 +65,30 @@ export default function AuthProvider(props) {
   useEffect(() => {
 
     Promise.all([
-      axios.get('/user/:id'),
       axios.get('/user/1/collections'),
       axios.get('/widgets'),
+      axios.get('/widgets/owners')
     ])
       .then(all => {
         // Getting response
-        console.log('AHHHHHHHIMLOGGING', all)
-        const [userData, collectionsData, widgetsData] = all
-        console.log(userData.data);
-        console.log(collectionsData.data);
-        console.log("lewidget", widgetsData)
+        // console.log('AHHHHHHHIMLOGGING', all)
+        const [collectionsData, widgetsData, widgetOwnersData] = all
+        // console.log(collectionsData.data);
+        // console.log("lewidget", widgetsData)
+        console.log(widgetOwnersData)
+        //
+        const myWidgetsID = [];
+        widgetOwnersData.data.filter(widget => {
+          if (widget.user_id === state.user.id) {
+            myWidgetsID.push(widget.widget_id)
+          }
+        })
         // Set state based on the response
         setState(prev => ({
           ...prev,
           collections: collectionsData.data,
-          widgets: widgetsData.data
+          widgets: widgetsData.data,
+          myWidgets: myWidgetsID
 
         }))
         //line below retrieves all collections for a given user. 
@@ -86,7 +96,7 @@ export default function AuthProvider(props) {
         Promise.all(collectionPromises)
           .then(collectionPromisesResults => {
             //collectionPromisesResults contains all collections in an array of axios responses.
-            console.log("collectionPromises", collectionPromisesResults)
+            // console.log("collectionPromises", collectionPromisesResults)
             //build a collection object with the for loop below
             const stateCollections = []
             for (const collectionPromiseResult of collectionPromisesResults) {
@@ -106,7 +116,7 @@ export default function AuthProvider(props) {
               ...prev,
               collections: stateCollections
             }));
-            console.log('MYFINALState', state)
+            // console.log('MYFINALState', state)
           });
         // for (const id in collectionsData.data) {
         //   console.log('id is', id)

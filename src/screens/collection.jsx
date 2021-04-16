@@ -1,11 +1,43 @@
 import axios from 'axios';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { authContext } from '../AuthProvider';
 
 export default function Collection(){
   
   const userID = useParams().id;
-  const [ userProfile, setUserProfile ] = useState({});
+  const { collectionID } = useParams();
+  const { state } = useContext(authContext);
+  const [ collection, setCollection ] = useState({
+    userProfile: {},
+    collectionName: "",
+    collectionDesc: "",
+    collectionItems: []
+  });
+
+  const setCollectionName = (event) => {
+    setCollection(prev => ({
+      ...prev,
+      collectionName: event.target.value
+    }));
+  };
+
+  const setCollectionDesc = (event) => {
+    setCollection(prev => ({
+      ...prev,
+      collectionDesc: event.target.value
+    }));
+  };
+
+  // const setCollectionItems = (event) => {
+  //   console.log('setCollectionItems');
+  // };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    console.log('Clicked')
+    //axios Post request;
+  }
 
   // Retrieve collections from user
   // update userProfile to an object that includes the user's email,
@@ -13,97 +45,94 @@ export default function Collection(){
   useEffect(() => {
     Promise.all([
       axios.get(`/user/${userID}`),
-      axios.get(`/user/${userID}/collections`)
+      axios.get(`/user/${userID}/collections/${collectionID}`)
     ])
     .then(all => {
-      const [userResponse, collectionsResponse] = all;
-      setUserProfile(prev => ({
-        ...prev,
-        id: userResponse.data.id,
-        email: userResponse.data.email
-      }));
-      const collectionPromises = collectionsResponse.data.map(aCollectionData => axios.get(`/user/1/collections/${aCollectionData.id}`));
-      Promise.all(collectionPromises)
-      .then(collectionPromisesResults => {
-        console.log('collectionPromisesResults', collectionPromisesResults)
-        const stateCollections = [];
-        for (const collectionPromiseResult of collectionPromisesResults) {
-          if (collectionPromiseResult.data.length !== 0) {
-            const collection = {
-              collectionID: collectionPromiseResult.data[0].list_id,
-              collectionName: collectionPromiseResult.data[0].list_name,
-              collectionDescription: collectionPromiseResult.data[0].list_description,
-              widgets: collectionPromiseResult.data
-            }
-            stateCollections.push(collection);
-          }
-        }
-        setUserProfile(prev => ({
+      const [userResponse, collectionResponse] = all;
+      // console.log(userResponse.data)
+      if (collectionResponse.data[0]) {
+        setCollection(prev => ({
           ...prev,
-          collections: stateCollections
+          userProfile: userResponse.data,
+          collectionName: collectionResponse.data[0].list_name,
+          collectionDesc: collectionResponse.data[0].list_description,
+          collectionItems: collectionResponse.data
         }))
-      })
+      } else {
+        setCollection(prev => ({
+          ...prev,
+          userProfile: userResponse.data,
+          collectionName: "",
+          collectionDesc: "",
+          collectionItems: []
+        }))
+      }
     })
-  }, [userID]);
+  }, [userID, collectionID]);
 
-  let displayCollections;
-  if (userProfile.collections) {
-    displayCollections = userProfile.collections.map(collection => {
-      console.log('!@@#$', collection)
-      const collectionWidgets = collection.widgets.map(widget => {
-        return (
-          <div>
-            <ul>
-              <li>Name: {widget.name}</li>
-              <li>Current_sell_price_cents: {widget.current_sell_price_cents}</li>
-              <li>Description: {widget.description}</li>
-              <li>For_sale_by_owner: {widget.for_sale_by_owner}</li>
-              <li>hash:{widget.hash}</li>
-              <li>MSRP_cents: {widget.msrp_cents}</li>
-              <li>Rarity_id: {widget.rarity_id}</li>
-              <li>Subcategory_id: {widget.subcategory_id}</li>
-              <li>widget_id: {widget.widget_id}</li>
-              <form>
-                <label>Sell price: </label>
-                <input></input>
-              </form>
-              <button>Sell</button>
+  const usersWidgetsDetails = state.widgets.filter(widget => {
+    return state.myWidgets.includes(widget.id);
+  })
 
-            </ul>
-          </div>
-        );
-      });
-  
+  const displayWidgets = usersWidgetsDetails.map(widget => {
+    // console.log(widget);
+    return(
+      <p>
+        <input type="checkbox" name={`${widget.name}`}></input>
+        <label htmlFor={`${widget.name}`}>{widget.name}</label>
+      </p>
+    );
+  })
+
+  let displayCollections = [];
+  if (collection.collectionItems.length !== 0) {
+    displayCollections = collection.collectionItems.map(item => {
+      // console.log('Item name:', item)
       return (
         <div>
-          <Link to={`/user/${userID}/collections/${collection.collectionID}`} collectionWidgets={collectionWidgets}>
-            <h2>{collection.collectionName} (collectionID: {collection.collectionID})</h2>
-          </Link>
-          <h2>{collectionWidgets}</h2>
+          <ul>
+            <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li>
+            <li>Current_sell_price_cents: {item.current_sell_price_cents}</li>
+            <li>Description: {item.description}</li>
+            <li>For_sale_by_owner: {item.for_sale_by_owner}</li>
+            <li>hash:{item.hash}</li>
+            <li>MSRP_cents: {item.msrp_cents}</li>
+            <li>Rarity_id: {item.rarity_id}</li>
+            <li>Subcategory_id: {item.subcategory_id}</li>
+            <li>widget_id: {item.widget_id}</li>
+            <form>
+              <label>Sell price: </label>
+              <input></input>
+            </form>
+            <button>Sell</button>
+          </ul>
         </div>
       );
     });
   }
+  // console.log('displayCollections', displayCollections)
   
   return(
     <div>
-      <h2>User: {userProfile.email}</h2>
+      <h2>User: {collection.userProfile.email}</h2>
 
-      Change list Name input field
-      change list description input field
-      <h3>Widgets</h3>
-      <ul>
-        <li>Widget1 []</li>
-        <li>Widget2 []</li>
-        <li>...</li>
+      <form onSubmit={onSubmit}>
+        <label htmlFor="nameInput">Collection Name: </label>
+        <input type="text" className="form-control" id="nameInput" onChange={setCollectionName} value={collection.collectionName}/>
+        <br></br>
+        <label htmlFor="descInput">Collection Description: </label>
+        <input type="text" className="form-control" id="descInput" onChange={setCollectionDesc} value={collection.collectionDesc}/>
 
-      </ul>
+        <h3>Select widget(s) below to add to this collection</h3>
+        <ul>
+          {displayWidgets}
+        </ul>
+        <button type="submit" className="submit">Submit</button>
+      </form>
 
-      <button>Save</button>
-      <h3>Collections:</h3>
+      <h3>Widgets:</h3>
       {displayCollections}
-      {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
+      {(!displayCollections || displayCollections.length === 0) && <h4>This collection does not have any widgets yet</h4>}
     </div>
   );
-
 }
