@@ -27,7 +27,7 @@ export default function AuthProvider(props) {
     itemsInCart: [], // an array of objects
     myWidgets: []
   })
-  console.log('state', state)
+  // console.log('state', state)
 
   // console.log('@@@', state);
   // document.cookie="line=line26"
@@ -75,7 +75,7 @@ export default function AuthProvider(props) {
         const [collectionsData, widgetsData, widgetOwnersData] = all
         // console.log(collectionsData.data);
         // console.log("lewidget", widgetsData)
-        console.log(widgetOwnersData)
+        // console.log(widgetOwnersData)
         //
         const myWidgetsID = [];
         widgetOwnersData.data.filter(widget => {
