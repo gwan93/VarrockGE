@@ -9,6 +9,9 @@ import User from './screens/user';
 import history from './History';
 import Navigation from './screens/navigation';
 import Cart from './screens/cart';
+import Collections from './screens/collections';
+import Collection from './screens/collection';
+
 
 export default function App() {
 
@@ -23,7 +26,9 @@ export default function App() {
       <Navigation />
           <Route path="/admin" component={Admin}></Route>
           <Route path="/widgets" component={Widgets}></Route>
-          <Route exact path="/user/:id/collections" component={User}></Route>
+          <Route exact path="/user/:id" component={User}></Route>
+          <Route exact path="/user/:id/collections" component={Collections}></Route>
+          <Route exact path="/user/:id/collections/:collectionID" component={Collection}></Route>
           <Route path="/cart" component={Cart}></Route>
           </div>
           </Switch>
