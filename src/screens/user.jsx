@@ -8,7 +8,6 @@ export default function User(){
   const userID = Number(useParams().id);
   const { state } = useContext(authContext);
   const [ userProfile, setUserProfile ] = useState({});
-  const [ widgetOwners, setWidgetOwners ] = useState([]);
   
   // Get request to get all widgets
   useEffect(() => {
@@ -20,25 +19,14 @@ export default function User(){
       }));
     })
 
-    axios.get('/widgets/owners')
-    .then(response => {
-      setWidgetOwners(response.data)
-    })
   }, [userID]);
 
-  const usersWidgetsID = [];
-  widgetOwners.filter(widget => {
-    if (widget.user_id === userID) {
-      usersWidgetsID.push(widget.widget_id);
-    }
-  })
-
   const usersWidgetsDetails = state.widgets.filter(widget => {
-    return usersWidgetsID.includes(widget.id);
+    return state.myWidgets.includes(widget.id);
   })
 
   const displayWidgets = usersWidgetsDetails.map(widget => {
-
+    console.log(widget);
     return(
       <li><Link to={`/widgets/${widget.id}`}>{widget.name}</Link></li>
     );
