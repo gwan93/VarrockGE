@@ -6,7 +6,7 @@ export default function Collections(){
   
   const userID = useParams().id;
   const [ userProfile, setUserProfile ] = useState({});
-
+  
   // Retrieve collections from user
   // update userProfile to an object that includes the user's email,
   // user id, and a collection array
@@ -67,6 +67,7 @@ export default function Collections(){
       <h3>Collections:</h3>
       {displayCollections}
       {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
+      <Link to={`/user/${userProfile.id}/collections/new`}>New Collection</Link>
     </div>
   );
 
