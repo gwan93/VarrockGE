@@ -5,8 +5,10 @@ import { useParams, Link } from 'react-router-dom';
 export default function User(){
 
   const userID = useParams().id;
-
+  
+  // Get request to get user's info
   // Get request to get all widgets
+
 
   return(
     <div>
