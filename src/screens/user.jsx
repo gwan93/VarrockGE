@@ -15,6 +15,8 @@ export default function User(){
     password: "",
     userWidgets: []
   });
+
+  console.log('userProfile', userProfile)
   
   useEffect(() => {
     Promise.all([
@@ -24,6 +26,8 @@ export default function User(){
     .then(all => {
       const [ userResponse, widgetOwnersResponse ] = all;
 
+      console.log('widgetOwnersResponse.data', widgetOwnersResponse.data)
+
       // Filtering the array of widget owners to only include widgets 
       // owned by the user of the profile being visited
       // Note: these elements do not have the widget's name, description, etc...
@@ -31,18 +35,24 @@ export default function User(){
         return widgetOwner.user_id === userID;
       });
 
+      console.log('ownedWidgets', ownedWidgets)
+
       // Create array that consists of this user's owned widgets' IDs
       const ownedWidgetsID = [];
       for (const ownedWidget of ownedWidgets) {
-        ownedWidgetsID.push(ownedWidget.id);
+        ownedWidgetsID.push(ownedWidget.widget_id);
       };
+
+      console.log('ownedWidgetsID', ownedWidgetsID)
 
       // Filter all existing widgets stored in state based on the above created array
       // ie if ownedWidgets = [1, 2, 3], then make an array with the details of widgets 1, 2, 3
       const ownedWidgetsDetails = state.widgets.filter(widget => {
-        console.log('widget', widget)
+        // console.log('widget', widget)
         return ownedWidgetsID.includes(widget.id)
       });
+
+      console.log('ownedWidgetsDetails', ownedWidgetsDetails)
 
       setUserProfile(prev => ({
         ...prev,
@@ -51,7 +61,7 @@ export default function User(){
       }));
 
     })
-  }, [userID]);
+  }, [userID, state.widgets]);
 
   const displayWidgets = userProfile.userWidgets.map(widget => {
     return(
