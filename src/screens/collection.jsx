@@ -4,10 +4,12 @@ import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
 
 export default function Collection(){
-  
+  const { widgetID } = useParams();
+  // console.log('--------', useParams())
   const userID = useParams().id;
   const { collectionID } = useParams();
   const { state } = useContext(authContext);
+  const [sellPrice, setSellPrice] = useState("");
   const [ collection, setCollection ] = useState({
     userProfile: {},
     collectionName: "",
@@ -31,7 +33,31 @@ export default function Collection(){
       collectionDesc: event.target.value
     }));
   };
+  const onSetSellPrice = (event) => {
+    setSellPrice(event.target.value)
+  };
 
+  const onUpdateSellPrice = (widgetID, event) => {
+    event.preventDefault();
+    updateSellPrice(widgetID)
+  };
+
+  const updateSellPrice = (widgetID) => {
+    
+    console.log('sell price', sellPrice)
+    console.log('widget id', widgetID);
+    axios.post(`/widgets/${widgetID}`,  {sellPrice} )
+    .then((response) => {
+      setSellPrice(
+
+      )
+    console.log("Updated successfully");
+    console.log("responseUpdateSell", response);
+  })
+  .catch((err) => {
+    console.log("Something went wrong", err);
+  });
+  }
   // Retrieve collections from user
   // update userProfile to an object that includes the user's email,
   // user id, and a collection array
@@ -142,11 +168,11 @@ export default function Collection(){
             <li>Rarity_id: {item.rarity_id}</li>
             <li>Subcategory_id: {item.subcategory_id}</li>
             <li>widget_id: {item.widget_id}</li>
-            <form>
+            <form onSubmit={(event) => onUpdateSellPrice(item.widget_id, event)}>
               <label>Sell price: </label>
-              <input></input>
+              <input onChange={onSetSellPrice}></input>
+            <button type="submit">Sell</button>
             </form>
-            <button>Sell</button>
           </ul>
         </div>
       );
