@@ -7,30 +7,57 @@ export default function User(){
 
   const userID = Number(useParams().id);
   const { state } = useContext(authContext);
-  const [ userProfile, setUserProfile ] = useState({});
+  const [ userProfile, setUserProfile ] = useState({
+    id: null,
+    email: "",
+    balance: null,
+    isadmin: null,
+    password: "",
+    userWidgets: []
+  });
   
-  // Get request to get all widgets
   useEffect(() => {
-    axios.get(`/user/${userID}`)
-    .then(response => {
+    Promise.all([
+      axios.get(`/user/${userID}`),
+      axios.get('/widgets/owners')
+    ])
+    .then(all => {
+      const [ userResponse, widgetOwnersResponse ] = all;
+
+      // Filtering the array of widget owners to only include widgets 
+      // owned by the user of the profile being visited
+      // Note: these elements do not have the widget's name, description, etc...
+      const ownedWidgets = widgetOwnersResponse.data.filter(widgetOwner => {
+        return widgetOwner.user_id === userID;
+      });
+
+      // Create array that consists of this user's owned widgets' IDs
+      const ownedWidgetsID = [];
+      for (const ownedWidget of ownedWidgets) {
+        ownedWidgetsID.push(ownedWidget.id);
+      };
+
+      // Filter all existing widgets stored in state based on the above created array
+      // ie if ownedWidgets = [1, 2, 3], then make an array with the details of widgets 1, 2, 3
+      const ownedWidgetsDetails = state.widgets.filter(widget => {
+        console.log('widget', widget)
+        return ownedWidgetsID.includes(widget.id)
+      });
+
       setUserProfile(prev => ({
         ...prev,
-        ...response.data
+        ...userResponse.data,
+        userWidgets: ownedWidgetsDetails
       }));
-    })
 
+    })
   }, [userID]);
 
-  const usersWidgetsDetails = state.widgets.filter(widget => {
-    return state.myWidgets.includes(widget.id);
-  })
-
-  const displayWidgets = usersWidgetsDetails.map(widget => {
-    console.log(widget);
+  const displayWidgets = userProfile.userWidgets.map(widget => {
     return(
-      <li><Link to={`/widgets/${widget.id}`}>{widget.name}</Link></li>
+      <li><Link to={`/widgets/${widget.id}`}>{widget.name} {widget.id}</Link></li>
     );
-  })
+  });
 
   return(
     <div>
@@ -39,9 +66,7 @@ export default function User(){
       <h2>Admin Status: {String(userProfile.isadmin)}</h2>
       <Link to={`/user/${userID}/collections`}><h2>View {userProfile.email}'s Collections</h2></Link>
       <h2>{userProfile.email}'s widgets</h2>
-
       {displayWidgets}
-
     </div>
   );
-}
+};
