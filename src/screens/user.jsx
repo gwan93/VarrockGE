@@ -15,6 +15,8 @@ export default function User(){
     password: "",
     userWidgets: []
   });
+
+  console.log('userProfile', userProfile)
   
   useEffect(() => {
     Promise.all([
@@ -51,7 +53,7 @@ export default function User(){
       }));
 
     })
-  }, [userID]);
+  }, [userID, state.widgets]);
 
   const displayWidgets = userProfile.userWidgets.map(widget => {
     return(
