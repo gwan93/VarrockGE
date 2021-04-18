@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
 
 export default function Collection(){
-  const { widgetID } = useParams();
+  // const { widgetID } = useParams();
   // console.log('--------', useParams())
   const userID = useParams().id;
+  let history = useHistory();
   const { collectionID } = useParams();
   const { state } = useContext(authContext);
   const [sellPrice, setSellPrice] = useState("");
@@ -17,8 +18,8 @@ export default function Collection(){
     collectionItems: [],
     checkedItems: []
   });
-
-  console.log('collectionid', collectionID)
+  console.log('state', state)
+  console.log('collection', collection)
 
   const setCollectionName = (event) => {
     setCollection(prev => ({
@@ -109,7 +110,9 @@ export default function Collection(){
       // Create new list
       axios.post(`/user/${userID}/collections`, postObject)
       .then(response => {
-        console.log('post create response', response);
+        const {listID} = response.data;
+        console.log('post create response', listID, response);
+        history.push(`/user/${userID}/collections/${listID}`);
       })
     } else {
       // Update existing list
