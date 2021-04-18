@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
-import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Container } from '@material-ui/core';
+import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
 import useStyles from './styles';
 
 export default function User(){
@@ -18,8 +18,9 @@ export default function User(){
     password: "",
     userWidgets: []
   });
+  console.log('state', state)
 
-  console.log('userProfile', userProfile)
+  // console.log('userProfile', userProfile)
   
   useEffect(() => {
     Promise.all([
@@ -29,7 +30,7 @@ export default function User(){
     .then(all => {
       const [ userResponse, widgetOwnersResponse ] = all;
 
-      console.log('widgetOwnersResponse.data', widgetOwnersResponse.data)
+      // console.log('widgetOwnersResponse.data', widgetOwnersResponse.data)
 
       // Filtering the array of widget owners to only include widgets 
       // owned by the user of the profile being visited
@@ -38,7 +39,7 @@ export default function User(){
         return widgetOwner.user_id === userID;
       });
 
-      console.log('ownedWidgets', ownedWidgets)
+      // console.log('ownedWidgets', ownedWidgets)
 
       // Create array that consists of this user's owned widgets' IDs
       const ownedWidgetsID = [];
@@ -46,7 +47,7 @@ export default function User(){
         ownedWidgetsID.push(ownedWidget.widget_id);
       };
 
-      console.log('ownedWidgetsID', ownedWidgetsID)
+      // console.log('ownedWidgetsID', ownedWidgetsID)
 
       // Filter all existing widgets stored in state based on the above created array
       // ie if ownedWidgets = [1, 2, 3], then make an array with the details of widgets 1, 2, 3
@@ -55,7 +56,7 @@ export default function User(){
         return ownedWidgetsID.includes(widget.id)
       });
 
-      console.log('ownedWidgetsDetails', ownedWidgetsDetails)
+      // console.log('ownedWidgetsDetails', ownedWidgetsDetails)
 
       setUserProfile(prev => ({
         ...prev,
@@ -67,14 +68,13 @@ export default function User(){
   }, [userID, state.widgets]);
 
   const displayWidgets = userProfile.userWidgets.map(widget => {
+    console.log(widget.imgurl)
     return(
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item key={widget.id} xs={12} sm={6} md={4}>
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.cardMedia}
-            image={`https://source.unsplash.com/random`}
-            title="Image title"
-          />
+          <CardMedia className={classes.cardMedia} title="Image title">
+            <img src={widget.imgurl} width="298"/>
+          </CardMedia>
           <CardContent>
             <Typography gutterBottom variant="h5">
               {widget.name}
