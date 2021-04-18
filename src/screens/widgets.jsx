@@ -10,9 +10,11 @@ export default function Widgets() {
     const widgetList = state.widgets.map((widget) => {
       if (widget.for_sale_by_owner) {
         return (
-          <Link key={`${widget["id"]}`} to={`/widgets/${widget["id"]}`}>
-            Widget {widget["id"]}{" "}
-          </Link>
+          <li>
+            <Link key={`${widget['id']}`} to={`/widgets/${widget['id']}`}>
+              {widget.id}. {widget['name']}
+            </Link>
+          </li>
         );
       }
     });
