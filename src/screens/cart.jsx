@@ -65,9 +65,9 @@ export default function Cart() {
   };
 
   const checkout = (state, cartItemDetails) => {
-    console.log('transferring ownership of items');
+    // console.log('transferring ownership of items');
     // console.log('state.user.id', state.user.id);
-    console.log('cartItemDetails', cartItemDetails)
+    // console.log('cartItemDetails', cartItemDetails)
 
     // Create array of items to transfer ownership (aka to be bought)
     const postObject = [];
@@ -82,7 +82,6 @@ export default function Cart() {
       return postObject.push(cartObject);
     });
 
-    console.log('postObject', postObject);
 
     // Submit that array along with the post request
     axios
