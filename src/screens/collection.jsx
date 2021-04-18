@@ -111,14 +111,13 @@ export default function Collection(){
       axios.post(`/user/${userID}/collections`, postObject)
       .then(response => {
         const {listID} = response.data;
-        console.log('post create response', listID, response);
         history.push(`/user/${userID}/collections/${listID}`);
       })
     } else {
       // Update existing list
       axios.post(`/user/${userID}/collections/${collectionID}`, postObject)
-      .then(response => {
-        console.log('post edit response', response);
+      .then(() => {
+        history.go(0);
       })
     }
   }
