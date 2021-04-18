@@ -9,6 +9,8 @@ export default function Admin(props) {
   const [description, setDescription] = useState("");
   const [rarityID, setRarityID] = useState("");
   const [cost, setCost] = useState("");
+  const[image, setImage] = useState("")
+  
 
   //updating input fields to create new widget
   const onCreateName = function (event) {
@@ -32,8 +34,12 @@ export default function Admin(props) {
     setCost(event.target.value);
   };
 
+  const onCreateImage = function (event) {
+    setImage(event.target.value);
+  };
+
   //things to add to the widget once submitted
-  const formInfo = { name, categoryID, description, rarityID, cost };
+  const formInfo = { name, categoryID, description, rarityID, cost, image };
   const onSubmit = function (event) {
     event.preventDefault();
     createWidget(formInfo);
@@ -42,7 +48,7 @@ export default function Admin(props) {
   //items that will be added to the widgets db
   const createWidget = function () {
     axios
-      .post("/widgets", { name, categoryID, description, rarityID, cost })
+      .post("/widgets", { name, categoryID, description, rarityID, cost, image })
       .then((response) => {
         setState(prev => ({
           ...prev,
@@ -110,6 +116,18 @@ export default function Admin(props) {
             onChange={onCreateDescription}
           ></input>
         </p>
+        <p></p>
+      <div class="form-group">
+        <label class="form-label" for="imgFile">Add Image</label>
+        <p>
+          <input
+            type="file" 
+            class="form-control" 
+            id="imgFile"
+            onChange={onCreateImage}
+          ></input>
+        </p>
+      </div>
       </div>
       <button type="submit" className="submit">
         Submit
