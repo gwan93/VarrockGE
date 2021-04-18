@@ -72,19 +72,23 @@ export default function Cart() {
     // Create array of items to transfer ownership (aka to be bought)
     const postObject = [];
     cartItemDetails.map((cartItem) => {
+      cartItem.for_sale_by_owner = false;
       const cartObject = {
         userID: state.user.id,
         widgetID: cartItem.id,
         boughtForPriceCents: cartItem.current_sell_price_cents,
+        for_sale_by_owner: cartItem.for_sale_by_owner,
       };
       return postObject.push(cartObject);
     });
+
 
     // Submit that array along with the post request
     axios
       .post(`/widgets/checkout`, postObject)
       .then((response) => {
         // console.log('in response)')
+        console.log('in response', response)
         setCheckoutSuccess(true);
         if (response.status === 200) {
           emptyCart(state);
