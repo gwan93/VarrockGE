@@ -101,15 +101,15 @@ export default function User(){
           <Container>
             <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
               Email: {userProfile.email}
-              </Typography>
+            </Typography>
 
             <Typography variant="h5" align="center" color="textSecondary">
               Wallet Balance: {userProfile.balance}
-              </Typography>
+            </Typography>
 
             <Typography variant="h5" align="center" color="textSecondary">
               Admin Status: {String(userProfile.isadmin)}
-              </Typography>
+            </Typography>
             
             <div align="center" className={classes.button}>
               <Button variant="outlined" color="primary">
