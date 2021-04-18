@@ -2,8 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
+import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Container } from '@material-ui/core';
+import useStyles from './styles';
 
 export default function User(){
+  const classes = useStyles(); //
 
   const userID = Number(useParams().id);
   const { state } = useContext(authContext);
@@ -65,18 +68,68 @@ export default function User(){
 
   const displayWidgets = userProfile.userWidgets.map(widget => {
     return(
-      <li><Link to={`/widgets/${widget.id}`}>{widget.name} {widget.id}</Link></li>
+      <Grid item xs={12} sm={6} md={4}>
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.cardMedia}
+            image={`https://source.unsplash.com/random`}
+            title="Image title"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5">
+              {widget.name}
+            </Typography>
+            <Typography>
+              WidgetID {widget.id}: {widget.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" color="primary">View</Button>
+            <Button size="small" color="primary"><Link to={`/widgets/${widget.id}`}>Clickme</Link></Button>
+            <Button size="small" color="primary">Edit</Button>
+          </CardActions>
+        </Card>
+      </Grid>
     );
   });
 
   return(
     <div>
-      <h2>Email: {userProfile.email}</h2>
-      <h2>Wallet Balance: {userProfile.balance}</h2>
-      <h2>Admin Status: {String(userProfile.isadmin)}</h2>
-      <Link to={`/user/${userID}/collections`}><h2>View {userProfile.email}'s Collections</h2></Link>
-      <h2>{userProfile.email}'s widgets</h2>
-      {displayWidgets}
+      <CssBaseline />
+      <main>
+        <div className={classes.container}>
+          <Container>
+            <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
+              Email: {userProfile.email}
+              </Typography>
+
+            <Typography variant="h5" align="center" color="textSecondary">
+              Wallet Balance: {userProfile.balance}
+              </Typography>
+
+            <Typography variant="h5" align="center" color="textSecondary">
+              Admin Status: {String(userProfile.isadmin)}
+              </Typography>
+            
+            <div align="center" className={classes.button}>
+              <Button variant="outlined" color="primary">
+                <Link to={`/user/${userID}/collections`}><h2>View {userProfile.email}'s Collections</h2></Link>
+              </Button>
+            </div>
+
+            <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+              {userProfile.email}'s widgets
+            </Typography>
+
+          </Container>
+        </div>
+
+        <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={4}>
+            {displayWidgets}
+          </Grid>
+        </Container>
+      </main>
     </div>
   );
 };
