@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+mport React, {useContext} from 'react';
 import {Link, Route, Switch} from 'react-router-dom';
 import Widget from './widget';
 import { authContext } from '../AuthProvider';
@@ -34,3 +34,4 @@ export default function Widgets(){
   )
 
 }
+
