@@ -1,6 +1,7 @@
 import { authContext } from "../AuthProvider";
 import React, { useContext, useState } from "react";
 import axios from "axios";
+import history from '../History';
 
 export default function Cart() {
   const { state, setState } = useContext(authContext);
@@ -92,6 +93,7 @@ export default function Cart() {
         setCheckoutSuccess(true);
         if (response.status === 200) {
           emptyCart(state);
+          history.push("/widgets");
         }
       })
       .catch((err) => console.log("Error purchasing", err));

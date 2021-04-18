@@ -6,16 +6,18 @@ export default function Navigation() {
   const { state } = useContext(authContext);
   const userID = state.user.id;
 
+  console.log('nav state', state);
+
   return (
     <nav>
       <Link to="/">Home </Link>
-      <Link to="/admin">Admin </Link>
-      <Link to="/login">Login </Link>
+      {state.user.isadmin && <Link to="/admin">Admin </Link>}
+      {!state.user.id && <Link to="/login">Login </Link>}
       <Link to="/widgets">Widgets </Link>
-      <Link to={`/user/${userID}`}>Collection </Link>
-      <Link to={`/user/${userID}/collections`}>User </Link>
-      <Link to="/Cart">Cart </Link>
-      <Link to="/login">Logout </Link>
+      {/* <Link to={`/user/${userID}/collections`}>Collection </Link> */}
+      {state.user.id && <Link to={`/user/${userID}`}>User: {state.user.email} </Link>}
+      {state.user.id && <Link to="/Cart">Cart ({state.itemsInCart.length}) </Link>}
+      {state.user.id && <Link to="/login">Logout </Link>}
     </nav>
   );
 }
