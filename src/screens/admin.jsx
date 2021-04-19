@@ -2,7 +2,26 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { authContext } from "../AuthProvider";
 import { Typography, Button, CssBaseline, TextField, Grid, Container} from '@material-ui/core'
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+  },
+
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
 
 export default function Admin(props) {
   const classes = useStyles();
