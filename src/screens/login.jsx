@@ -1,21 +1,26 @@
 import React from "react";
 import { useState, useContext } from 'react';
 import { authContext } from '../AuthProvider';
-import { TextField, Button, makeStyles, Grid, Typography, Card, CardActions, CardMedia } from '@material-ui/core';
+import { CssBaseline, TextField, Button, makeStyles, Grid, Typography, Card, CardActions, CardMedia } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   container: {
+  marginTop: theme.spacing(35),
    height: "100%",
    cardGrid: {
     padding: '20px 0'
   },
   card: {
     height: '100%',
+    width: '100%',
     display: 'flex',
-    flexDirection: 'column'
+    // flexDirection: 'column'
   },
   cardMedia: {
-    // paddingTop: '56.25%' // 16:9
+    // display:'flex',
+    // flexDirection: 'column',
+    height:'100%',
+    marginTop: '10px'
   },
   cardContent: {
     flexGrow: 1
@@ -56,23 +61,38 @@ export default function Login({setNavbar}) {
 
   return (
     <div className={classes.container} maxWidth="xs">
+      <CssBaseline>
       <Grid
       container
-      xs={'2'}
-      direction={'column'}
-      spacing={0, 0, 3, 0}
-      justify={'space-around'}
-      // alignContent={'flex-end'}
+      spacing={5}
+      justify={'center'}
+      alignSelf={'center'}
       alignItems={'center'}
+      direction={'row'}
+      alignContent={'stretch'}
+      // container
+      // xs={'9'}
+      // wrap={'wrap'}
+      // direction={'row'}
+      // spacing={0, 0, 3, 0}
+      // justify={'center'}
+      // alignContent={'center'}
+      // alignItems={'stretch'}
       // spacing={0}
       // justify={"space-between"}
       // wrap={'wrap'}
       // className={classes.container}
       >    
-       <Grid container
+       {/* <Grid container
        spacing={3}
-       justify={'flex-end'}
-       alignItems={'center'}
+       justify={'space-evenly'}
+       alignItems={'flex-end'}
+       direction={'column'}
+       alignContent={'flex-end'}
+              > */}
+              <Grid
+              item
+              // alignItems={"flex-end"}
               >
       <Card className={classes.card}>
           <CardMedia className={classes.cardMedia} title="Image title">
@@ -80,6 +100,7 @@ export default function Login({setNavbar}) {
           </CardMedia>
           </Card>
               </Grid>
+
       <form validate onSubmit={onSubmit}
       className={classes.form}
       >           
@@ -159,9 +180,11 @@ export default function Login({setNavbar}) {
         {/* <button type="submit" className="submit">
           Submit
         </button> */}
+        
       </Grid>
       </form>
         </Grid>
+        </CssBaseline>
     </div>
   );
 }
