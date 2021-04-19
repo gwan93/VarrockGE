@@ -34,5 +34,7 @@ export default function Widgets() {
         </Route>
       </Switch>
     </div>
-  );
+  )
+
 }
+

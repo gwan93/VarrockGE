@@ -88,6 +88,7 @@ export default function Cart() {
     axios
       .post(`/widgets/checkout`, postObject)
       .then((response) => {
+        // console.log('in response)')
         console.log('in response', response)
         setCheckoutSuccess(true);
         if (response.status === 200) {

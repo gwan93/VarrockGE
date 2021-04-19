@@ -6,17 +6,18 @@ import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBasel
 import useStyles from './styles';
 
 export default function User(){
-  const classes = useStyles(); //
+  const classes = useStyles();
+
 
   const userID = Number(useParams().id);
   const { state } = useContext(authContext);
-  const [ userProfile, setUserProfile ] = useState({
+  const [userProfile, setUserProfile] = useState({
     id: null,
     email: "",
     balance: null,
     isadmin: null,
     password: "",
-    userWidgets: []
+    userWidgets: [],
   });
   console.log('state', state)
 
@@ -25,17 +26,16 @@ export default function User(){
   useEffect(() => {
     Promise.all([
       axios.get(`/user/${userID}`),
-      axios.get('/widgets/owners')
-    ])
-    .then(all => {
-      const [ userResponse, widgetOwnersResponse ] = all;
+      axios.get("/widgets/owners"),
+    ]).then((all) => {
+      const [userResponse, widgetOwnersResponse] = all;
 
       // console.log('widgetOwnersResponse.data', widgetOwnersResponse.data)
 
-      // Filtering the array of widget owners to only include widgets 
+      // Filtering the array of widget owners to only include widgets
       // owned by the user of the profile being visited
       // Note: these elements do not have the widget's name, description, etc...
-      const ownedWidgets = widgetOwnersResponse.data.filter(widgetOwner => {
+      const ownedWidgets = widgetOwnersResponse.data.filter((widgetOwner) => {
         return widgetOwner.user_id === userID;
       });
 
@@ -45,26 +45,25 @@ export default function User(){
       const ownedWidgetsID = [];
       for (const ownedWidget of ownedWidgets) {
         ownedWidgetsID.push(ownedWidget.widget_id);
-      };
+      }
 
       // console.log('ownedWidgetsID', ownedWidgetsID)
 
       // Filter all existing widgets stored in state based on the above created array
       // ie if ownedWidgets = [1, 2, 3], then make an array with the details of widgets 1, 2, 3
-      const ownedWidgetsDetails = state.widgets.filter(widget => {
+      const ownedWidgetsDetails = state.widgets.filter((widget) => {
         // console.log('widget', widget)
-        return ownedWidgetsID.includes(widget.id)
+        return ownedWidgetsID.includes(widget.id);
       });
 
       // console.log('ownedWidgetsDetails', ownedWidgetsDetails)
 
-      setUserProfile(prev => ({
+      setUserProfile((prev) => ({
         ...prev,
         ...userResponse.data,
-        userWidgets: ownedWidgetsDetails
+        userWidgets: ownedWidgetsDetails,
       }));
-
-    })
+    });
   }, [userID, state.widgets]);
 
   const displayWidgets = userProfile.userWidgets.map(widget => {
@@ -93,7 +92,7 @@ export default function User(){
     );
   });
 
-  return(
+  return (
     <div>
       <CssBaseline />
       <main>
@@ -132,4 +131,4 @@ export default function User(){
       </main>
     </div>
   );
-};
+}
