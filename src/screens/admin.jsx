@@ -1,16 +1,15 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { authContext } from '../AuthProvider';
+import { authContext } from "../AuthProvider";
 
 export default function Admin(props) {
-  const { setState } = useContext(authContext)
+  const { setState } = useContext(authContext);
   const [name, setName] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [description, setDescription] = useState("");
   const [rarityID, setRarityID] = useState("");
   const [cost, setCost] = useState("");
-  const[image, setImage] = useState("")
-  
+  const [image, setImage] = useState("");
 
   //updating input fields to create new widget
   const onCreateName = function (event) {
@@ -35,8 +34,15 @@ export default function Admin(props) {
   };
 
   const onCreateImage = function (event) {
-    setImage(event.target.value);
+    const data = new FormData();
+    data.append("file", event.target.files[0]);
+    console.log("event", event.target.files[0]);
+    console.log("image", image);
+    console.log("data", data)
   };
+  // setImage(event.target.files[0]);
+  // console.log("image", image);
+  // console.log("event", event.target.files[0]);
 
   //things to add to the widget once submitted
   const formInfo = { name, categoryID, description, rarityID, cost, image };
@@ -48,12 +54,19 @@ export default function Admin(props) {
   //items that will be added to the widgets db
   const createWidget = function () {
     axios
-      .post("/widgets", { name, categoryID, description, rarityID, cost, image })
+      .post("/widgets", {
+        name,
+        categoryID,
+        description,
+        rarityID,
+        cost,
+        image,
+      })
       .then((response) => {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
-          widgets: [...prev.widgets, response.data]
-        }))
+          widgets: [...prev.widgets, response.data],
+        }));
         console.log("Added successfully");
         console.log("response", response);
       })
@@ -63,7 +76,7 @@ export default function Admin(props) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form enctype="multipart/form-data" onSubmit={onSubmit}>
       <div class="create-widget">
         <h3>Admin</h3>
         <label htmlFor="nameInput">Name</label>
@@ -117,17 +130,18 @@ export default function Admin(props) {
           ></input>
         </p>
         <p></p>
-      <div class="form-group">
-        <label class="form-label" for="imgFile">Add Image</label>
-        <p>
-          <input
-            type="file" 
-            class="form-control" 
-            id="imgFile"
-            onChange={onCreateImage}
-          ></input>
-        </p>
-      </div>
+        <div class="form-group">
+          <label for="imgFile">Add Image</label>
+          <p>
+            <input
+              name="myImage"
+              type="file"
+              class="form-control"
+              id="imgFile"
+              onChange={onCreateImage}
+            ></input>
+          </p>
+        </div>
       </div>
       <button type="submit" className="submit">
         Submit

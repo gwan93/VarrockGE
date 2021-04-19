@@ -35,6 +35,7 @@ export default function Widget(props) {
       <h3>Widget ID is #{widgetID}</h3>
       <ul>
         <li>Name: {widget.name}</li>
+        <li> {widget.imgurl}</li>
         <li>Description: {widget.description}</li>
         <li>id: {widget.id}</li>
         <li>hash: {widget.hash}</li>
