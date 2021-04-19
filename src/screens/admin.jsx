@@ -36,15 +36,6 @@ export default function Admin(props) {
   const onCreateImage = function (event) {
     setImage(event.target.value);
   }
-  //   const data = new FormData();
-  //   data.append("file", event.target.files[0]);
-  //   console.log("event", event.target.files[0]);
-  //   console.log("image", image);
-  //   console.log("data", data)
-  // };
-  // setImage(event.target.files[0]);
-  // console.log("image", image);
-  // console.log("event", event.target.files[0]);
 
   //things to add to the widget once submitted
   const formInfo = { name, categoryID, description, rarityID, cost, image };
