@@ -78,7 +78,6 @@ export default function Admin(props) {
         <Typography component="h1" variant="h5">
           Admin
         </Typography>
-        <p></p>
         <form className={classes.form} noValidate onSubmit={onSubmit}>
         <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -154,7 +153,6 @@ export default function Admin(props) {
               />
             </Grid>
             </Grid>
-            <p></p>
             <Button
             type="submit"
             fullWidth
