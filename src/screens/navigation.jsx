@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   user: {
-    flexGrow: 30,
+   flexGrow: 30,
    display: "flex",
    justifyContent: "flex-end",
-  
  },
 
  cart: {
@@ -32,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: "flex",
     justifyContent: "flex-end",
-    // wordSpacing: "5px",
   },
 }));
 
