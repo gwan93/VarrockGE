@@ -136,7 +136,6 @@ export default function Admin(props) {
           <label for="imgFile">Add Image</label>
           <p>
             <input
-              // name="myImage"
               type="url"
               class="form-control"
               id="imgFile"
