@@ -1,8 +1,11 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { authContext } from "../AuthProvider";
+import { Typography, Button, CssBaseline, TextField, Grid, Container} from '@material-ui/core'
+import useStyles from './styles';
 
 export default function Admin(props) {
+  const classes = useStyles();
   const { setState } = useContext(authContext);
   const [name, setName] = useState("");
   const [categoryID, setCategoryID] = useState("");
@@ -69,75 +72,100 @@ export default function Admin(props) {
   };
 
   return (
-    <form enctype="multipart/form-data" method="POST" onSubmit={onSubmit}>
-      <div class="create-widget">
-        <h3>Admin</h3>
-        <label htmlFor="nameInput">Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="nameInput"
-          onChange={onCreateName}
-        ></input>
-      </div>
-      <p>
-        <div class="form-group">
-          <label htmlfor="category">Category ID</label>
-          <input
-            type="number"
-            class="form-control"
-            id="category"
-            onChange={onCreateCategory}
-          ></input>
-        </div>
-      </p>
-      <p>
-        <div class="form-group">
-          <label htmlfor="rarity">Rarity ID</label>
-          <input
-            type="number"
-            class="form-control"
-            id="rarity"
-            onChange={onCreateRarity}
-          ></input>
-        </div>
-      </p>
-      <div class="form-group">
-        <label htmlFor="cost">$Cost$</label>
-        <input
-          type="number"
-          class="form-control"
-          id="cost"
-          onChange={onCreateCost}
-        ></input>
-      </div>
-      <p></p>
-      <div class="form-group">
-        <label htmlfor="widget-description">Description</label>
-        <p>
-          <input
-            type="text"
-            class="form-control"
-            id="widget-description"
-            onChange={onCreateDescription}
-          ></input>
-        </p>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Admin
+        </Typography>
         <p></p>
-        <div class="form-group">
-          <label for="imgFile">Add Image</label>
-          <p>
-            <input
-              type="url"
-              class="form-control"
-              id="imgFile"
-              onChange={onCreateImage}
-            ></input>
-          </p>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
+        <Grid container spacing={2}>
+        <Grid item xs={12}>
+              <TextField
+                name="nftName"
+                variant="outlined"
+                required
+                fullWidth
+                id="nftName"
+                label="NFT Title"
+                onChange={onCreateName}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="category"
+                variant="outlined"
+                required
+                fullWidth
+                id="category"
+                label="Category No."
+                onChange={onCreateCategory}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="rarity"
+                variant="outlined"
+                required
+                fullWidth
+                id="rarity"
+                label="Rarity No."
+                onChange={onCreateRarity}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="cost"
+                variant="outlined"
+                required
+                fullWidth
+                id="cost"
+                label="Cost"
+                onChange={onCreateCost}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="description"
+                variant="outlined"
+                required
+                fullWidth
+                id="description"
+                label="Description"
+                onChange={onCreateDescription}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="imageUrl"
+                variant="outlined"
+                required
+                fullWidth
+                id="imageUrl"
+                label="Image URL"
+                onChange={onCreateImage}
+                autoFocus
+              />
+            </Grid>
+            </Grid>
+            <p></p>
+            <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Create NFT
+          </Button>
+        </form>
         </div>
-      </div>
-      <button type="submit" className="submit">
-        Submit
-      </button>
-    </form>
+        </Container>
   );
 }
