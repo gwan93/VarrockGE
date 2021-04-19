@@ -6,7 +6,7 @@ export default function Navigation() {
   const { state } = useContext(authContext);
   const userID = state.user.id;
 
-  console.log('nav state', state);
+  // console.log('nav state', state);
 
   return (
     <nav>
