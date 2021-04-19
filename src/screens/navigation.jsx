@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
  },
 
  cart: {
-  flexGrow: 1,
+  flexGrow: 0.5,
    display: "flex",
    justifyContent: "flex-end",
   
  },
 
   login: {
-    flexGrow: 1,
+    flexGrow: 0.5,
     display: "flex",
     justifyContent: "flex-end",
   },
@@ -95,7 +95,7 @@ export default function Navigation() {
               component={Link}
               to={`/user/${userID}`}
             >
-              User: {state.user.email}
+            {state.user.email}
             </Typography>
           )}
           {state.user.id && (
@@ -134,24 +134,5 @@ export default function Navigation() {
         </Toolbar>
       </AppBar>
     </div>
-
-    // <div className={classes.root}>
-    //   <AppBar position="static">
-    //     <Toolbar>
-    //     <Typography variant="h6" className={classes.title}>
-    //     <Link href="/" color="inherit" style={{ textDecoration: 'none'}}>Home </Link>
-    //   {state.user.isadmin && <Link href="/admin" color="inherit" style={{ textDecoration: 'none'}}>Admin </Link>}
-    //   <Link href="/widgets" color="inherit" style={{ textDecoration: 'none'}}>Widgets </Link>
-    //   <Link href={`/user/${userID}/collections`} color="inherit" style={{ textDecoration: 'none'}}>Collections </Link>
-    //   {state.user.id && <Link href={`/user/${userID}`} color="inherit" style={{ textDecoration: 'none'}}>User: {state.user.email}</Link>}
-    //   </Typography>
-    //   {state.user.id && <Link href="/cart" color="inherit" className={classes.login}><ShoppingCartOutlinedIcon/>({state.itemsInCart.length}) </Link>}
-    //   <Button color="inherit" className={classes.login}>
-    //   {!state.user.id && <Link href="/login" color="inherit">Login </Link>}
-    //   {state.user.id && <Link href="/login" color="inherit">Logout </Link>}
-    //   </Button>
-    //   </Toolbar>
-    //   </AppBar>
-    // </div>
   );
 }
