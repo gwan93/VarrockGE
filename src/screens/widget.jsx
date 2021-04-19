@@ -40,7 +40,7 @@ export default function Widget(props) {
   const displayWidgetHistory = widget.history.map(historyData => {
     return (
       <ul key={historyData.id}>
-        <li>Date Purchased: {historyData.date_purchased}</li>
+        <li>Date Purchased: {`${new Date(historyData.date_purchased.toString())}`}</li>
         <li>By: {historyData.email} (userID: {historyData.id})</li>
         <li>Bought For: ${historyData.bought_for_price_cents / 100}</li>
       </ul>
