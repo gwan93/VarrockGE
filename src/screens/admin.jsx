@@ -76,7 +76,7 @@ export default function Admin(props) {
   };
 
   return (
-    <form enctype="multipart/form-data" onSubmit={onSubmit}>
+    <form enctype="multipart/form-data" method="POST" onSubmit={onSubmit}>
       <div class="create-widget">
         <h3>Admin</h3>
         <label htmlFor="nameInput">Name</label>
