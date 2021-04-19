@@ -1,8 +1,16 @@
 import React from "react";
 import { useState, useContext } from 'react';
 import { authContext } from '../AuthProvider';
+import { TextField, Button, makeStyles, Grid } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+   height: "100%"
+  },
+}));
 
 export default function Login({setNavbar}) {
+  const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(authContext); // the login method
@@ -27,11 +35,32 @@ export default function Login({setNavbar}) {
   };
 
   return (
-    <div className="login">
-      <form onSubmit={onSubmit}>
-        <h3>Login</h3>
-          <p>
-            <label htmlFor="emailInput">Email address</label>
+    <div className={classes.container}>
+      <form onSubmit={onSubmit}
+      className={classes.container}
+      >           
+            <Grid
+            direction={'column'}
+            alignItems={'center'}
+            spacing={2}
+            container 
+            justify={"center"}
+            // className={classes.container}
+            >
+              <h3>Login</h3>
+            <Grid
+            item
+            >
+            <TextField 
+            id="emailInput"
+            variant={"filled"}
+            label={"Email Address"}
+            value={email}
+            onChange={onEmailChange}
+            placeholder={"email"}
+            ></TextField>
+            </Grid>
+            {/* <label htmlFor="emailInput">Email address</label>
             <input
               type="email"
               name="login"
@@ -41,10 +70,20 @@ export default function Login({setNavbar}) {
               placeholder="Enter email"
               value={email}
               onChange={onEmailChange}
-            ></input>
-          </p>
-          <p>
-            <label htmlFor="passwordInput">Password</label>
+            ></input> */}
+          <Grid
+          item
+          >
+          <TextField 
+            id="passwordInput"
+            variant={"filled"}
+            label={"Password"}
+            value={password}
+            onChange={onPasswordChange}
+            placeholder={"password"}
+            ></TextField>
+          </Grid>
+            {/* <label htmlFor="passwordInput">Password</label>
             <input
               type="password"
               name="password"
@@ -53,11 +92,20 @@ export default function Login({setNavbar}) {
               placeholder="Password"
               value={password}
               onChange={onPasswordChange}
-            ></input>
-          </p>
-        <button type="submit" className="submit">
+            ></input> */}
+        <Grid
+        item
+        >
+          <Button
+          variant={"contained"}
+          > 
+        Submit 
+          </Button>
+          </Grid>
+        {/* <button type="submit" className="submit">
           Submit
-        </button>
+        </button> */}
+            </Grid>
       </form>
     </div>
   );
