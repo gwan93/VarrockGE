@@ -38,7 +38,7 @@ export default function Navigation() {
         <Link href="/" color="inherit" style={{ textDecoration: 'none'}}>Home </Link>
       {state.user.isadmin && <Link href="/admin" color="inherit" style={{ textDecoration: 'none'}}>Admin </Link>}
       <Link href="/widgets" color="inherit" style={{ textDecoration: 'none'}}>Widgets </Link>
-      <Link to={`/user/${userID}/collections`} color="inherit" style={{ textDecoration: 'none'}}>Collection </Link>
+      <Link href={`/user/${userID}/collections`} color="inherit" style={{ textDecoration: 'none'}}>Collections </Link>
       {state.user.id && <Link href={`/user/${userID}`} color="inherit" style={{ textDecoration: 'none'}}>User: {state.user.email}</Link>}
       </Typography>
       {state.user.id && <Link href="/cart" color="inherit" className={classes.login}><ShoppingCartOutlinedIcon/>({state.itemsInCart.length}) </Link>}
