@@ -34,12 +34,14 @@ export default function Admin(props) {
   };
 
   const onCreateImage = function (event) {
-    const data = new FormData();
-    data.append("file", event.target.files[0]);
-    console.log("event", event.target.files[0]);
-    console.log("image", image);
-    console.log("data", data)
-  };
+    setImage(event.target.value);
+  }
+  //   const data = new FormData();
+  //   data.append("file", event.target.files[0]);
+  //   console.log("event", event.target.files[0]);
+  //   console.log("image", image);
+  //   console.log("data", data)
+  // };
   // setImage(event.target.files[0]);
   // console.log("image", image);
   // console.log("event", event.target.files[0]);
@@ -134,8 +136,8 @@ export default function Admin(props) {
           <label for="imgFile">Add Image</label>
           <p>
             <input
-              name="myImage"
-              type="file"
+              // name="myImage"
+              type="url"
               class="form-control"
               id="imgFile"
               onChange={onCreateImage}
