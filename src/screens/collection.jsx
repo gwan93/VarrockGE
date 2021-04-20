@@ -115,18 +115,16 @@ export default function Collection(){
 
   const updateSellPrice = (widgetID) => {
     
-    // console.log('sell price', sellPrice)
-    // console.log('widget id', widgetID);
     // Sell price * 100 to convert it from decimal to integer
     // eg Convert 15.25 dollars to 1525 cents to prevent floating point conflicts in database
     axios.post(`/widgets/${widgetID}`,  {sellPrice: sellPrice * 100} )
     .then((response) => {
-      // console.log('line 122 response', response)
-      setSellPrice(
+      // console.log('response', response)
+      history.go(0);
+      // setSellPrice(
+      
 
-      )
-    // console.log("Updated successfully");
-    // console.log("responseUpdateSell", response);
+      // )
   })
   .catch((err) => {
     console.log("Something went wrong", err);
@@ -150,13 +148,12 @@ export default function Collection(){
         for (const widget of collectionResponse.data) {
           widgetIDArray.push(widget.widget_id);
         }
-
         setCollection(prev => ({
           ...prev,
           userProfile: userResponse.data,
           collectionName: collectionResponse.data[0].list_name,
           collectionDesc: collectionResponse.data[0].list_description,
-          collectionItems: collectionResponse.data,
+          collectionItems: collectionResponse.data.sort((a, b) => a.widget_id - b.widget_id),
           checkedItems: widgetIDArray
         }))
 
@@ -195,30 +192,44 @@ export default function Collection(){
     }
   }
 
-  // Addsremoves the id integer from collection.checkedItems array
+  // Adds or removes the id integer from collection.checkedItems array
   const checkToggleWidget = (id) => {
-    if (collection.checkedItems.includes(id)) {
-      const index = collection.checkedItems.indexOf(id);
+    // if (collection.checkedItems.includes(id)) {
+    //   const index = collection.checkedItems.indexOf(id);
+    //   if (index > -1) {
+    //     collection.checkedItems.splice(index, 1);
+    //   }
+    // } else {
+    //   collection.checkedItems.push(id);
+    // }
+    // console.log('collection.checkedItems after toggling', collection.checkedItems)
+    const newCheckedItems = [...collection.checkedItems];
+    if (newCheckedItems.includes(id)) {
+      const index = newCheckedItems.indexOf(id);
       if (index > -1) {
-        collection.checkedItems.splice(index, 1);
+        newCheckedItems.splice(index, 1);
       }
     } else {
-      collection.checkedItems.push(id);
+      newCheckedItems.push(id);
     }
-    console.log('collection.checkedItems after toggling', collection.checkedItems)
-    // console.log('collection.checkedItems', collection.checkedItems)
+    // console.log('newCheckedItems', newCheckedItems);
+    setCollection(prev => ({
+      ...prev,
+      checkedItems:newCheckedItems
+    }))
   };
 
   
-  const usersWidgetsDetails = state.widgets.filter(widget => {
-    return state.myWidgets.includes(widget.id);
-  })
+  const usersWidgetsDetails = state.widgets
+    .filter(widget => state.myWidgets.includes(widget.id))
+    .sort((a, b) => a.id - b.id);
+
 
 
   const displayWidgets = usersWidgetsDetails.map(widget => {
     return(
       <div key={widget.id}>
-        <input type="checkbox" defaultChecked={collection.checkedItems.includes(widget.id)} name={`${widget.name}`} onClick={()=>checkToggleWidget(widget.id)}></input>
+        <input type="checkbox" checked={collection.checkedItems.includes(widget.id)} name={`${widget.name}`} onChange={()=>checkToggleWidget(widget.id)}></input>
         <label htmlFor={`${widget.name}`}>{widget.name}</label>
       </div>
     );
