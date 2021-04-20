@@ -102,7 +102,7 @@ export default function Widget(props) {
       <Grid item key={widgetID} xs={12} sm={6} md={3}>
         <Card >
           <CardMedia title="Image title">
-            <img src={widget.details.imgurl} width="306" />
+            <img src={widget.details.imgurl} width="306" alt=""/>
           </CardMedia>
           <CardContent>
             <Typography gutterBottom variant="h5">

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
-import { makeStyles, Typography, TextField, InputAdornment, Card, CardActionArea, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+import { makeStyles, Typography, TextField, Card, Button, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
 
 
 export default function Collection(){
@@ -115,15 +115,18 @@ export default function Collection(){
 
   const updateSellPrice = (widgetID) => {
     
-    console.log('sell price', sellPrice)
-    console.log('widget id', widgetID);
-    axios.post(`/widgets/${widgetID}`,  {sellPrice} )
+    // console.log('sell price', sellPrice)
+    // console.log('widget id', widgetID);
+    // Sell price * 100 to convert it from decimal to integer
+    // eg Convert 15.25 dollars to 1525 cents to prevent floating point conflicts in database
+    axios.post(`/widgets/${widgetID}`,  {sellPrice: sellPrice * 100} )
     .then((response) => {
+      // console.log('line 122 response', response)
       setSellPrice(
 
       )
-    console.log("Updated successfully");
-    console.log("responseUpdateSell", response);
+    // console.log("Updated successfully");
+    // console.log("responseUpdateSell", response);
   })
   .catch((err) => {
     console.log("Something went wrong", err);
@@ -214,10 +217,10 @@ export default function Collection(){
 
   const displayWidgets = usersWidgetsDetails.map(widget => {
     return(
-      <p>
+      <div key={widget.id}>
         <input type="checkbox" defaultChecked={collection.checkedItems.includes(widget.id)} name={`${widget.name}`} onClick={()=>checkToggleWidget(widget.id)}></input>
         <label htmlFor={`${widget.name}`}>{widget.name}</label>
-      </p>
+      </div>
     );
   })
 
@@ -226,7 +229,7 @@ export default function Collection(){
     displayCollections = collection.collectionItems.map(item => {
       // console.log('Item name:', item)
       return (
-        <div>
+        <div key={item.widget_id}>
           <Grid item key={item.widget_id} /* xs={12} sm={6} md={4} */>
             <Card className={classes.card} variant="outlined">
               <CardMedia className={classes.cardMedia}>
@@ -236,37 +239,35 @@ export default function Collection(){
                 <Typography gutterBottom variant="h5">
                   <Link className={classes.textLink} to={`/widgets/${item.widget_id}`}>{item.name}</Link>
                 </Typography>
-                <Typography>
+                <div>
                   {/* {item.description} */}
-                  <ul>
-                    {/* <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li> */}
-                    <li>On sale for: ${item.current_sell_price_cents / 100}</li>
-                    {/* <li>Description: {item.description}</li> */}
-                    <li>Listed for sale: {String(item.for_sale_by_owner)}</li>
-                    {/* <li>hash:{item.hash}</li> */}
-                    {/* <li>MSRP_cents: {item.msrp_cents}</li> */}
-                    <li>Rarity: {item.rarity_id}</li>
-                    <li>Game: {item.subcategory_id}</li>
+                  {/* <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li> */}
+                  <li>On sale for: ${item.current_sell_price_cents / 100}</li>
+                  {/* <li>Description: {item.description}</li> */}
+                  <li>Listed for sale: {String(item.for_sale_by_owner)}</li>
+                  {/* <li>hash:{item.hash}</li> */}
+                  {/* <li>MSRP_cents: {item.msrp_cents}</li> */}
+                  <li>Rarity: {item.rarity_id}</li>
+                  <li>Game: {item.subcategory_id}</li>
 
-                    <form onSubmit={(event) => onUpdateSellPrice(item.widget_id, event)}>
-                      <Grid className={classes.updateForm}>
-                        <Grid item xs={8}>
-                          <TextField
-                            variant="outlined"
-                            fullWidth
-                            label="Update Price ($)"
-                            onChange={onSetSellPrice}
-                            placeholder={String(item.current_sell_price_cents / 100)}
-                          />
-                        </Grid>
+                  <form onSubmit={(event) => onUpdateSellPrice(item.widget_id, event)}>
+                    <Grid className={classes.updateForm}>
+                      <Grid item xs={8}>
+                        <TextField
+                          variant="outlined"
+                          fullWidth
+                          label="Update Price ($)"
+                          onChange={onSetSellPrice}
+                          placeholder={String(item.current_sell_price_cents / 100)}
+                        />
                       </Grid>
-                      <Button type="submit" size="small" variant="contained" color="primary" className={classes.submit}>
-                        Update
-                      </Button>
-                    </form>
+                    </Grid>
+                    <Button type="submit" size="small" variant="contained" color="primary" className={classes.submit}>
+                      Update
+                    </Button>
+                  </form>
 
-                  </ul>
-                </Typography>
+                </div>
               </CardContent>
             </Card>
           </Grid>
@@ -319,10 +320,10 @@ export default function Collection(){
                   />
                 </Grid>
               </Grid>
-              <h3>Add or remove from this collection</h3>
-              <ul>
+              <Typography variant="h6" gutterBottom>
+                Add or remove cards from this collection
+              </Typography>
                 {displayWidgets}
-              </ul>
               <Button type="submit" size="medium" variant="contained" color="primary" className={classes.submit}>
                 Save Changes
               </Button>
@@ -335,7 +336,7 @@ export default function Collection(){
             <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
               In this collection:
             </Typography>
-            <Grid className={classes.grid} /* container */ spacing={3}>
+            <Grid className={classes.grid} container spacing={3}>
               {displayCollections}
               {(!displayCollections || displayCollections.length === 0) && <h4>This collection does not have any widgets yet</h4>}
             </Grid>
