@@ -8,6 +8,7 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    backgroundColor: "black"
   },
 
   title: {
@@ -32,6 +33,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+
+  image: {
+    flexGrow: 0.3,
+    marginLeft: "-25px",
+    marginRight: "25px",
+    background: "black"
+    
+  },
 }));
 
 export default function Navigation() {
@@ -41,8 +50,10 @@ export default function Navigation() {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.root}>
         <Toolbar>
+        <img src="https://bit.ly/32K7Zs1" width="50" className={classes.image}>
+        </img>
           <Typography
             variant="h6"
             className={classes.title}
@@ -73,7 +84,7 @@ export default function Navigation() {
             component={Link}
             to="/widgets"
           >
-            Widgets
+            Marketplace
           </Typography>
           <Typography
             variant="h6"

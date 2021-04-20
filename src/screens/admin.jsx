@@ -10,16 +10,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    outline: "none"
   },
 
   form: {
     width: '100%',
     marginTop: theme.spacing(3),
+    outline: "none"
   },
 
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "black",
+    "&:hover": {
+      backgroundColor: "#56144D"
+    }
   },
+ 
 }));
 
 
