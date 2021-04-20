@@ -2,8 +2,78 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
+import { makeStyles, Typography, TextField, InputAdornment, Card, CardActionArea, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+
 
 export default function Collection(){
+  const useStyles = makeStyles((theme) => ({
+    main:{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    container: {
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(6, 0, 6),
+      border: 'rgb(224, 224, 224) 2px solid',
+      borderRadius: '5px',
+      width: "960px",
+      margin: '8px 0 8px 0',
+      transition: 'box-shadow .1s',
+      "&:hover": {
+        boxShadow: '0 0 11px rgba(33,33,33,.2)'
+      }
+    },
+    button: {
+      marginTop: '40px',
+    },
+    textLink: {
+      color: 'inherit',
+      textDecoration: 'inherit'
+    },
+    cardGrid: {
+      padding: '0px 10px 10px 10px',
+      borderRadius: '5px',
+      // border: 'green 1px solid'
+    },
+    formGrid: {
+      // border: 'red 1px solid',
+      width: '80%'
+    },
+    grid: {
+      // border: 'red 1px solid',
+      display: 'flex', 
+      justifyContent: "space-evenly"
+    },
+    card: {
+      width: '300px',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '5px 5px 5px 5px',
+      // border: 'blue 1px solid',
+      transition: 'box-shadow .1s',
+      "&:hover": {
+        boxShadow: '0 0 11px rgba(33,33,33,.2)'
+      }
+    },
+    cardMedia: {
+      display: 'flex',
+      alignItems: 'center',
+      height: '435px'
+    },
+    cardContent: {
+      flexGrow: 1
+    },
+    submit: {
+      margin: theme.spacing(1, 0, 2),
+    },
+    updateForm: {
+      margin: theme.spacing(2, 0, 0),
+    }
+  }));
+  const classes = useStyles();
   // const { widgetID } = useParams();
   // console.log('--------', useParams())
   const userID = useParams().id;
@@ -18,8 +88,8 @@ export default function Collection(){
     collectionItems: [],
     checkedItems: []
   });
-  console.log('state', state)
-  console.log('collection', collection)
+  // console.log('state', state)
+  // console.log('collection', collection)
 
   const setCollectionName = (event) => {
     setCollection(prev => ({
@@ -143,13 +213,10 @@ export default function Collection(){
 
 
   const displayWidgets = usersWidgetsDetails.map(widget => {
-    // console.log('collection.checkedItems', collection.checkedItems)
-    // console.log('widget.id', collection.checkedItems.includes(widget.id))
-
     return(
       <p>
         <input type="checkbox" defaultChecked={collection.checkedItems.includes(widget.id)} name={`${widget.name}`} onClick={()=>checkToggleWidget(widget.id)}></input>
-        <label htmlFor={`${widget.name}`}>{widget.name} {widget.id}</label>
+        <label htmlFor={`${widget.name}`}>{widget.name}</label>
       </p>
     );
   })
@@ -160,22 +227,49 @@ export default function Collection(){
       // console.log('Item name:', item)
       return (
         <div>
-          <ul>
-            <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li>
-            <li>Current_sell_price_cents: {item.current_sell_price_cents}</li>
-            <li>Description: {item.description}</li>
-            <li>For_sale_by_owner: {item.for_sale_by_owner}</li>
-            <li>hash:{item.hash}</li>
-            <li>MSRP_cents: {item.msrp_cents}</li>
-            <li>Rarity_id: {item.rarity_id}</li>
-            <li>Subcategory_id: {item.subcategory_id}</li>
-            <li>widget_id: {item.widget_id}</li>
-            <form onSubmit={(event) => onUpdateSellPrice(item.widget_id, event)}>
-              <label>Sell price: </label>
-              <input onChange={onSetSellPrice}></input>
-            <button type="submit">Sell</button>
-            </form>
-          </ul>
+          <Grid item key={item.widget_id} /* xs={12} sm={6} md={4} */>
+            <Card className={classes.card} variant="outlined">
+              <CardMedia className={classes.cardMedia}>
+                <img src={item.imgurl} width="280" alt=""/>
+              </CardMedia>
+              <CardContent>
+                <Typography gutterBottom variant="h5">
+                  <Link className={classes.textLink} to={`/widgets/${item.widget_id}`}>{item.name}</Link>
+                </Typography>
+                <Typography>
+                  {/* {item.description} */}
+                  <ul>
+                    {/* <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li> */}
+                    <li>On sale for: ${item.current_sell_price_cents / 100}</li>
+                    {/* <li>Description: {item.description}</li> */}
+                    <li>Listed for sale: {String(item.for_sale_by_owner)}</li>
+                    {/* <li>hash:{item.hash}</li> */}
+                    {/* <li>MSRP_cents: {item.msrp_cents}</li> */}
+                    <li>Rarity: {item.rarity_id}</li>
+                    <li>Game: {item.subcategory_id}</li>
+
+                    <form onSubmit={(event) => onUpdateSellPrice(item.widget_id, event)}>
+                      <Grid className={classes.updateForm}>
+                        <Grid item xs={8}>
+                          <TextField
+                            variant="outlined"
+                            fullWidth
+                            label="Update Price ($)"
+                            onChange={onSetSellPrice}
+                            placeholder={String(item.current_sell_price_cents / 100)}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Button type="submit" size="small" variant="contained" color="primary" className={classes.submit}>
+                        Update
+                      </Button>
+                    </form>
+
+                  </ul>
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         </div>
       );
     });
@@ -184,25 +278,70 @@ export default function Collection(){
   
   return(
     <div>
-      <h2>User: {collection.userProfile.email}</h2>
+      <CssBaseline />
+      <main className={classes.main}>
+        <div className={classes.container}>
+          <Typography variant="body2" align="center" color="textSecondary">
+            Viewing
+          </Typography>
 
-      <form onSubmit={onSubmit}>
-        <label htmlFor="nameInput">Collection Name: </label>
-        <input type="text" className="form-control" id="nameInput" onChange={setCollectionName} value={collection.collectionName}/>
-        <br></br>
-        <label htmlFor="descInput">Collection Description: </label>
-        <input type="text" className="form-control" id="descInput" onChange={setCollectionDesc} value={collection.collectionDesc}/>
+          <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
+            {collection.userProfile.email}
+          </Typography>
+        </div>
 
-        <h3>Select widget(s) below to add to this collection</h3>
-        <ul>
-          {displayWidgets}
-        </ul>
-        <button type="submit" className="submit">Submit</button>
-      </form>
+        <div className={classes.container}>
+          <Container className={classes.formGrid}>
+            <form onSubmit={onSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  <TextField
+                    name="nameInput"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="nameInput"
+                    label="Collection Name"
+                    onChange={setCollectionName}
+                    value={collection.collectionName}
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <TextField
+                    name="descInput"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="descInput"
+                    label="Description"
+                    onChange={setCollectionDesc}
+                    value={collection.collectionDesc}
+                  />
+                </Grid>
+              </Grid>
+              <h3>Add or remove from this collection</h3>
+              <ul>
+                {displayWidgets}
+              </ul>
+              <Button type="submit" size="medium" variant="contained" color="primary" className={classes.submit}>
+                Save Changes
+              </Button>
+            </form>
+          </Container>
+        </div>
 
-      <h3>Widgets:</h3>
-      {displayCollections}
-      {(!displayCollections || displayCollections.length === 0) && <h4>This collection does not have any widgets yet</h4>}
+        <div className={classes.container}>
+          <Container className={classes.cardGrid} /* maxWidth="md" */>
+            <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+              In this collection:
+            </Typography>
+            <Grid className={classes.grid} /* container */ spacing={3}>
+              {displayCollections}
+              {(!displayCollections || displayCollections.length === 0) && <h4>This collection does not have any widgets yet</h4>}
+            </Grid>
+          </Container>
+        </div>
+      </main>
     </div>
   );
 }

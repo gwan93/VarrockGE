@@ -18,7 +18,11 @@ export default function User(){
       border: 'rgb(224, 224, 224) 2px solid',
       borderRadius: '5px',
       width: "960px",
-      margin: '8px 0 8px 0'
+      margin: '8px 0 8px 0',
+      transition: 'box-shadow .1s',
+      "&:hover": {
+        boxShadow: '0 0 11px rgba(33,33,33,.2)'
+      }
     },
     button: {
       marginTop: '40px',
@@ -28,15 +32,20 @@ export default function User(){
       // textDecoration: 'inherit'
     },
     cardGrid: {
-      padding: '20px 10px 10px 0',
+      padding: '20px 10px 10px 10px',
       border: 'rgb(224, 224, 224) 2px solid',
-      borderRadius: '5px'
+      borderRadius: '5px',
+      marginBottom: '20px'
     },
     card: {
       height: '100%',
       display: 'flex',
       flexDirection: 'column',
-      padding: '5px 5px 5px 5px'
+      padding: '5px 5px 5px 5px',
+      transition: 'box-shadow .1s',
+      "&:hover": {
+        boxShadow: '0 0 11px rgba(33,33,33,.2)'
+      }
     },
     cardMedia: {
       display: 'flex',
@@ -101,9 +110,9 @@ export default function User(){
   const displayWidgets = userProfile.userWidgets.map(widget => {
     return(
       <Grid item key={widget.id} xs={12} sm={6} md={4}>
-        <Card className={classes.card}>
+        <Card className={classes.card} variant="outlined">
           <CardMedia className={classes.cardMedia}>
-            <img src={widget.imgurl} width="298" alt=""/>
+            <img src={widget.imgurl} width="280" alt=""/>
           </CardMedia>
           <CardContent>
             <Typography gutterBottom variant="h5">
@@ -143,6 +152,7 @@ export default function User(){
           </Container>
           
         </div>
+
         <div className={classes.container}>
           <Container>
             <div align="center">
@@ -155,14 +165,17 @@ export default function User(){
           </Container>
         </div>
 
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-            {userProfile.email}'s cards
-          </Typography>
-          <Grid container spacing={3}>
-            {displayWidgets}
-          </Grid>
-        </Container>
+        <div className={classes.container}>
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+              {userProfile.email}'s cards
+            </Typography>
+            <Grid container spacing={3}>
+              {displayWidgets}
+            </Grid>
+          </Container>
+        </div>
+
       </main>
     </div>
   );
