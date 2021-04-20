@@ -3,14 +3,43 @@ import { Link, Route, Switch } from "react-router-dom";
 import Widget from "./widget";
 import { authContext } from "../AuthProvider";
 import axios from 'axios';
+import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container, TextField } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6)
+  },
+  button: {
+    marginTop: '40px',
+    marginBottom: '40px'
+  },
+  cardGrid: {
+    padding: '20px 0'
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  cardMedia: {
+    // paddingTop: '56.25%' // 16:9
+  },
+  cardContent: {
+    flexGrow: 1
+  }
+}));
+
 
 export default function Widgets() {
+  const classes = useStyles();
   const { state } = useContext(authContext);
   const [ filters, setFilters ] = useState({
     filterList: [],
     activeFilters: []
   });
-  // console.log('state', state)
+  console.log('state', state.widgets)
   // console.log('filters', filters)
 
   useEffect(() => {
@@ -118,28 +147,88 @@ export default function Widgets() {
     return widgetList;
   };
 
+  const displayWidgets = state.widgets.map(widget => {
+    console.log(widget.description)
   return (
-    <div>
-      <h2>These are all of our Widgets!</h2>
+  
+  <Grid item key={widget.id} xs={12} sm={6} md={4}>
+    <Card className={classes.card}>
+      <CardMedia className={classes.cardMedia} title="Image title">
+        <img src={widget.imgurl} width="298"/>
+      </CardMedia>
+      <CardContent>
+        <Typography gutterBottom variant="h5">
+          {widget.name}
+        </Typography>
+        <Typography>
+          WidgetID {widget.id}: {widget.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary">View</Button>
+        <Button size="small" color="primary"><Link to={`/widgets/${widget.id}`}>Clickme</Link></Button>
+        <Button size="small" color="primary">Edit</Button>
+      </CardActions>
+    </Card>
+  </Grid>
+)
+});
 
-      <div>Show all Cards</div>
-      <input 
-        id="myInput"
-        type="checkbox"
-        onChange={() => onFilterChange("ALL")}
-        checked={filters.activeFilters.length === filters.filterList.length}
-      />
-      <label htmlFor="myInput">All</label>
+return (
+  <div>
+     <CssBaseline />
+      <main>
+        <div className={classes.container}>
+          <Container>
+            <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
+            NFT Marketplace
+            </Typography>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                id="myInput"
+                type="checkbox"
+                onChange={() => onFilterChange("ALL")}
+                checked={filters.activeFilters.length === filters.filterList.length}
+        />
+        <label htmlFor="myInput">All</label>
       <div>{renderRarityFilters()}</div>
-
-      <nav>{renderWidgetList()}</nav>
-
       <Switch>
         <Route path="/widgets/:widgetID" component={Widget} />
         <Route path="/widgets">
           <h2>Please select a widget to view</h2>
         </Route>
       </Switch>
-    </div>
-  );
+      {/* <nav>{renderWidgetList()}</nav> */}
+        </Grid>
+        {displayWidgets}
+            </Container>
+            </div>
+            </main>
+            </div>
+
+  //      <h2>These are all of our Widgets!</h2>
+
+  // <div>Show all Cards</div>
+  //   <input 
+  //       id="myInput"
+  //       type="checkbox"
+  //       onChange={() => onFilterChange("ALL")}
+  //       checked={filters.activeFilters.length === filters.filterList.length}
+  //     />
+  //     <label htmlFor="myInput">All</label>
+  //     <div>{renderRarityFilters()}</div>
+
+  //     <nav>{renderWidgetList()}</nav>
+
+  //     <Switch>
+  //       <Route path="/widgets/:widgetID" component={Widget} />
+  //       <Route path="/widgets">
+  //         <h2>Please select a widget to view</h2>
+  //       </Route>
+  //     </Switch>
+  //     {displayWidgets}
+  //   </div> 
+  )
 };
