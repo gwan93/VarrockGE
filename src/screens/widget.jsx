@@ -12,26 +12,51 @@ import {
   CardMedia,
   CssBaseline,
   Grid,
-  Container
+  Container,
 } from "@material-ui/core";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
-   
   },
-  card: {
+  historyCard: {
     flexDirection: "column",
   },
- 
+  historyContainer: {
+    height: '35vh',
+    overflowY: "scroll",
+    margin: 0,
+    padding: 0,
+    listStyle: "none",
+    '&::-webkit-scrollbar': {
+      width: '0.3em'
+    },
+    '&::-webkit-scrollbar-track': {
+      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(33,33,33,.1)',
+    }
+  },
+  card: {
+    transition: 'box-shadow .1s',
+    "&:hover": {
+      boxShadow: '0 0 11px rgba(33,33,33,.2)'
+    }
+  },
+  title: {
+    margin: '25px 0 50px 0'
+  },
   cardContent: {
     flexGrow: 0.5,
   },
   history: {
     marginLeft: "1.5em",
-    marginTop: "2em",
+    marginTop: "0em",
     display: "flex",
   
     justifyContent: "center",
@@ -39,7 +64,13 @@ const useStyles = makeStyles((theme) => ({
 
   close: {
     flexGrow: 1,
-  }
+  },
+  main: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    topMargin: '2em'
+  },
 }));
 
 export default function Widget(props) {
@@ -57,7 +88,7 @@ export default function Widget(props) {
     axios.get(`/widgets/${widgetID}`).then((all) => {
       const [detailsResponse, historyResponse] = all.data;
       // Order the history objects by id (oldest first, newest last)
-      const sortedResponseData = historyResponse.sort((a, b) => a.id - b.id);
+      const sortedResponseData = historyResponse.sort((a, b) => b.id - a.id);
       setWidget((prev) => ({
         ...prev,
         details: detailsResponse,
@@ -75,67 +106,79 @@ export default function Widget(props) {
       itemsInCart: currentCart,
     }));
   };
+  
 
-  const displayWidgetHistory = widget.history.map((historyData) => {
+  const displayWidgetHistory = widget.history.map((historyData, index) => {
+    // console.log('historyData and index', historyData, index);
     return (
-      <ul key={historyData.id}>
-        <Grid md={6} className={classes.card}>
-        <Card >
-          Date Purchased: 
-          <p></p>
-          {`${new Date(historyData.date_purchased.toString())}`}
-        <p></p>
-          By: {historyData.email} (userID: {historyData.id})
-        <p></p>
-        Bought For: ${historyData.bought_for_price_cents / 100}
-        </Card>
-        </Grid>
-      </ul>
+      <div>
+        <ul key={historyData.id}>
+          <Grid md={12} className={classes.historyCard}>
+            <Card className={classes.card} variant="outlined">
+              <Typography variant="body1" color="textPrimary">
+                {/* By:  */}{historyData.email} {/* (TransactionID: {historyData.id}) */}
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                {/* Purchased For:  */}${historyData.bought_for_price_cents / 100}
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                {`${new Date(historyData.date_purchased).toUTCString()}`}
+              </Typography>
+            </Card>
+          </Grid>
+        </ul>
+      </div>
     );
   });
 
   return (
     <div align="center">
-      <h3 align="center">NFT ID #{widgetID}</h3>
       <CssBaseline />
-      
-      <Grid item key={widgetID} xs={12} sm={6} md={3}>
-        <Card >
-          <CardMedia title="Image title">
-            <img src={widget.details.imgurl} width="306" alt=""/>
-          </CardMedia>
-          <CardContent>
-            <Typography gutterBottom variant="h5">
-              {widget.details.name}
-            </Typography>
-            <Typography>
-              NFT # {widget.details.id}: {widget.details.description}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button className={classes.cardContent} size="small" color="primary" onClick={addToCart}>
-              Add to Cart
-            </Button>
-            <Button className={classes.close}
-              size="small"
-              color="primary"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to="/widgets"
-            >
-              Close
-            </Button>
-          </CardActions>
-        </Card>
+      <Typography variant="h2" className={classes.title}>
+        {widget.details.name}
+      </Typography>
+
+      <main className={classes.main}>
+        <Grid item key={widgetID} xs={12} sm={6} /* md={3} */>
+          <Card className={classes.card} variant="outlined">
+            <CardMedia title="Image title">
+              <img src={widget.details.imgurl} width="306" alt=""/>
+            </CardMedia>
+            <CardContent>
+              <Typography gutterBottom variant="h5">
+                {widget.details.name}
+              </Typography>
+              <Typography>
+                NFT # {widget.details.id}: {widget.details.description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button className={classes.cardContent} size="small" color="primary" onClick={addToCart}>
+                Add to Cart
+              </Button>
+              <Button className={classes.close}
+                size="small"
+                color="primary"
+                style={{ textDecoration: "none" }}
+                component={Link}
+                to="/widgets"
+              >
+                Close
+              </Button>
+            </CardActions>
+          </Card>
         </Grid>
-        <Container>
+
+        <Grid className={classes.historyContainer} item xs={12} sm={6} /* md={3} */>
           <Typography className={classes.history} variant="h5">
-        NFT Purchase History
-        </Typography>
-        {displayWidgetHistory}
-     </Container>
-    
+            Purchase History
+          </Typography>
+          <Container>
+            {displayWidgetHistory}
+          </Container>
+        </Grid>
+  
+      </main>
     </div>
-    
   );
 }
