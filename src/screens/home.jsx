@@ -4,7 +4,7 @@ import { CssBaseline, Paper, TextField, Button, makeStyles, Grid, Typography } f
 
 const useStyles = makeStyles((theme) => ({
   paperContainer:{
-    height: 1070,
+    height: "100vh",
     backgroundImage: `url(https://i.imgur.com/dj04uE0.jpg)`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",

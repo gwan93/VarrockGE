@@ -5,7 +5,7 @@ import { CssBaseline, Paper, TextField, Button, makeStyles, Grid, Typography, Ca
 
 const useStyles = makeStyles((theme) => ({
   container: {
-  marginTop: theme.spacing(35),
+  // marginTop: theme.spacing(35),
    height: "100%",
    cardGrid: {
     padding: '20px 0'
@@ -31,13 +31,20 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 10
   },
   paperContainer:{
-    height: 1070,
+    // height: 1070,
+    // backgroundImage: `url(https://scontent.fyvr1-1.fna.fbcdn.net/v/t1.15752-9/175096321_164067965601096_8611238032525775896_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=ae9488&_nc_ohc=W55_8YwHjK4AX8KHyKR&_nc_ht=scontent.fyvr1-1.fna&oh=f9f7e99da3812e5c3d667f5b0b242cc1&oe=60A2BAD4)`,
+    // backgroundRepeat: "no-repeat",
+    // backgroundPosition: "center center",
+    // backgroundAttachment: "fixed",
+    // backgroundSize: "cover",
+    // backgroundColor: "#cc0000",
+    // display:"flex"
+    height: `100vh`,
     backgroundImage: `url(https://scontent.fyvr1-1.fna.fbcdn.net/v/t1.15752-9/175096321_164067965601096_8611238032525775896_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=ae9488&_nc_ohc=W55_8YwHjK4AX8KHyKR&_nc_ht=scontent.fyvr1-1.fna&oh=f9f7e99da3812e5c3d667f5b0b242cc1&oe=60A2BAD4)`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
-    backgroundAttachment: "fixed",
     backgroundSize: "cover",
-    display:"flex"
+    background: "blue"
   }
   },
 }));
@@ -68,11 +75,20 @@ export default function Login({setNavbar}) {
   };
 
   return (
+    <div className={classes.container} maxWidth="xs">
+    <CssBaseline>
       <Paper
+      style={{
+        height: `100vh`,
+        width:`100%`,
+        background: `url(https://i.imgur.com/dj04uE0.jpg)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        backgroundSize: "cover",
+        // background: "blue"
+      }}
       className={classes.paperContainer}
       >
-    <div className={classes.container} maxWidth="xs">
-        <CssBaseline>
       <Grid
       container
       spacing={5}
@@ -81,7 +97,9 @@ export default function Login({setNavbar}) {
       alignItems={'center'}
       direction={'row'}
       alignContent={'stretch'}
-      >    
+      >   
+      <div               
+      style={{marginTop:'30vh'}}>
               <Grid
               item
               // alignItems={"flex-end"}
@@ -102,9 +120,10 @@ export default function Login({setNavbar}) {
               alignContent={'space-between'}  
               spacing={2}
               >
-            <Grid item>
+            <Grid item
+            >
             <Typography
-              variant={'h4'}
+              variant={'h3'}
               align={'center'}
               color={'primary'}
               >
@@ -116,12 +135,13 @@ export default function Login({setNavbar}) {
             >  
             <TextField 
             id="emailInput"
-            variant={"outlined"}
+            variant={"filled"}
+            required={"true"}
             label={"Email Address"}
             value={email}
             onChange={onEmailChange}
             placeholder={"email"}
-            autofocus
+            autofocus={"true"}
             ></TextField>
             </Grid>
           <Grid
@@ -129,14 +149,15 @@ export default function Login({setNavbar}) {
           >
           <TextField 
             id="passwordInput"
-            variant={"outlined"}
+            variant={"filled"}
+            required={"true"}
             name={"password"}
             type={"password"}
             label={"Password"}
             value={password}
             onChange={onPasswordChange}
             placeholder={"password"}
-            autofocus
+            autofocus={"true"}
             ></TextField>
           </Grid>
         <Grid
@@ -156,9 +177,10 @@ export default function Login({setNavbar}) {
         
       </Grid>
       </form>
+      </div>
         </Grid>
-        </CssBaseline>
-    </div>
     </Paper>
+    </CssBaseline>
+    </div>
   );
 }

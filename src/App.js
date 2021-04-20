@@ -17,21 +17,21 @@ export default function App() {
 
   return (
 
-      <main>
-      <Router history = {history}>
-      <Switch>
-          <Route path="/login"><Login/> </Route>
-          <Route exact path="/"component={Home}></Route>
-        <div>
-      <Navigation />
-          <Route path="/admin" component={Admin}></Route>
-          <Route path="/widgets" component={Widgets}></Route>
-          <Route exact path="/user/:id" component={User}></Route>
-          <Route exact path="/user/:id/collections" component={Collections}></Route>
-          <Route path="/user/:id/collections/:collectionID" component={Collection}></Route>
-          <Route path="/cart" component={Cart}></Route>
+    <main>
+      <Router history={history}>
+        <Switch>
+          <Route path="/login" component={Login}></Route>
+          <Route exact path="/" component={Home}></Route>
+          <div>
+            <Navigation />
+            <Route path="/admin" component={Admin}></Route>
+            <Route path="/widgets" component={Widgets}></Route>
+            <Route exact path="/user/:id" component={User}></Route>
+            <Route exact path="/user/:id/collections" component={Collections}></Route>
+            <Route path="/user/:id/collections/:collectionID" component={Collection}></Route>
+            <Route path="/cart" component={Cart}></Route>
           </div>
-          </Switch>
+        </Switch>
       </Router>
     </main>
   )
