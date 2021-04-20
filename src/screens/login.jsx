@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useContext } from 'react';
 import { authContext } from '../AuthProvider';
-import { CssBaseline, TextField, Button, makeStyles, Grid, Typography, Card, CardActions, CardMedia } from '@material-ui/core';
+import { CssBaseline, Paper, TextField, Button, makeStyles, Grid, Typography, Card, CardActions, CardMedia } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,7 +30,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     flexGrow: 10
   },
-
+  paperContainer:{
+    height: 1070,
+    backgroundImage: `url(https://scontent.fyvr1-1.fna.fbcdn.net/v/t1.15752-9/175096321_164067965601096_8611238032525775896_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=ae9488&_nc_ohc=W55_8YwHjK4AX8KHyKR&_nc_ht=scontent.fyvr1-1.fna&oh=f9f7e99da3812e5c3d667f5b0b242cc1&oe=60A2BAD4)`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    backgroundAttachment: "fixed",
+    backgroundSize: "cover",
+    display:"flex"
+  }
   },
 }));
 
@@ -61,7 +69,7 @@ export default function Login({setNavbar}) {
 
   return (
     <div className={classes.container} maxWidth="xs">
-      <CssBaseline>
+        <CssBaseline>
       <Grid
       container
       spacing={5}
@@ -70,26 +78,7 @@ export default function Login({setNavbar}) {
       alignItems={'center'}
       direction={'row'}
       alignContent={'stretch'}
-      // container
-      // xs={'9'}
-      // wrap={'wrap'}
-      // direction={'row'}
-      // spacing={0, 0, 3, 0}
-      // justify={'center'}
-      // alignContent={'center'}
-      // alignItems={'stretch'}
-      // spacing={0}
-      // justify={"space-between"}
-      // wrap={'wrap'}
-      // className={classes.container}
       >    
-       {/* <Grid container
-       spacing={3}
-       justify={'space-evenly'}
-       alignItems={'flex-end'}
-       direction={'column'}
-       alignContent={'flex-end'}
-              > */}
               <Grid
               item
               // alignItems={"flex-end"}
@@ -124,48 +113,29 @@ export default function Login({setNavbar}) {
             >  
             <TextField 
             id="emailInput"
-            variant={"filled"}
+            variant={"outlined"}
             label={"Email Address"}
             value={email}
             onChange={onEmailChange}
             placeholder={"email"}
+            autofocus
             ></TextField>
             </Grid>
-            {/* <label htmlFor="emailInput">Email address</label>
-            <input
-            type="email"
-            name="login"
-            className="form-control"
-            id="emailInput"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            value={email}
-            onChange={onEmailChange}
-          ></input> */}
           <Grid
           item
           >
           <TextField 
             id="passwordInput"
-            variant={"filled"}
+            variant={"outlined"}
             name={"password"}
             type={"password"}
             label={"Password"}
             value={password}
             onChange={onPasswordChange}
             placeholder={"password"}
+            autofocus
             ></TextField>
           </Grid>
-            {/* <label htmlFor="passwordInput">Password</label>
-            <input
-            type="password"
-            name="password"
-            className="form-control"
-            id="passwordInput"
-            placeholder="Password"
-            value={password}
-            onChange={onPasswordChange}
-          ></input> */}
         <Grid
         item
         >
