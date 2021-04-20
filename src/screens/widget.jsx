@@ -1,29 +1,68 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { authContext } from "../AuthProvider";
+import {
+  Typography,
+  Card,
+  Button,
+  CardActions,
+  CardContent,
+  CardMedia,
+  CssBaseline,
+  Grid,
+  Container
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+   
+  },
+  card: {
+    flexDirection: "column",
+  },
+ 
+  cardContent: {
+    flexGrow: 0.5,
+  },
+  history: {
+    marginLeft: "1.5em",
+    marginTop: "2em",
+    display: "flex",
+  
+    justifyContent: "center",
+  },
+
+  close: {
+    flexGrow: 1,
+  }
+}));
 
 export default function Widget(props) {
+  const classes = useStyles();
   const { state, setState } = useContext(authContext);
   const { widgetID } = useParams();
-  const [ widget, setWidget ] = useState({
+  const [widget, setWidget] = useState({
     details: {},
-    history: []
-  })
+    history: [],
+  });
 
   // Axios request using widgetID from params to get
   // widget details and widget history
   useEffect(() => {
-    axios.get(`/widgets/${widgetID}`)
-    .then(all => {
-      const [ detailsResponse, historyResponse ] = all.data;
+    axios.get(`/widgets/${widgetID}`).then((all) => {
+      const [detailsResponse, historyResponse] = all.data;
       // Order the history objects by id (oldest first, newest last)
       const sortedResponseData = historyResponse.sort((a, b) => a.id - b.id);
-      setWidget(prev => ({
-        ...prev, 
+      setWidget((prev) => ({
+        ...prev,
         details: detailsResponse,
-        history: sortedResponseData
-      }))
+        history: sortedResponseData,
+      }));
     });
   }, [widgetID]);
 
@@ -37,38 +76,66 @@ export default function Widget(props) {
     }));
   };
 
-  const displayWidgetHistory = widget.history.map(historyData => {
+  const displayWidgetHistory = widget.history.map((historyData) => {
     return (
       <ul key={historyData.id}>
-        <li>Date Purchased: {`${new Date(historyData.date_purchased.toString())}`}</li>
-        <li>By: {historyData.email} (userID: {historyData.id})</li>
-        <li>Bought For: ${historyData.bought_for_price_cents / 100}</li>
+        <Grid md={6} className={classes.card}>
+        <Card >
+          Date Purchased: 
+          <p></p>
+          {`${new Date(historyData.date_purchased.toString())}`}
+        <p></p>
+          By: {historyData.email} (userID: {historyData.id})
+        <p></p>
+        Bought For: ${historyData.bought_for_price_cents / 100}
+        </Card>
+        </Grid>
       </ul>
     );
   });
 
   return (
-    <div>
-      <h3>Widget ID is #{widgetID}</h3>
-      <ul>
-        <li>Name: {widget.details.name}</li>
-        <li>imgurl: {widget.details.imgurl}</li>
-        <li>Description: {widget.details.description}</li>
-        <li>id: {widget.details.id}</li>
-        <li>hash: {widget.details.hash}</li>
-        <li>MSRP: {widget.details.msrp_cents}</li>
-        <li>Rarity_id:{widget.details.rarity_id}</li>
-        <li>Subcategory_id: {widget.details.subcategory_id}</li>
-        <li>For_sale_by_owner: {widget.details.for_sale_by_owner}</li>
-        <li>Current_sell_price_cents: {widget.details.current_sell_price_cents}</li>
-      </ul>
-
-      <button onClick={addToCart}>Add to Cart</button>
-
-      <div>
-        <h3>History</h3>
-          {displayWidgetHistory}
-      </div>
+    <div align="center">
+      <h3 align="center">NFT ID #{widgetID}</h3>
+      <CssBaseline />
+      
+      <Grid item key={widgetID} xs={12} sm={6} md={3}>
+        <Card >
+          <CardMedia title="Image title">
+            <img src={widget.details.imgurl} width="306" />
+          </CardMedia>
+          <CardContent>
+            <Typography gutterBottom variant="h5">
+              {widget.details.name}
+            </Typography>
+            <Typography>
+              NFT # {widget.details.id}: {widget.details.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button className={classes.cardContent} size="small" color="primary" onClick={addToCart}>
+              Add to Cart
+            </Button>
+            <Button className={classes.close}
+              size="small"
+              color="primary"
+              style={{ textDecoration: "none" }}
+              component={Link}
+              to="/widgets"
+            >
+              Close
+            </Button>
+          </CardActions>
+        </Card>
+        </Grid>
+        <Container>
+          <Typography className={classes.history} variant="h5">
+        NFT Purchase History
+        </Typography>
+        {displayWidgetHistory}
+     </Container>
+    
     </div>
+    
   );
 }
