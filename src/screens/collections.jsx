@@ -1,11 +1,67 @@
 import axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { makeStyles, Typography, Card, CardActionArea, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
 
 export default function Collections(){
+  const useStyles = makeStyles((theme) => ({
+    main:{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    container: {
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(6, 0, 6),
+      border: 'rgb(224, 224, 224) 2px solid',
+      borderRadius: '5px',
+      width: "960px",
+      margin: '8px 0 8px 0',
+      transition: 'box-shadow .1s',
+      "&:hover": {
+        boxShadow: '0 0 11px rgba(33,33,33,.2)'
+      }
+    },
+    button: {
+      marginTop: '40px',
+    },
+    textLink: {
+      color: 'inherit',
+      textDecoration: 'inherit'
+    },
+    cardGrid: {
+      padding: '0px 10px 10px 10px',
+      borderRadius: '5px',
+      width: '960px',
+    },
+    collections: {
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      // border: 'red 1px solid'
+    },
+    card: {
+      height: '100%',
+      width: '455px',
+      margin: '10px 5px 10px 5px',
+      // border: 'blue 1px solid',
+      transition: 'box-shadow .1s',
+      "&:hover": {
+        boxShadow: '0 0 11px rgba(33,33,33,.2)'
+      }
+    },
+    cardContent: {
+      flexGrow: 1
+    }
+  }));
+  const classes = useStyles();
   
   const userID = useParams().id;
   const [ userProfile, setUserProfile ] = useState({});
+
+
+  
   
   // Retrieve collections from user
   // update userProfile to an object that includes the user's email,
@@ -51,12 +107,20 @@ export default function Collections(){
   let displayCollections;
   if (userProfile.collections) {
     displayCollections = userProfile.collections.map(collection => {
-      console.log('!@@#$', collection)
+      // console.log('!@@#$', collection)
   
       return (
         <div>
-          <Link to={`/user/${userID}/collections/${collection.collectionID}`}>
-            <h2>{collection.collectionName} (collectionID: {collection.collectionID})</h2>
+          <Link className={classes.textLink} to={`/user/${userID}/collections/${collection.collectionID}`}>
+            <Grid item md={6}>
+              <Card className={classes.card} variant="outlined">
+                <CardContent>
+                  <Typography component="h2" variant="h5" align="center">
+                    {collection.collectionName}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           </Link>
         </div>
       );
@@ -65,31 +129,42 @@ export default function Collections(){
   
   return(
     <div>
-      <h2>User: {userProfile.email}</h2>
-      <h3>Collections:</h3>
-      {displayCollections}
-      {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
-      <Link to={`/user/${userProfile.id}/collections/new`}>New Collection</Link>
+        <CssBaseline />
+        <main className={classes.main}>
+          <div className={classes.container}>
+            <Typography variant="body2" align="center" color="textSecondary">
+              Viewing
+            </Typography>
+
+            <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
+              {userProfile.email}
+            </Typography>
+          </div>
+
+          <div className={classes.container}>
+            <Container>
+              <div align="center">
+                  <Link className={classes.textLink} to={`/user/${userProfile.id}/collections/new`}>
+                    <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+                      Create A New Collection
+                    </Typography>
+                  </Link>
+              </div>
+            </Container>
+          </div>
+
+          <div className={classes.container}>
+            <Container className={classes.cardGrid}>
+              <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+                {userProfile.email}'s collections
+              </Typography>
+              <Grid className={classes.collections}>
+                {displayCollections}
+                {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
+              </Grid>
+            </Container>
+          </div>
+        </main>
     </div>
   );
-
 }
-
-
-// /user/2
-// Email
-// Wallet balance
-// A link that goes to collections -> /user/2/collections
-// Show all the widgets a user owns here
-
-// /user/2/collections
-// Dont even show widgets here
-// Pokemon collections (collectionID) -> /user/2/collections/1
-// Yugioh collections (collectionID) -> /user/2/collections/1
-// New Collection -> /user/2/collections/new
-
-// /user/2/collections/new AND /user/2/collections/1
-// Show all the widgets a user owns here
-// A form to change list name
-// Form to change list desc
-// Button to submit
