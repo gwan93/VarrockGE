@@ -11,7 +11,8 @@ export default function Collection(){
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginTop: '75px'
     },
     container: {
       backgroundColor: theme.palette.background.paper,

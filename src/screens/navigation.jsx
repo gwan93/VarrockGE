@@ -8,7 +8,10 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "black"
+    backgroundColor: "black",
+    position: 'fixed',
+    top: '0',
+    height: '60px'
   },
 
   title: {

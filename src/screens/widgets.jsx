@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-
   cardContent: {
     flexGrow: 1,
   },
@@ -51,18 +50,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "space-evenly"
     },
-
-    checkbackground: {
-      backgroundColor: "black",
-    },
-
+  checkbackground: {
+    backgroundColor: "black",
+  },
+  main: {
+    marginTop: '75px'
+  },
   view: {
     flexGrow: 1,
     alignSelf: "center",
     alignItems: "last baseline",
-    
   }
-
 }));
 
 export default function Widgets() {
@@ -215,7 +213,7 @@ export default function Widgets() {
   return (
     <div>
       <CssBaseline />
-      <main>
+      <main className={classes.main}>
         <div className={classes.container}>
           <Container>
             <Typography
