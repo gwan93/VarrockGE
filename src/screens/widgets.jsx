@@ -3,7 +3,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import Widget from "./widget";
 import { authContext } from "../AuthProvider";
 import axios from 'axios';
-import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container, TextField } from '@material-ui/core';
+import { Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container, TextField, Checkbox } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,16 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     flexGrow: 1
-  }
+  },
+  check: {
+    flexGrow: 1,
+    marginTop: "2em",
+     display: "flex",
+     flexDirection: "row",
+    justifyContent: "space-evenly"
+    
+    
+   },
 }));
 
 
@@ -183,32 +192,44 @@ return (
             <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
             NFT Marketplace
             </Typography>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
+        <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+        Please select a widget to view
+            </Typography>
+            
+            {/* </Grid> */}
+            </Container>
+            </div>
+            <div align="left" direction="row">
+            <Container>
+
+        <Grid className={classes.check}>
+        <input
+               
                 id="myInput"
                 type="checkbox"
                 onChange={() => onFilterChange("ALL")}
                 checked={filters.activeFilters.length === filters.filterList.length}
                 
-        />
-        <Typography
-         htmlFor="myInput">
-           All
-        </Typography>
-      <div>{renderRarityFilters()}</div>
+        /> 
+        All
+            {renderRarityFilters()}
+            </Grid>
       <Switch>
         <Route path="/widgets/:widgetID" component={Widget} />
         <Route path="/widgets">
-          <h2>Please select a widget to view</h2>
+          
         </Route>
       </Switch>
       {/* <nav>{renderWidgetList()}</nav> */}
-        </Grid>
-        {displayWidgets}
+        
+        
             </Container>
             </div>
+            <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={4}>
+            {displayWidgets}
+          </Grid>
+        </Container>
             </main>
             </div>
 
