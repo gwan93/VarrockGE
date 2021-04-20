@@ -68,6 +68,9 @@ export default function Login({setNavbar}) {
   };
 
   return (
+      <Paper
+      className={classes.paperContainer}
+      >
     <div className={classes.container} maxWidth="xs">
         <CssBaseline>
       <Grid
@@ -83,7 +86,7 @@ export default function Login({setNavbar}) {
               item
               // alignItems={"flex-end"}
               >
-      <Card className={classes.card}>
+              <Card className={classes.card}>
           <CardMedia className={classes.cardMedia} title="Image title">
             <img src={'https://64.media.tumblr.com/64eab0859cf319d597b50a5e15f2b609/6397400c1aa19fe4-b3/s1280x1920/5158b52dcf14390075830667ec15066738ce9277.png'} width="180"/>
           </CardMedia>
@@ -156,5 +159,6 @@ export default function Login({setNavbar}) {
         </Grid>
         </CssBaseline>
     </div>
+    </Paper>
   );
 }

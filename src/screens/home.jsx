@@ -5,7 +5,7 @@ import { CssBaseline, Paper, TextField, Button, makeStyles, Grid, Typography } f
 const useStyles = makeStyles((theme) => ({
   paperContainer:{
     height: 1070,
-    backgroundImage: `url(https://scontent.fyvr1-1.fna.fbcdn.net/v/t1.15752-9/175096321_164067965601096_8611238032525775896_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=ae9488&_nc_ohc=W55_8YwHjK4AX8KHyKR&_nc_ht=scontent.fyvr1-1.fna&oh=f9f7e99da3812e5c3d667f5b0b242cc1&oe=60A2BAD4)`,
+    backgroundImage: `url(https://i.imgur.com/dj04uE0.jpg)`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     backgroundSize: "cover"
