@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { makeStyles, Typography, Card, CardActionArea, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+import { makeStyles, Typography, Card, CardContent, CssBaseline, Grid, Container } from '@material-ui/core';
 
 export default function Collections(){
   const useStyles = makeStyles((theme) => ({
@@ -73,7 +73,7 @@ export default function Collections(){
     ])
     .then(all => {
       const [userResponse, collectionsResponse] = all;
-      console.log('collectionsResponse', collectionsResponse)
+      // console.log('collectionsResponse', collectionsResponse)
       setUserProfile(prev => ({
         ...prev,
         id: userResponse.data.id,
@@ -83,7 +83,7 @@ export default function Collections(){
       const collectionPromises = collectionsResponse.data.map(aCollectionData => axios.get(`/user/1/collections/${aCollectionData.id}`));
       Promise.all(collectionPromises)
       .then(collectionPromisesResults => {
-        console.log('collectionPromisesResults', collectionPromisesResults)
+        // console.log('collectionPromisesResults', collectionPromisesResults)
         const stateCollections = [];
         for (const collectionPromiseResult of collectionPromisesResults) {
           if (collectionPromiseResult.data.length !== 0) {
@@ -110,7 +110,7 @@ export default function Collections(){
       // console.log('!@@#$', collection)
   
       return (
-        <div>
+        <div key={collection.collectionID}>
           <Link className={classes.textLink} to={`/user/${userID}/collections/${collection.collectionID}`}>
             <Grid item md={6}>
               <Card className={classes.card} variant="outlined">

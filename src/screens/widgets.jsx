@@ -163,7 +163,7 @@ export default function Widgets() {
           <Grid item key={widget.id} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             <CardMedia title="Image title">
-              <img src={widget.imgurl} width="298" />
+              <img src={widget.imgurl} width="298" alt="" />
             </CardMedia>
             <CardContent>
               <Typography gutterBottom variant="h5">
