@@ -52,7 +52,7 @@ export default function Navigation() {
     <div>
       <AppBar position="static" className={classes.root}>
         <Toolbar>
-        <img src="https://bit.ly/32K7Zs1" width="50" className={classes.image}>
+        <img src="https://i.imgur.com/hZMZGsi.jpg" width="50" className={classes.image}>
         </img>
           <Typography
             variant="h6"

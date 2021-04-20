@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
 
+  title: {
+    fontSize: "400%",
+    fontFamily: "ui-rounded",
+  },
+
   cardGrid: {
     padding: "40px 0",
   },
@@ -35,12 +40,21 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   check: {
-    // flexGrow: 1,
-    marginTop: "2em",
+    fontSize: "Large",
+    fontStyle: "italic",
+    fontFamily: "ui-rounded",
+    backgroundColor: "black",
+    color: "white",
+    marginTop: "3em",
+    marginBottom: "3em",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
-  },
+    justifyContent: "space-evenly"
+    },
+
+    checkbackground: {
+      backgroundColor: "black",
+    },
 
   view: {
     flexGrow: 1,
@@ -79,13 +93,19 @@ export default function Widgets() {
     const filterList = filters.filterList.map((filter) => {
       return (
         <div key={filter.name}>
+          <Grid>
+            {/* <Card> */}
           <input
             id={filter.name}
             type="checkbox"
             checked={filters.activeFilters.includes(filter.name)}
             onChange={() => onFilterChange(filter.name)} // eg. filter.name = "Pokemon"
           />
-          <label htmlFor={filter.name}>{filter.name}</label>
+          <span>
+          <label htmlFor={filter.name}>  {filter.name}</label>
+          </span>
+          {/* </Card> */}
+          </Grid>
         </div>
       );
     });
@@ -199,14 +219,46 @@ export default function Widgets() {
         <div className={classes.container}>
           <Container>
             <Typography
-              variant="h2"
+              className={classes.title}
               align="center"
               color="textPrimary"
               gutterBottom
             >
+              <div>
+              <img src="https://bit.ly/3tGL24E" width="200"></img>
+              </div>
               NFT Marketplace
             </Typography>
-            <Typography
+          </Container>
+        </div>
+        <div align="left" direction="row">
+          <Container>
+            <Card className={classes.checkbackground}>
+            <Grid className={classes.check}>
+              <div>
+              <input
+                id="myInput"
+                type="checkbox"
+                label="All"
+                onChange={() => onFilterChange("ALL")}
+                checked={
+                  filters.activeFilters.length === filters.filterList.length
+                }
+              />
+              <label htmlFor="myInput">All </label>
+              </div>
+              {renderRarityFilters()}
+          
+            </Grid>
+            </Card>
+            <Switch>
+              <Route path="/widgets/:widgetID" component={Widget} />
+              <Route path="/widgets"></Route>
+            </Switch>
+          </Container>
+        </div>
+        <p></p>
+        <Typography
               variant="h5"
               align="center"
               color="textPrimary"
@@ -214,28 +266,6 @@ export default function Widgets() {
             >
               Please select a widget to view
             </Typography>
-          </Container>
-        </div>
-        <div align="left" direction="row">
-          <Container>
-            <Grid className={classes.check}>
-              <input
-                id="myInput"
-                type="checkbox"
-                onChange={() => onFilterChange("ALL")}
-                checked={
-                  filters.activeFilters.length === filters.filterList.length
-                }
-              />
-              <label htmlFor="myInput">All</label>
-              {renderRarityFilters()}
-            </Grid>
-            <Switch>
-              <Route path="/widgets/:widgetID" component={Widget} />
-              <Route path="/widgets"></Route>
-            </Switch>
-          </Container>
-        </div>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {renderWidgetList()}
