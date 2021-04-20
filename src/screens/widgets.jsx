@@ -191,8 +191,12 @@ return (
                 type="checkbox"
                 onChange={() => onFilterChange("ALL")}
                 checked={filters.activeFilters.length === filters.filterList.length}
+                
         />
-        <label htmlFor="myInput">All</label>
+        <Typography
+         htmlFor="myInput">
+           All
+        </Typography>
       <div>{renderRarityFilters()}</div>
       <Switch>
         <Route path="/widgets/:widgetID" component={Widget} />
