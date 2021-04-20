@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
-import { makeStyles, Typography, Card, Button, CardActions, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+import { makeStyles, Typography, Card, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
 
 export default function User(){
   const useStyles = makeStyles((theme) => ({
