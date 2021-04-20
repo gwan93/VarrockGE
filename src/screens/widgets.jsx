@@ -21,31 +21,34 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
   },
-  button: {
-    marginTop: "40px",
-    marginBottom: "40px",
-  },
+
   cardGrid: {
-    padding: "20px 0",
+    padding: "40px 0",
   },
   card: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
   },
-  cardMedia: {
-    // paddingTop: '56.25%' // 16:9
-  },
+
   cardContent: {
     flexGrow: 1,
   },
   check: {
-    flexGrow: 1,
+    // flexGrow: 1,
     marginTop: "2em",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
+
+  view: {
+    flexGrow: 1,
+    alignSelf: "center",
+    alignItems: "last baseline",
+    
+  }
+
 }));
 
 export default function Widgets() {
@@ -159,7 +162,7 @@ export default function Widgets() {
         return (
           <Grid item key={widget.id} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
-            <CardMedia className={classes.cardMedia} title="Image title">
+            <CardMedia title="Image title">
               <img src={widget.imgurl} width="298" />
             </CardMedia>
             <CardContent>
@@ -167,18 +170,18 @@ export default function Widgets() {
                 {widget.name}
               </Typography>
               <Typography>
-                WidgetID {widget.id}: {widget.description}
+                NFT # {widget.id}: {widget.description}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button size="small" color="primary">
+            <CardActions className={classes.view}>
+              <Button 
+              size="small" 
+              color="primary"
+              style={{ textDecoration: "none" }}
+              component={Link}
+              to={`/widgets/${widget.id}`}
+              >
                 View
-              </Button>
-              <Button size="small" color="primary">
-                <Link to={`/widgets/${widget.id}`}>Clickme</Link>
-              </Button>
-              <Button size="small" color="primary">
-                Edit
               </Button>
             </CardActions>
           </Card>
@@ -231,7 +234,6 @@ export default function Widgets() {
               <Route path="/widgets/:widgetID" component={Widget} />
               <Route path="/widgets"></Route>
             </Switch>
-            {/* <nav>{renderWidgetList()}</nav> */}
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
