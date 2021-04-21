@@ -31,7 +31,7 @@ export default function Collection(){
     },
     textLink: {
       color: 'inherit',
-      textDecoration: 'inherit'
+      // textDecoration: 'inherit'
     },
     cardGrid: {
       padding: '0px 10px 10px 10px',
@@ -260,7 +260,7 @@ export default function Collection(){
                 <div>
                   {/* {item.description} */}
                   {/* <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li> */}
-                  <li>On sale for: ${(item.current_sell_price_cents / 100).toFixed(2)}</li>
+                  <li>Selling for: ${(item.current_sell_price_cents / 100).toFixed(2)}</li>
                   {/* <li>Description: {item.description}</li> */}
                   <li>Listed for sale: {String(item.for_sale_by_owner)}</li>
                   {/* <li>hash:{item.hash}</li> */}
@@ -339,7 +339,7 @@ export default function Collection(){
                 </Grid>
               </Grid>
               <Typography variant="h6" gutterBottom>
-                Add or remove cards from this collection
+                Add or remove NFTs from this collection
               </Typography>
                 {displayWidgets}
               <Button type="submit" size="medium" variant="contained" color="primary" className={classes.submit}>
@@ -352,7 +352,7 @@ export default function Collection(){
         <div className={classes.container}>
           <Container className={classes.cardGrid} /* maxWidth="md" */>
             <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-              In this collection:
+              NFTs in this collection
             </Typography>
             <Grid className={classes.grid} container spacing={3}>
               {displayCollections}

@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textLink: {
     color: 'inherit',
-    textDecoration: 'inherit'
+    // textDecoration: 'inherit'
   },
   view: {
     flexGrow: 1,
