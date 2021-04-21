@@ -14,13 +14,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
     display: 'flex',
-    // flexDirection: 'column'
-  },
-  cardMedia: {
-    // display:'flex',
-    // flexDirection: 'column',
-    height:'100%',
-    marginTop: '10px'
   },
   cardContent: {
     flexGrow: 1
@@ -31,22 +24,22 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 10,
   },
   paperContainer:{
-    // height: 1070,
-    // backgroundImage: `url(https://scontent.fyvr1-1.fna.fbcdn.net/v/t1.15752-9/175096321_164067965601096_8611238032525775896_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=ae9488&_nc_ohc=W55_8YwHjK4AX8KHyKR&_nc_ht=scontent.fyvr1-1.fna&oh=f9f7e99da3812e5c3d667f5b0b242cc1&oe=60A2BAD4)`,
-    // backgroundRepeat: "no-repeat",
-    // backgroundPosition: "center center",
-    // backgroundAttachment: "fixed",
-    // backgroundSize: "cover",
-    // backgroundColor: "#cc0000",
-    // display:"flex"
     height: `100vh`,
     backgroundImage: `url(https://scontent.fyvr1-1.fna.fbcdn.net/v/t1.15752-9/175096321_164067965601096_8611238032525775896_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=ae9488&_nc_ohc=W55_8YwHjK4AX8KHyKR&_nc_ht=scontent.fyvr1-1.fna&oh=f9f7e99da3812e5c3d667f5b0b242cc1&oe=60A2BAD4)`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     backgroundSize: "cover",
-    // background: "blue"
-  }
   },
+
+  },
+  submit: {
+    backgroundColor: "black",
+    "&:hover": {
+      backgroundColor: "#56144D",
+    }
+    },
+
+
 }));
 
 export default function Login({setNavbar}) {
@@ -85,7 +78,6 @@ export default function Login({setNavbar}) {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
         backgroundSize: "cover",
-        // background: "blue"
       }}
       className={classes.paperContainer}
       >
@@ -99,15 +91,11 @@ export default function Login({setNavbar}) {
       alignContent={'stretch'}
       >   
       <div               
-      style={{marginTop:'8vh'}}>
+      style={{marginTop:'4vh'}}>
               <Grid
               item
-              // alignItems={"flex-end"}
               >
               <Card className={classes.card}>
-          <CardMedia className={classes.cardMedia} title="Image title">
-            <img src={'https://64.media.tumblr.com/64eab0859cf319d597b50a5e15f2b609/6397400c1aa19fe4-b3/s1280x1920/5158b52dcf14390075830667ec15066738ce9277.png'} width="180"/>
-          </CardMedia>
           </Card>
               </Grid>
 
@@ -164,18 +152,17 @@ export default function Login({setNavbar}) {
         <Grid
         item
         >
-          <Button
+          <Button 
+          className={classes.submit}
+          color="primary"
           variant={"contained"}
-          color={"primary"}
           fullWidth type="submit"
           > 
         Submit 
           </Button>
           
           </Grid>
-        {/* <button type="submit" className="submit">
-          Submit
-        </button> */}
+    
         
       </Grid>
       </form>
