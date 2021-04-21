@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
     marginTop: theme.spacing(3),
-    flexGrow: 10
+    flexGrow: 10,
   },
   paperContainer:{
     // height: 1070,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     backgroundSize: "cover",
-    background: "blue"
+    // background: "blue"
   }
   },
 }));
@@ -171,6 +171,7 @@ export default function Login({setNavbar}) {
           > 
         Submit 
           </Button>
+          
           </Grid>
         {/* <button type="submit" className="submit">
           Submit
