@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useContext } from 'react';
 import { authContext } from '../AuthProvider';
 import { CssBaseline, Paper, TextField, Button, makeStyles, Grid, Typography, Card, CardActions, CardMedia } from '@material-ui/core';
-
+import "../App.css"
 const useStyles = makeStyles((theme) => ({
   container: {
   // marginTop: theme.spacing(35),
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
     marginTop: theme.spacing(3),
-    flexGrow: 10
+    flexGrow: 10,
   },
   paperContainer:{
     // height: 1070,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     backgroundSize: "cover",
-    background: "blue"
+    // background: "blue"
   }
   },
 }));
@@ -99,7 +99,7 @@ export default function Login({setNavbar}) {
       alignContent={'stretch'}
       >   
       <div               
-      style={{marginTop:'30vh'}}>
+      style={{marginTop:'8vh'}}>
               <Grid
               item
               // alignItems={"flex-end"}
@@ -123,8 +123,9 @@ export default function Login({setNavbar}) {
             <Grid item
             >
             <Typography
+              class="login"
               variant={'h3'}
-              align={'center'}
+              align='center'
               color={'primary'}
               >
                  Login
@@ -170,6 +171,7 @@ export default function Login({setNavbar}) {
           > 
         Submit 
           </Button>
+          
           </Grid>
         {/* <button type="submit" className="submit">
           Submit
