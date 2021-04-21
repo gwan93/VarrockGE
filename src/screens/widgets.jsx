@@ -15,6 +15,7 @@ import {
   Container,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import "../App.css"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
 
-  title: {
-    fontSize: "400%",
-    fontFamily: "ui-rounded",
-  },
 
   cardGrid: {
     padding: "40px 0",
@@ -39,9 +36,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   check: {
-    fontSize: "Large",
-    fontStyle: "italic",
-    fontFamily: "ui-rounded",
+    fontSize: "20px",
     backgroundColor: "black",
     color: "white",
     marginTop: "3em",
@@ -90,9 +85,8 @@ export default function Widgets() {
   const renderRarityFilters = () => {
     const filterList = filters.filterList.map((filter) => {
       return (
-        <div key={filter.name}>
-          <Grid>
-            {/* <Card> */}
+        <div class="checkbox" key={filter.name}>
+          
           <input
             id={filter.name}
             type="checkbox"
@@ -102,8 +96,7 @@ export default function Widgets() {
           <span>
           <label htmlFor={filter.name}>  {filter.name}</label>
           </span>
-          {/* </Card> */}
-          </Grid>
+          
         </div>
       );
     });
@@ -217,7 +210,6 @@ export default function Widgets() {
         <div className={classes.container}>
           <Container>
             <Typography
-              className={classes.title}
               align="center"
               color="textPrimary"
               gutterBottom
@@ -225,7 +217,9 @@ export default function Widgets() {
               <div>
               <img src="https://bit.ly/3tGL24E" width="200"></img>
               </div>
-              NFT Marketplace
+              <div>
+              <img src="https://bit.ly/32wJmi7"></img>
+              </div>
             </Typography>
           </Container>
         </div>
@@ -233,7 +227,7 @@ export default function Widgets() {
           <Container>
             <Card className={classes.checkbackground}>
             <Grid className={classes.check}>
-              <div>
+              <div class="checkbox">
               <input
                 id="myInput"
                 type="checkbox"
@@ -257,12 +251,13 @@ export default function Widgets() {
         </div>
         <p></p>
         <Typography
-              variant="h5"
               align="center"
               color="textPrimary"
               gutterBottom
             >
-              Please select a widget to view
+              
+              <img src="https://bit.ly/3syU02E" width="300"></img>
+              
             </Typography>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
