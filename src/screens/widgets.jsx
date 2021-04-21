@@ -22,21 +22,26 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
   },
-
-
   cardGrid: {
-    
     padding: "40px 0",
   },
   card: {
-    
     height: "100%",
     display: "flex",
     flexDirection: "column",
+    padding: '5px 5px 5px 5px',
+    transition: 'box-shadow .1s',
+    "&:hover": {
+      boxShadow: '0 0 11px rgba(33,33,33,.2)'
+    }
   },
   cardContent: {
-    
     flexGrow: 1,
+  },
+  cardMedia: {
+    display: 'flex',
+    alignItems: 'center',
+    height: '435px'
   },
   check: {
     fontSize: "20px",
@@ -47,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly"
-    },
+  },
   checkbackground: {
     backgroundColor: "black",
     marginBottom: "3em"
@@ -55,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
   main: {
     backgroundColor: theme.palette.background.paper,
     marginTop: '75px'
+  },
+  textLink: {
+    color: 'inherit',
+    // textDecoration: 'inherit'
   },
   view: {
     flexGrow: 1,
@@ -177,13 +186,13 @@ export default function Widgets() {
       .map((widget) => {
         return (
           <Grid item key={widget.id} xs={12} sm={6} md={4}>
-          <Card className={classes.card}>
-            <CardMedia title="Image title">
-              <img src={widget.imgurl} width="298" alt="" />
+          <Card className={classes.card} variant="outlined">
+            <CardMedia className={classes.cardMedia}>
+              <img src={widget.imgurl} width="280" alt="" />
             </CardMedia>
             <CardContent>
               <Typography gutterBottom variant="h5">
-                {widget.name}
+                <Link className={classes.textLink} to={`/widgets/${widget.id}`}>{widget.name}</Link>
               </Typography>
               <Typography>
                 NFT # {widget.id}: {widget.description}

@@ -34,7 +34,7 @@ export default function User(){
     },
     cardGrid: {
       padding: '20px 10px 10px 10px',
-      border: 'rgb(224, 224, 224) 2px solid',
+      // border: 'rgb(224, 224, 224) 2px solid',
       borderRadius: '5px',
       marginBottom: '20px'
     },
@@ -171,7 +171,7 @@ export default function User(){
         <div className={classes.container}>
           <Container className={classes.cardGrid} maxWidth="md">
             <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-              {userProfile.email}'s cards
+              {userProfile.email}'s NFTs
             </Typography>
             <Grid container spacing={3}>
               {displayWidgets}

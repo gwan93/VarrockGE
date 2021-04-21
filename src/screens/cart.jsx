@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '75px'
   },
   container: {
     backgroundColor: theme.palette.background.paper,
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardGrid: {
     padding: '20px 10px 10px 10px',
-    border: 'rgb(224, 224, 224) 2px solid',
+    // border: 'rgb(224, 224, 224) 2px solid',
     borderRadius: '5px',
     marginBottom: '20px'
   },
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    padding: '5px 5px 5px 5px',
+    padding: '5px 4px 5px 4px',
     transition: 'box-shadow .1s',
     "&:hover": {
       boxShadow: '0 0 11px rgba(33,33,33,.2)'
@@ -55,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     flexGrow: 1
+  },
+  grid: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
   imageContainer: {
     backgroundImage: `url(https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/176033620_192587326008749_5812437287084734516_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=ae9488&_nc_ohc=56iZXK8TulQAX8G1xQ5&_nc_ht=scontent.fyvr2-1.fna&oh=ba1030ec1d0e50c820ed56a2f0b846f9&oe=60A4692B)`,
@@ -88,6 +94,9 @@ export default function Cart() {
             <CardContent>
               <Typography gutterBottom variant="h5" >
                 <Link className={classes.textLink} to={`/widgets/${widget.id}`}>{widget.name}</Link>
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                Current Price: ${(widget.current_sell_price_cents / 100).toFixed(2)}
               </Typography>
               <Typography>
                 {widget.description}
@@ -161,56 +170,66 @@ export default function Cart() {
   };
 
   return (
-  <div>
-    <CssBaseline>
-     <main className={classes.main}>
-      <div className={classes.container}>
-        <Container>
-      {checkoutSuccess && <h2>Thank you for your purchase!</h2>}
-      <Typography
-      class="login"
-      variant={"h3"}
-      align={"center"}
-      gutterBottom
-      >
-      Cart
-      </Typography>
-      </Container>
-      <div className={classes.container}>
-    <Container>
-      <div align="center">
-      {itemsInCart.length !== 0 && showWidgets}
-      {itemsInCart.length !== 0 && <h2>Total: ${cartSubtotal / 100}</h2>}
-      {itemsInCart.length !== 0 && (
-        <Button
-        onClick={() => checkout(state, cartItemDetails)}
-        color={"inherit"}
-        size={"medium"}
-        variant={"contained"}
-        >
-          Check Out
-        </Button>
-      )}
-      {itemsInCart.length === 0 && <Typography
-      variant={"h6"}
-      align={"center"}
-      color={"secondary"}
-      gutterBottom
-      >Your Cart is Empty.</Typography>
-      }
-      </div>
-      </Container>
-      </div>
-      </div>
-        <Container
-        align="center"
-        >
-          {/* <div
-          align="center"
-          ></div> */}
-        <img src="https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/175944101_831094944205099_8398184698228450241_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_ohc=H5IqacPwaqAAX8r6V9F&_nc_ht=scontent.fyvr2-1.fna&oh=33fc241f03e41e37d4f001d6dc0b3bbb&oe=60A52AF3" width="400" height="400" align="center" className={classes.imageContainer}></img>
-        </Container>
-      </main>
+    <div>
+      <CssBaseline>
+        <main className={classes.main}>
+          <div className={classes.container}>
+            <Container>
+              {checkoutSuccess && <h2>Thank you for your purchase!</h2>}
+              <Typography variant="h3" align="center" gutterBottom>
+                Cart
+              </Typography>
+            </Container>
+
+
+          </div>
+
+          <div className={classes.container}>
+            <Container>
+              <div align="center">
+                {itemsInCart.length !== 0 && <h2>Total: ${cartSubtotal / 100}</h2>}
+                {itemsInCart.length !== 0 && (
+                  <Button
+                    onClick={() => checkout(state, cartItemDetails)}
+                    color={"inherit"}
+                    size={"medium"}
+                    variant={"contained"}
+                    >
+                    Check Out
+                  </Button>
+                )}
+                {itemsInCart.length === 0 && <Typography
+                  variant={"h6"}
+                  align={"center"}
+                  color={"secondary"}
+                  gutterBottom
+                >Your Cart is Empty.</Typography>
+                }
+
+              </div>
+            </Container>
+          </div>
+
+          {itemsInCart.length !== 0 && (
+            <div className={classes.container}>
+              <Container className={classes.cardGrid} maxWidth="md">
+                <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+                  NFTs in cart
+                </Typography>
+                <Grid className={classes.grid} container spacing={3}>
+                  {showWidgets}
+                </Grid>
+              </Container>
+            </div>
+          )}
+
+          <Container align="center">
+            {/* <div
+            align="center"
+            ></div> */}
+            <img src="https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/175944101_831094944205099_8398184698228450241_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_ohc=H5IqacPwaqAAX8r6V9F&_nc_ht=scontent.fyvr2-1.fna&oh=33fc241f03e41e37d4f001d6dc0b3bbb&oe=60A52AF3" width="400" height="400" align="center" className={classes.imageContainer}></img>
+          </Container>
+        </main>
       </CssBaseline>
     </div>
   );
