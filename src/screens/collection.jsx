@@ -93,8 +93,8 @@ export default function Collection(){
     collectionItems: [],
     checkedItems: []
   });
-  console.log('state', state)
-  console.log('collection', collection)
+  // console.log('state', state)
+  // console.log('collection', collection)
 
   const setCollectionName = (event) => {
     setCollection(prev => ({
@@ -115,16 +115,18 @@ export default function Collection(){
 
   const onUpdateSellPrice = (widgetID, event) => {
     event.preventDefault();
+    // console.log('1. onUpdateSellPrice clicked 118')
     updateSellPrice(widgetID)
   };
 
   const updateSellPrice = (widgetID) => {
+    // console.log('2. updateSellPrice called by onUpdateSellPrice')
     
     // Sell price * 100 to convert it from decimal to integer
     // eg Convert 15.25 dollars to 1525 cents to prevent floating point conflicts in database
     axios.post(`/widgets/${widgetID}`,  {sellPrice: sellPrice * 100} )
     .then((response) => {
-      // console.log('response', response)
+      // console.log('3. Axios Post response', response)
       history.go(0);
       // setSellPrice(
       

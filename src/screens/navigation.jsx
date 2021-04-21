@@ -58,7 +58,7 @@ export default function Navigation() {
     <div>
       <AppBar position="static" className={classes.root}>
         <Toolbar>
-        <img src="https://i.imgur.com/hZMZGsi.jpg" width="40" className={classes.image}>
+        <img src="https://i.imgur.com/hZMZGsi.jpg" width="40" className={classes.image} alt="">
         </img>
           <Typography
             variant='h6'
@@ -67,7 +67,7 @@ export default function Navigation() {
             component={Link}
             to="/"
           >
-            <img src="https://bit.ly/3tCtk2g" width="60"></img>
+            <img src="https://bit.ly/3tCtk2g" width="60" alt=""></img>
             
           </Typography>
           {state.user.isadmin && (
@@ -78,7 +78,7 @@ export default function Navigation() {
               component={Link}
               to="/admin"
             >
-              <img src="https://bit.ly/3dD4fyK" width="70"></img>
+              <img src="https://bit.ly/3dD4fyK" width="70" alt=""></img>
             </Typography>
           )}
           <Typography
@@ -88,7 +88,7 @@ export default function Navigation() {
             component={Link}
             to="/widgets"
           >
-            <img src="https://bit.ly/3uYoRXY" width="125"></img>
+            <img src="https://bit.ly/3uYoRXY" width="125" alt=""></img>
           </Typography>
           <Typography
             variant='h6'
@@ -96,7 +96,7 @@ export default function Navigation() {
             component={Link}
             to={`/user/${userID}/collections`}
           >
-            <img src="https://bit.ly/3tBojXz" width="120"></img>
+            <img src="https://bit.ly/3tBojXz" width="120" alt=""></img>
           </Typography>
           {state.user.id && (
             <Typography
