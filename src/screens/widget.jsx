@@ -120,7 +120,7 @@ export default function Widget(props) {
                 {/* By:  */}{historyData.email} {/* (TransactionID: {historyData.id}) */}
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                {/* Purchased For:  */}${historyData.bought_for_price_cents / 100}
+                {/* Purchased For:  */}${(historyData.bought_for_price_cents / 100).toFixed(2)}
               </Typography>
               <Typography variant="body1" color="textSecondary">
                 {`${new Date(historyData.date_purchased).toUTCString()}`}
@@ -147,11 +147,15 @@ export default function Widget(props) {
             </CardMedia>
             <CardContent>
               <Typography gutterBottom variant="h5">
-                {widget.details.name}
+                {widget.details.name} 
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                Current Price: ${(widget.details.current_sell_price_cents / 100).toFixed(2)}
               </Typography>
               <Typography>
                 NFT # {widget.details.id}: {widget.details.description}
               </Typography>
+
             </CardContent>
             <CardActions>
               <Button className={classes.cardContent} size="small" color="primary" onClick={addToCart}>
