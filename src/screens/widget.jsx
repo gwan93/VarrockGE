@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   historyContainer: {
-    height: '35vh',
+    height: '40vh',
     overflowY: "scroll",
-    margin: 0,
+    marginTop: '1em',
     padding: 0,
     listStyle: "none",
     '&::-webkit-scrollbar': {
@@ -170,11 +170,11 @@ export default function Widget(props) {
           </Card>
         </Grid>
 
-        <Grid className={classes.historyContainer} item xs={12} sm={6} /* md={3} */>
+        <Grid item xs={12} sm={6} /* md={3} */>
           <Typography className={classes.history} variant="h5">
             Purchase History
           </Typography>
-          <Container>
+          <Container className={classes.historyContainer}>
             {displayWidgetHistory}
           </Container>
         </Grid>
