@@ -216,10 +216,10 @@ export default function Widgets() {
               gutterBottom
             >
               <div>
-              <img src="https://bit.ly/3tGL24E" width="200"></img>
+              <img src="https://bit.ly/3tGL24E" width="200" alt=""></img>
               </div>
               <div>
-              <img src="https://bit.ly/32wJmi7"></img>
+              <img src="https://bit.ly/32wJmi7" alt=""></img>
               </div>
             </Typography>
           </Container>
@@ -257,7 +257,7 @@ export default function Widgets() {
               gutterBottom
             >
               
-              <img src="https://bit.ly/3syU02E" width="300"></img>
+              <img src="https://bit.ly/3syU02E" width="300" alt=""></img>
               
             </Typography>
         <Container className={classes.cardGrid} maxWidth="md">
