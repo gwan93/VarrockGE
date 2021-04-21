@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
+    // backgroundColor: "#fefeff",
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+    // backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    // backgroundSize: "cover",
   },
   cardGrid: {
     padding: "40px 0",
@@ -30,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     padding: '5px 5px 5px 5px',
+    border: '2px lightgrey solid',
     transition: 'box-shadow .1s',
     "&:hover": {
       boxShadow: '0 0 11px rgba(33,33,33,.2)'
@@ -58,7 +64,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3em"
   },
   main: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+    backgroundPosition: "center center",
+    // backgroundColor: theme.palette.background.paper,
     marginTop: '75px'
   },
   textLink: {

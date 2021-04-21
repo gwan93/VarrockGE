@@ -8,6 +8,8 @@ import { makeStyles, Typography, TextField, Card, Button, CardContent, CardMedia
 export default function Collection(){
   const useStyles = makeStyles((theme) => ({
     main:{
+      backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+      backgroundPosition: "center center",
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -53,7 +55,7 @@ export default function Collection(){
       display: 'flex',
       flexDirection: 'column',
       padding: '5px 5px 5px 5px',
-      // border: 'blue 1px solid',
+      border: '2px lightgrey solid',
       transition: 'box-shadow .1s',
       "&:hover": {
         boxShadow: '0 0 11px rgba(33,33,33,.2)'

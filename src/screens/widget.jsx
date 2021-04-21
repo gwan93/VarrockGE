@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   card: {
+    border: '2px lightgrey solid',
     transition: 'box-shadow .1s',
     "&:hover": {
       boxShadow: '0 0 11px rgba(33,33,33,.2)'

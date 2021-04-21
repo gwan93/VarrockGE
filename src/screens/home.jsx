@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     backgroundSize: "cover",
+    overflow: 'hidden'
   },
   buttonContainer: {
     marginTop: "1em",

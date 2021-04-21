@@ -7,6 +7,8 @@ import { makeStyles, Typography, Card, CardContent, CardMedia, CssBaseline, Grid
 export default function User(){
   const useStyles = makeStyles((theme) => ({
     main:{
+      backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+      backgroundPosition: "center center",
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -43,6 +45,7 @@ export default function User(){
       display: 'flex',
       flexDirection: 'column',
       padding: '5px 5px 5px 5px',
+      border: '2px lightgrey solid',
       transition: 'box-shadow .1s',
       "&:hover": {
         boxShadow: '0 0 11px rgba(33,33,33,.2)'
@@ -144,13 +147,13 @@ export default function User(){
               {userProfile.email}
             </Typography>
 
-            <Typography variant="body2" align="center" color="textSecondary">
+            {/* <Typography variant="body2" align="center" color="textSecondary">
               Wallet Balance: ${userProfile.balance / 100}
             </Typography>
 
             <Typography variant="body2" align="center" color="textSecondary">
               Admin Status: {String(userProfile.isadmin)}
-            </Typography>
+            </Typography> */}
 
           </Container>
           
