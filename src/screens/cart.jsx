@@ -107,16 +107,28 @@ export default function Cart() {
     return accumulator + currentValue;
   }, 0);
 
-  const emptyCart = (state) => {
+  const emptyCart = (widgetIDs) => {
     console.log("emptying cart");
+    let newMyWidgets = [...state.myWidgets];
+
+    for (const widgetID of widgetIDs) {
+      if (!newMyWidgets.includes(widgetID)) {
+        newMyWidgets.push(widgetID);
+      }
+    }
+
+    newMyWidgets = newMyWidgets.sort((a, b) => a - b);
+
     setState((prev) => ({
       ...prev,
       itemsInCart: [],
+      myWidgets: newMyWidgets
     }));
   };
 
   const checkout = (state, cartItemDetails) => {
 
+    const widgetIDs = cartItemDetails.map(widget => widget.id);
     // Create array of items to transfer ownership (aka to be bought)
     const postObject = [];
     cartItemDetails.map((cartItem) => {
@@ -139,7 +151,7 @@ export default function Cart() {
         console.log('in response', response)
         setCheckoutSuccess(true);
         if (response.status === 200) {
-          emptyCart(state);
+          emptyCart(widgetIDs);
           history.push("/widgets");
         }
       })

@@ -66,7 +66,7 @@ export default function Widgets() {
     filterList: [],
     activeFilters: [],
   });
-  console.log("state", state.widgets);
+  // console.log("state", state.widgets);
   // console.log('filters', filters)
 
   useEffect(() => {

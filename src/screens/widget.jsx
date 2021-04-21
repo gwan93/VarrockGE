@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   historyContainer: {
-    height: '35vh',
+    height: '40vh',
     overflowY: "scroll",
-    margin: 0,
+    marginTop: '1em',
     padding: 0,
     listStyle: "none",
     '&::-webkit-scrollbar': {
@@ -85,6 +85,7 @@ export default function Widget(props) {
   // Axios request using widgetID from params to get
   // widget details and widget history
   useEffect(() => {
+    window.scrollTo(0, 490);
     axios.get(`/widgets/${widgetID}`).then((all) => {
       const [detailsResponse, historyResponse] = all.data;
       // Order the history objects by id (oldest first, newest last)
@@ -119,7 +120,7 @@ export default function Widget(props) {
                 {/* By:  */}{historyData.email} {/* (TransactionID: {historyData.id}) */}
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                {/* Purchased For:  */}${historyData.bought_for_price_cents / 100}
+                {/* Purchased For:  */}${(historyData.bought_for_price_cents / 100).toFixed(2)}
               </Typography>
               <Typography variant="body1" color="textSecondary">
                 {`${new Date(historyData.date_purchased).toUTCString()}`}
@@ -146,11 +147,15 @@ export default function Widget(props) {
             </CardMedia>
             <CardContent>
               <Typography gutterBottom variant="h5">
-                {widget.details.name}
+                {widget.details.name} 
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                Current Price: ${(widget.details.current_sell_price_cents / 100).toFixed(2)}
               </Typography>
               <Typography>
                 NFT # {widget.details.id}: {widget.details.description}
               </Typography>
+
             </CardContent>
             <CardActions>
               <Button className={classes.cardContent} size="small" color="primary" onClick={addToCart}>
@@ -169,11 +174,11 @@ export default function Widget(props) {
           </Card>
         </Grid>
 
-        <Grid className={classes.historyContainer} item xs={12} sm={6} /* md={3} */>
+        <Grid item xs={12} sm={6} /* md={3} */>
           <Typography className={classes.history} variant="h5">
             Purchase History
           </Typography>
-          <Container>
+          <Container className={classes.historyContainer}>
             {displayWidgetHistory}
           </Container>
         </Grid>
