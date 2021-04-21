@@ -93,8 +93,8 @@ export default function Collection(){
     collectionItems: [],
     checkedItems: []
   });
-  // console.log('state', state)
-  // console.log('collection', collection)
+  console.log('state', state)
+  console.log('collection', collection)
 
   const setCollectionName = (event) => {
     setCollection(prev => ({
@@ -258,7 +258,7 @@ export default function Collection(){
                 <div>
                   {/* {item.description} */}
                   {/* <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li> */}
-                  <li>On sale for: ${item.current_sell_price_cents / 100}</li>
+                  <li>On sale for: ${(item.current_sell_price_cents / 100).toFixed(2)}</li>
                   {/* <li>Description: {item.description}</li> */}
                   <li>Listed for sale: {String(item.for_sale_by_owner)}</li>
                   {/* <li>hash:{item.hash}</li> */}
