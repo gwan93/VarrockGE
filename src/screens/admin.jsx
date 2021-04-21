@@ -59,7 +59,7 @@ export default function Admin(props) {
   };
 
   const onCreateCost = function (event) {
-    setCost(event.target.value);
+    setCost(event.target.value * 100);
   };
 
   const onCreateImage = function (event) {
