@@ -13,6 +13,11 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import "../App.css";
 const useStyles = makeStyles((theme) => ({
+  main: {
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+    backgroundPosition: "center center",
+    height: '100vh'
+  },
   paper: {
     marginTop: theme.spacing(10),
     display: "flex",
@@ -104,6 +109,7 @@ export default function Admin(props) {
   };
 
   return (
+    <main className={classes.main}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -200,5 +206,6 @@ export default function Admin(props) {
         </form>
       </div>
     </Container>
+    </main>
   );
 }

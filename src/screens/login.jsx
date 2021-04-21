@@ -6,9 +6,11 @@ import "../App.css"
 const useStyles = makeStyles((theme) => ({
   container: {
   // marginTop: theme.spacing(35),
-   height: "100%",
+  //  height: "100%",
+   overflow: 'hidden',
+   height: '100vh',
    cardGrid: {
-    padding: '20px 0'
+    padding: '20px 0',
   },
   card: {
     height: '100%',
@@ -44,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login({setNavbar}) {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("gio@gio.com");
+  const [password, setPassword] = useState("gio");
   const { loginUser } = useContext(authContext); // the login method
 
   // updating input fields

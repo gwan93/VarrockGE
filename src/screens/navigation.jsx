@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "black",
     position: 'fixed',
     top: '0',
-    height: '60px'
+    height: '70px'
   },
 
   title: {
