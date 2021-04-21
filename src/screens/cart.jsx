@@ -1,9 +1,67 @@
 import { authContext } from "../AuthProvider";
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import history from '../History';
-
+import { makeStyles, Button, Typography, Card, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+const useStyles = makeStyles((theme) => ({
+  main:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  container: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6, 0, 6),
+    border: 'rgb(224, 224, 224) 2px solid',
+    borderRadius: '5px',
+    width: "960px",
+    margin: '8px 0 8px 0',
+    transition: 'box-shadow .1s',
+    "&:hover": {
+      boxShadow: '0 0 11px rgba(33,33,33,.2)'
+    }
+  },
+  button: {
+    marginTop: '40px',
+  },
+  textLink: {
+    color: 'inherit',
+    // textDecoration: 'inherit'
+  },
+  cardGrid: {
+    padding: '20px 10px 10px 10px',
+    border: 'rgb(224, 224, 224) 2px solid',
+    borderRadius: '5px',
+    marginBottom: '20px'
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '5px 5px 5px 5px',
+    transition: 'box-shadow .1s',
+    "&:hover": {
+      boxShadow: '0 0 11px rgba(33,33,33,.2)'
+    }
+  },
+  cardMedia: {
+    display: 'flex',
+    alignItems: 'center',
+    height: '435px'
+  },
+  cardContent: {
+    flexGrow: 1
+  },
+  imageContainer: {
+    backgroundImage: `url(https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/176033620_192587326008749_5812437287084734516_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=ae9488&_nc_ohc=56iZXK8TulQAX8G1xQ5&_nc_ht=scontent.fyvr2-1.fna&oh=ba1030ec1d0e50c820ed56a2f0b846f9&oe=60A4692B)`,
+    alignItems: 'center',
+    marginTop:'2em'
+  }
+}));
 export default function Cart() {
+  const classes = useStyles();
   const { state, setState } = useContext(authContext);
   const { itemsInCart } = state;
   const stateWidgets = state.widgets;
@@ -20,33 +78,25 @@ export default function Cart() {
   // These are the filtered widgets' details to be displayed
   const showWidgets = cartItemDetails.map((widget) => {
     return (
-      <div>
-        <ul>
-          <li key={`${widget.widget_id}_name`}>Name: {widget.name}</li>
-          <li key={`${widget.widget_id}_current_sell_price_cents`}>
-            Current_sell_price_cents: {widget.current_sell_price_cents}
-          </li>
-          <li key={`${widget.widget_id}_description`}>
-            Description: {widget.description}
-          </li>
-          <li key={`${widget.widget_id}_for_sale_by_owner`}>
-            For_sale_by_owner: {widget.for_sale_by_owner}
-          </li>
-          <li key={`${widget.widget_id}_hash_`}>hash:{widget.hash}</li>
-          <li key={`${widget.widget_id}_msrp_cents`}>
-            MSRP_cents: {widget.msrp_cents}
-          </li>
-          <li key={`${widget.widget_id}_rarity_id`}>
-            Rarity_id: {widget.rarity_id}
-          </li>
-          <li key={`${widget.widget_id}_subcategory_id`}>
-            Subcategory_id: {widget.subcategory_id}
-          </li>
-          <li key={`${widget.widget_id}_widget_id`}>widget_id: {widget.id}</li>
-        </ul>
-      </div>
-    );
-  });
+        <Grid item key={widget.id} xs={12} sm={6} md={4}>
+          <Card className={classes.card} variant="outlined">
+            <CardMedia className={classes.cardMedia}>
+              <img src={widget.imgurl} width="280" alt=""/>
+            </CardMedia>
+            <CardContent>
+              <Typography gutterBottom variant="h5" >
+                <Link className={classes.textLink} to={`/widgets/${widget.id}`}>{widget.name}</Link>
+              </Typography>
+              <Typography>
+                {widget.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      );
+    });
+  
+    
 
   // Calculate subtotal for all the widgets in the cart
   const widgetPriceArray = [];
@@ -66,9 +116,6 @@ export default function Cart() {
   };
 
   const checkout = (state, cartItemDetails) => {
-    // console.log('transferring ownership of items');
-    // console.log('state.user.id', state.user.id);
-    // console.log('cartItemDetails', cartItemDetails)
 
     // Create array of items to transfer ownership (aka to be bought)
     const postObject = [];
@@ -100,20 +147,57 @@ export default function Cart() {
   };
 
   return (
-    <div>
+  <div>
+    <CssBaseline>
+     <main className={classes.main}>
+      <div className={classes.container}>
+        <Container>
       {checkoutSuccess && <h2>Thank you for your purchase!</h2>}
-
-      <h2>Cart</h2>
-
+      <Typography
+      variant={"h3"}
+      align={"center"}
+      color={"primary"}
+      gutterBottom
+      >
+      Cart
+      </Typography>
+      </Container>
+      <div className={classes.container}>
+    <Container>
+      <div align="center">
       {itemsInCart.length !== 0 && showWidgets}
       {itemsInCart.length !== 0 && <h2>Total: ${cartSubtotal / 100}</h2>}
       {itemsInCart.length !== 0 && (
-        <button onClick={() => checkout(state, cartItemDetails)}>
+        <Button
+        onClick={() => checkout(state, cartItemDetails)}
+        color={"inherit"}
+        size={"medium"}
+        variant={"contained"}
+        >
           Check Out
-        </button>
+        </Button>
       )}
-
-      {itemsInCart.length === 0 && <h2>No items in cart.</h2>}
+      {itemsInCart.length === 0 && <Typography
+      variant={"h6"}
+      align={"center"}
+      color={"secondary"}
+      gutterBottom
+      >Your Cart is Empty.</Typography>
+      }
+      </div>
+      </Container>
+      </div>
+      </div>
+        <Container
+        align="center"
+        >
+          {/* <div
+          align="center"
+          ></div> */}
+        <img src="https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/175944101_831094944205099_8398184698228450241_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_ohc=H5IqacPwaqAAX8r6V9F&_nc_ht=scontent.fyvr2-1.fna&oh=33fc241f03e41e37d4f001d6dc0b3bbb&oe=60A52AF3" width="400" height="400" align="center" className={classes.imageContainer}></img>
+        </Container>
+      </main>
+      </CssBaseline>
     </div>
   );
 }
