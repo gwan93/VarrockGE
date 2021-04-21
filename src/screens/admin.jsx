@@ -3,10 +3,10 @@ import axios from "axios";
 import { authContext } from "../AuthProvider";
 import { Typography, Button, CssBaseline, TextField, Grid, Container} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-
+import "../App.css"
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(20),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -101,7 +101,7 @@ export default function Admin(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" class="login">
           Admin
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmit}>

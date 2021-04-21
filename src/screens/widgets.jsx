@@ -25,14 +25,17 @@ const useStyles = makeStyles((theme) => ({
 
 
   cardGrid: {
+    
     padding: "40px 0",
   },
   card: {
+    
     height: "100%",
     display: "flex",
     flexDirection: "column",
   },
   cardContent: {
+    
     flexGrow: 1,
   },
   check: {
@@ -50,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3em"
   },
   main: {
+    backgroundColor: theme.palette.background.paper,
     marginTop: '75px'
   },
   view: {

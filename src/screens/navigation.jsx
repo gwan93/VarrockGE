@@ -15,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    flexGrow: 1,
-    // display: "inline-flex",
-    // justifyContent: "space-evenly",
-  
+    flexGrow: 1, 
   },
 
   user: {
