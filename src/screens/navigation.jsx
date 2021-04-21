@@ -8,11 +8,17 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "black"
+    backgroundColor: "black",
+    position: 'fixed',
+    top: '0',
+    height: '60px'
   },
 
   title: {
     flexGrow: 1,
+    // display: "inline-flex",
+    // justifyContent: "space-evenly",
+  
   },
 
   user: {
@@ -52,49 +58,45 @@ export default function Navigation() {
     <div>
       <AppBar position="static" className={classes.root}>
         <Toolbar>
-        <img src="https://i.imgur.com/hZMZGsi.jpg" width="50" className={classes.image}>
+        <img src="https://i.imgur.com/hZMZGsi.jpg" width="40" className={classes.image}>
         </img>
           <Typography
-            variant="h6"
+            variant='h6'
+            align='inherit'
             className={classes.title}
-            color="inherit"
-            style={{ textDecoration: "none" }}
             component={Link}
             to="/"
           >
-            Home
+            <img src="https://bit.ly/3tCtk2g" width="60"></img>
+            
           </Typography>
           {state.user.isadmin && (
             <Typography
-              variant="h6"
+            variant='h6'
+            align='inherit'
               className={classes.title}
-              color="inherit"
-              style={{ textDecoration: "none" }}
               component={Link}
               to="/admin"
             >
-              Admin
+              <img src="https://bit.ly/3dD4fyK" width="70"></img>
             </Typography>
           )}
           <Typography
-            variant="h6"
+            variant='h4'
+            align='inherit'
             className={classes.title}
-            color="inherit"
-            style={{ textDecoration: "none" }}
             component={Link}
             to="/widgets"
           >
-            Marketplace
+            <img src="https://bit.ly/3uYoRXY" width="125"></img>
           </Typography>
           <Typography
-            variant="h6"
+            variant='h6'
             className={classes.title}
-            color="inherit"
-            style={{ textDecoration: "none" }}
             component={Link}
             to={`/user/${userID}/collections`}
           >
-            Collections
+            <img src="https://bit.ly/3tBojXz" width="120"></img>
           </Typography>
           {state.user.id && (
             <Typography
