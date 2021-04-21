@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import history from '../History';
 import { makeStyles, Button, Typography, Card, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+import "../App.css"
+
 const useStyles = makeStyles((theme) => ({
   main:{
     display: 'flex',
@@ -166,9 +168,9 @@ export default function Cart() {
         <Container>
       {checkoutSuccess && <h2>Thank you for your purchase!</h2>}
       <Typography
+      class="login"
       variant={"h3"}
       align={"center"}
-      color={"primary"}
       gutterBottom
       >
       Cart
