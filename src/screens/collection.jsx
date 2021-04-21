@@ -69,6 +69,10 @@ export default function Collection(){
     },
     submit: {
       margin: theme.spacing(1, 0, 2),
+      backgroundColor: "black",
+      "&:hover": {
+        backgroundColor: "#56144D"
+      }
     },
     updateForm: {
       margin: theme.spacing(2, 0, 0),
