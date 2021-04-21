@@ -1,34 +1,40 @@
 import React, { useState, useContext } from "react";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 import { authContext } from "../AuthProvider";
-import { Typography, Button, CssBaseline, TextField, Grid, Container} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import "../App.css"
+import {
+  Typography,
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Container,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import "../App.css";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(10),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    outline: "none"
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    outline: "none",
   },
 
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(3),
-    outline: "none"
+    outline: "none",
   },
 
   submit: {
     margin: theme.spacing(3, 0, 2),
     backgroundColor: "black",
     "&:hover": {
-      backgroundColor: "#56144D"
-    }
+      backgroundColor: "#56144D",
+    },
   },
- 
 }));
-
 
 export default function Admin(props) {
   const classes = useStyles();
@@ -64,7 +70,7 @@ export default function Admin(props) {
 
   const onCreateImage = function (event) {
     setImage(event.target.value);
-  }
+  };
 
   //things to add to the widget once submitted
   const formInfo = { name, categoryID, description, rarityID, cost, image };
@@ -105,8 +111,8 @@ export default function Admin(props) {
           Admin
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmit}>
-        <Grid container spacing={2}>
-        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <TextField
                 name="nftName"
                 variant="outlined"
@@ -178,18 +184,21 @@ export default function Admin(props) {
                 autoFocus
               />
             </Grid>
-            </Grid>
-            <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Create NFT
-          </Button>
+          </Grid>
+              
+              <Button
+                
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() => { alert('💯 NFT Added Successfully 🔥'); }}
+              >
+                Create NFT
+              </Button>
         </form>
-        </div>
-        </Container>
+      </div>
+    </Container>
   );
 }
