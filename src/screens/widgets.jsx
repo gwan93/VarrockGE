@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   checkbackground: {
     backgroundColor: "black",
+    marginBottom: "3em"
   },
   main: {
     marginTop: '75px'
