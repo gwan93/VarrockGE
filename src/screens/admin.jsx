@@ -199,7 +199,10 @@ export default function Admin(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={() => { alert('💯 NFT Added Successfully 🔥'); }}
+                onClick={() => { 
+                  alert('💯 NFT Added Successfully 🔥'); 
+                  window.location.href = "http://localhost:3001/widgets"
+                }}
               >
                 Create NFT
               </Button>
