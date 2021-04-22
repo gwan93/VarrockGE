@@ -8,7 +8,7 @@ import { makeStyles, Typography, TextField, Card, Button, CardContent, CardMedia
 export default function Collection(){
   const useStyles = makeStyles((theme) => ({
     main:{
-      backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0011087001619042393/circuitboard.gif)`,
+      backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
       backgroundPosition: "center center",
       display: 'flex',
       flexDirection: 'column',
