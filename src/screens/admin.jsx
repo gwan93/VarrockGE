@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../App.css";
 const useStyles = makeStyles((theme) => ({
   main: {
-    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
     backgroundPosition: "center center",
     height: '100vh'
   },
@@ -199,7 +199,10 @@ export default function Admin(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={() => { alert('💯 NFT Added Successfully 🔥'); }}
+                onClick={() => { 
+                  alert('💯 NFT Added Successfully 🔥'); 
+                  window.location.href = "http://localhost:3001/widgets"
+                }}
               >
                 Create NFT
               </Button>
