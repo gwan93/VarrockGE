@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login({setNavbar}) {
   const classes = useStyles();
-  const [email, setEmail] = useState("gio@gio.com");
-  const [password, setPassword] = useState("gio");
+  const [email, setEmail] = useState("jesse@jesse.com");
+  const [password, setPassword] = useState("jesse");
   const { loginUser } = useContext(authContext); // the login method
 
   // updating input fields

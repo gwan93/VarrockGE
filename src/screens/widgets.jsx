@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
     // backgroundColor: "#fefeff",
-    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0011087001619042393/circuitboard.gif)`,
     // backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     // backgroundSize: "cover",
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3em"
   },
   main: {
-    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0723163001619026966/circuitboard.gif)`,
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://dw.convertfiles.com/files/0011087001619042393/circuitboard.gif)`,
     backgroundPosition: "center center",
     // backgroundColor: theme.palette.background.paper,
     marginTop: '75px'
