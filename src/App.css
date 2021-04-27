@@ -15,12 +15,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
-.checkbox {
+/* .checkbox {
   font-family: 'DotGothic16', sans-serif;
-}
+} */
 
 .login {
-  font-family: 'DotGothic16', sans-serif;
+  /* font-family: 'DotGothic16', sans-serif; */
   font-size: 45px;
   display: flex;
   justify-content: center;

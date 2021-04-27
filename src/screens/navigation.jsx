@@ -55,45 +55,56 @@ export default function Navigation() {
     <div>
       <AppBar position="static" className={classes.root}>
         <Toolbar>
-        <img src="https://i.imgur.com/hZMZGsi.jpg" width="40" className={classes.image} alt="">
-        </img>
+          <img
+            src="https://i.imgur.com/hZMZGsi.jpg"
+            width="40"
+            className={classes.image}
+            alt=""
+          ></img>
           <Typography
-            variant='h6'
-            align='inherit'
+            variant="h6"
+            align="inherit"
             className={classes.title}
+            color="inherit"
+            style={{ textDecoration: "none" }}
             component={Link}
             to="/"
           >
-            <img src="https://bit.ly/3tCtk2g" width="60" alt=""></img>
-            
+            Home
           </Typography>
           {state.user.isadmin && (
             <Typography
-            variant='h6'
-            align='inherit'
+              variant="h6"
+              align="inherit"
               className={classes.title}
+              color="inherit"
+              style={{ textDecoration: "none" }}
               component={Link}
               to="/admin"
             >
-              <img src="https://bit.ly/3dD4fyK" width="70" alt=""></img>
+              Admin
             </Typography>
           )}
           <Typography
-            variant='h4'
-            align='inherit'
+            variant="h6"
+            align="inherit"
             className={classes.title}
+            color="inherit"
+            style={{ textDecoration: "none" }}
             component={Link}
             to="/widgets"
           >
-            <img src="https://bit.ly/3uYoRXY" width="125" alt=""></img>
+            NFT Marketplace
           </Typography>
           <Typography
-            variant='h6'
+            variant="h6"
             className={classes.title}
+            color="inherit"
+            style={{ textDecoration: "none" }}
             component={Link}
             to={`/user/${userID}/collections`}
           >
-            <img src="https://bit.ly/3tBojXz" width="120" alt=""></img>
+            My Collections
           </Typography>
           {state.user.id && (
             <Typography
@@ -103,7 +114,7 @@ export default function Navigation() {
               component={Link}
               to={`/user/${userID}`}
             >
-            {state.user.email}
+              {state.user.email}
             </Typography>
           )}
           {state.user.id && (
@@ -114,7 +125,7 @@ export default function Navigation() {
               component={Link}
               to="/cart"
             >
-              <ShoppingCartOutlinedIcon /> ({state.itemsInCart.length})
+              <ShoppingCartOutlinedIcon /> Cart ({state.itemsInCart.length})
             </Typography>
           )}
           {!state.user.id && (

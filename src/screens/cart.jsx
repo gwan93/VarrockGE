@@ -122,7 +122,7 @@ export default function Cart() {
   }, 0);
 
   const emptyCart = (widgetIDs) => {
-    console.log("emptying cart");
+    // console.log("emptying cart");
     let newMyWidgets = [...state.myWidgets];
 
     for (const widgetID of widgetIDs) {
@@ -162,7 +162,7 @@ export default function Cart() {
       .post(`/widgets/checkout`, postObject)
       .then((response) => {
         // console.log('in response)')
-        console.log('in response', response)
+        // console.log('in response', response)
         setCheckoutSuccess(true);
         if (response.status === 200) {
           emptyCart(widgetIDs);
@@ -183,32 +183,34 @@ export default function Cart() {
                 Cart
               </Typography>
             </Container>
-
-
           </div>
 
           <div className={classes.container}>
             <Container>
               <div align="center">
-                {itemsInCart.length !== 0 && <h2>Total: ${cartSubtotal / 100}</h2>}
+                {itemsInCart.length !== 0 && (
+                  <h2>Total: ${(cartSubtotal / 100).toFixed(2)}</h2>
+                )}
                 {itemsInCart.length !== 0 && (
                   <Button
                     onClick={() => checkout(state, cartItemDetails)}
                     color={"inherit"}
                     size={"medium"}
                     variant={"contained"}
-                    >
+                  >
                     Check Out
                   </Button>
                 )}
-                {itemsInCart.length === 0 && <Typography
-                  variant={"h6"}
-                  align={"center"}
-                  color={"secondary"}
-                  gutterBottom
-                >Your Cart is Empty.</Typography>
-                }
-
+                {itemsInCart.length === 0 && (
+                  <Typography
+                    variant={"h6"}
+                    align={"center"}
+                    color={"secondary"}
+                    gutterBottom
+                  >
+                    Your Cart is Empty.
+                  </Typography>
+                )}
               </div>
             </Container>
           </div>
@@ -216,7 +218,12 @@ export default function Cart() {
           {itemsInCart.length !== 0 && (
             <div className={classes.container}>
               <Container className={classes.cardGrid} maxWidth="md">
-                <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+                <Typography
+                  variant="h4"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                >
                   NFTs in cart
                 </Typography>
                 <Grid className={classes.grid} container spacing={3}>
@@ -230,7 +237,14 @@ export default function Cart() {
             {/* <div
             align="center"
             ></div> */}
-            <img src="https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/175944101_831094944205099_8398184698228450241_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_ohc=H5IqacPwaqAAX8r6V9F&_nc_ht=scontent.fyvr2-1.fna&oh=33fc241f03e41e37d4f001d6dc0b3bbb&oe=60A52AF3" width="400" height="400" align="center" className={classes.imageContainer}></img>
+            <img
+              src="https://scontent.fyvr2-1.fna.fbcdn.net/v/t1.15752-9/175944101_831094944205099_8398184698228450241_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_ohc=H5IqacPwaqAAX8r6V9F&_nc_ht=scontent.fyvr2-1.fna&oh=33fc241f03e41e37d4f001d6dc0b3bbb&oe=60A52AF3"
+              width="400"
+              height="400"
+              align="center"
+              className={classes.imageContainer}
+              alt=""
+            ></img>
           </Container>
         </main>
       </CssBaseline>
