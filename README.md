@@ -2,7 +2,7 @@
 
 VarrockGE is a full stack web application built with React, Express, and PostgresSQL that allows users to buy, sell, and collect video game collectibles. 
 
-This project was completed by [Jesse Mcdermott](), [Ray Yiu](), & [Gio Wan]() for the final project at Lighthouse Labs.
+This project was completed by [Jesse Mcdermott](https://github.com/mcdermottjesse), [Ray Yiu](https://github.com/rayyiu), & [Gio Wan](https://github.com/gwan93) for the final project at Lighthouse Labs.
 
 ## Features
 
