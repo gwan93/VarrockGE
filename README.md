@@ -1,8 +1,11 @@
-## VarrockGE Project
+## VarrockGE Project 
+
 
 VarrockGE is a full stack web application built with React, Express, and PostgresSQL that allows users to buy, sell, and collect video game collectibles. 
 
 This project was completed by [Jesse Mcdermott](https://github.com/mcdermottjesse), [Ray Yiu](https://github.com/rayyiu), & [Gio Wan](https://github.com/gwan93) for the final project at Lighthouse Labs.
+
+[Hosted on Heroku](https://varrockge-gw.herokuapp.com/) - Please wait 30-60 seconds for the Heroku server to start up after clicking the link.
 
 ## Features
 
