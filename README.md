@@ -40,16 +40,16 @@ This project was completed by [Jesse Mcdermott](), [Ray Yiu](), & [Gio Wan]() fo
 
 ## Final Product
 
-!['Marketplace']()
+!['Marketplace'](https://github.com/gwan93/varrockge-frontend/blob/master/docs/marketplace.png?raw=true)
 <br>
 
-!['Product Details']()
+!['Product Details'](https://github.com/gwan93/varrockge-frontend/blob/master/docs/nft-preview.png?raw=true)
 <br>
 
-!['User Page']()
+!['User Page'](https://github.com/gwan93/varrockge-frontend/blob/master/docs/user-page.png?raw=true)
 <br>
 
-!['Collection Page']()
+!['Collection Page'](https://github.com/gwan93/varrockge-frontend/blob/master/docs/collection.png?raw=true)
 ****
 
 ## Future Development
