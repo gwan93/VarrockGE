@@ -75,7 +75,7 @@ export default function AuthProvider(props) {
 
         }))
         //line below retrieves all collections for a given user. 
-        const collectionPromises = collectionsData.data.map(aCollectionData => axios.get(`/user/1/collections/${aCollectionData.id}`));
+        const collectionPromises = collectionsData.data.map(aCollectionData => axios.get(`${process.env.REACT_APP_API_URL}/user/1/collections/${aCollectionData.id}`));
         Promise.all(collectionPromises)
           .then(collectionPromisesResults => {
             //collectionPromisesResults contains all collections in an array of axios responses.
