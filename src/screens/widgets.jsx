@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "../App.css"
+require('dotenv').config({path: './../.env'});
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -92,6 +93,8 @@ export default function Widgets() {
   });
   // console.log("state", state.widgets);
   // console.log('filters', filters)
+  console.log(process.env.REACT_APP_API_URL)
+
 
   useEffect(() => {
     Promise.all([axios.get("/rarities"), axios.get("/subcategories")]).then(

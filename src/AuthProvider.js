@@ -49,9 +49,9 @@ export default function AuthProvider(props) {
   useEffect(() => {
 
     Promise.all([
-      axios.get(`/user/3/collections`),
-      axios.get(`/widgets`),
-      axios.get(`/widgets/owners`)
+      axios.get(`${process.env.REACT_APP_API_URL}/user/3/collections`),
+      axios.get(`${process.env.REACT_APP_API_URL}/widgets`),
+      axios.get(`${process.env.REACT_APP_API_URL}/widgets/owners`)
     ])
       .then(all => {
         // Getting response
