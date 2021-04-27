@@ -159,7 +159,7 @@ export default function Cart() {
 
     // Submit that array along with the post request
     axios
-      .post(`/widgets/checkout`, postObject)
+      .post(`${process.env.REACT_APP_API_URL}/widgets/checkout`, postObject)
       .then((response) => {
         // console.log('in response)')
         // console.log('in response', response)

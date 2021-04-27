@@ -190,7 +190,7 @@ export default function Collection(){
       axios.post(`${process.env.REACT_APP_API_URL}/user/${userID}/collections`, postObject)
       .then(response => {
         const {listID} = response.data;
-        history.push(`/user/${userID}/collections/${listID}`);
+        history.push(`${process.env.REACT_APP_API_URL}/user/${userID}/collections/${listID}`);
       })
     } else {
       // Update existing list
