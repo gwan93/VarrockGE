@@ -126,7 +126,7 @@ export default function Collection(){
     
     // Sell price * 100 to convert it from decimal to integer
     // eg Convert 15.25 dollars to 1525 cents to prevent floating point conflicts in database
-    axios.post(`/widgets/${widgetID}`,  {sellPrice: sellPrice * 100} )
+    axios.post(`${process.env.REACT_APP_API_URL}/widgets/${widgetID}`,  {sellPrice: sellPrice * 100} )
     .then((response) => {
       // console.log('3. Axios Post response', response)
       history.go(0);
@@ -146,8 +146,8 @@ export default function Collection(){
 
     // Retrieve User info and Collection Item data
     Promise.all([
-      axios.get(`/user/${userID}`),
-      axios.get(`/user/${userID}/collections/${collectionID}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/user/${userID}`),
+      axios.get(`${process.env.REACT_APP_API_URL}/user/${userID}/collections/${collectionID}`)
     ])
     .then(all => {
       const [userResponse, collectionResponse] = all;
@@ -187,14 +187,14 @@ export default function Collection(){
     }
     if (collectionID === 'new') {
       // Create new list
-      axios.post(`/user/${userID}/collections`, postObject)
+      axios.post(`${process.env.REACT_APP_API_URL}/user/${userID}/collections`, postObject)
       .then(response => {
         const {listID} = response.data;
         history.push(`/user/${userID}/collections/${listID}`);
       })
     } else {
       // Update existing list
-      axios.post(`/user/${userID}/collections/${collectionID}`, postObject)
+      axios.post(`${process.env.REACT_APP_API_URL}/user/${userID}/collections/${collectionID}`, postObject)
       .then(() => {
         history.go(0);
       })

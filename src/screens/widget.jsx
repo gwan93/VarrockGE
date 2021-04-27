@@ -86,7 +86,7 @@ export default function Widget(props) {
   // widget details and widget history
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.get(`/widgets/${widgetID}`).then((all) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/widgets/${widgetID}`).then((all) => {
       const [detailsResponse, historyResponse] = all.data;
       // Order the history objects by id (oldest first, newest last)
       const sortedResponseData = historyResponse.sort((a, b) => b.id - a.id);

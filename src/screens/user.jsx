@@ -78,8 +78,8 @@ export default function User(){
   
   useEffect(() => {
     Promise.all([
-      axios.get(`/user/${userID}`),
-      axios.get('/widgets/owners')
+      axios.get(`${process.env.REACT_APP_API_URL}/user/${userID}`),
+      axios.get(`${process.env.REACT_APP_API_URL}/widgets/owners`)
     ])
     .then(all => {
       const [ userResponse, widgetOwnersResponse ] = all;

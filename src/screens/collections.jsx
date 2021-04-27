@@ -72,8 +72,8 @@ export default function Collections(){
   // user id, and a collection array
   useEffect(() => {
     Promise.all([
-      axios.get(`/user/${userID}`),
-      axios.get(`/user/${userID}/collections`)
+      axios.get(`${process.env.REACT_APP_API_URL}/user/${userID}`),
+      axios.get(`${process.env.REACT_APP_API_URL}/user/${userID}/collections`)
     ])
     .then(all => {
       const [userResponse, collectionsResponse] = all;
@@ -84,7 +84,7 @@ export default function Collections(){
         email: userResponse.data.email
       }));
       
-      const collectionPromises = collectionsResponse.data.map(aCollectionData => axios.get(`/user/1/collections/${aCollectionData.id}`));
+      const collectionPromises = collectionsResponse.data.map(aCollectionData => axios.get(`${process.env.REACT_APP_API_URL}/user/1/collections/${aCollectionData.id}`));
       Promise.all(collectionPromises)
       .then(collectionPromisesResults => {
         // console.log('collectionPromisesResults', collectionPromisesResults)

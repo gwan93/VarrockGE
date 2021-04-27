@@ -21,7 +21,7 @@ export default function AuthProvider(props) {
 
   // Perform login process for the user & save authID, etc
   const loginUser = function (email, password) {
-    axios.post('/login', { email, password })
+    axios.post(`${process.env.REACT_APP_API_URL}/login`, { email, password })
       .then(response => {
         setState(prev => ({
           ...prev,

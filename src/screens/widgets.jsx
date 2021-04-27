@@ -97,7 +97,7 @@ export default function Widgets() {
 
 
   useEffect(() => {
-    Promise.all([axios.get("/rarities"), axios.get("/subcategories")]).then(
+    Promise.all([axios.get(`${process.env.REACT_APP_API_URL}/rarities`), axios.get(`${process.env.REACT_APP_API_URL}/subcategories`)]).then(
       (all) => {
         const [rarities, subcategories] = all;
         const combinedArray = [...rarities.data, ...subcategories.data];
