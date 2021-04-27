@@ -19,27 +19,25 @@ This project was completed by [Jesse Mcdermott](https://github.com/mcdermottjess
 ## Project Setup
 
 1. Fork this repository, then clone your fork of this repository.
-2. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
+2. Create the `.env` in the root of the directory by using `.env.example` as a reference. The `.env` file should have the following content:
+   ```shell
+   CHOKIDAR_USEPOLLING=true
+   REACT_APP_API_URL=https://varrockge-api-gw.herokuapp.com
+   ```
 3. Install all dependencies:
    ```shell
    npm install
    ```
-4. Update the API Server URL within package.json. A live API server is currently being hosted at https://varrockge-api-gw.herokuapp.com, or use the localhost API if you are running the API server locally:
-   ```shell
-   "proxy": "https://varrockge-api-gw.herokuapp.com"
-   ```
-   ```shell
-   "proxy": "https://localhost:<API server port number>"
-   ```
-5. Start the web server using:
+
+4. Start the web server using:
      ```shell
      npm start
      ```
-6. Open your web browser and enter the default URL:
+5. Open your web browser and enter the default URL:
      ```browser
      http://localhost:<your port number>/
      ```
-7. When finished, the server can be safely shut down with `control + c`.
+6. When finished, the server can be safely shut down with `control + c`.
 
 ## Final Product
 
