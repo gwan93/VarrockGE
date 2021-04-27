@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import uuid from 'react-uuid';
 import axios from 'axios';
 import history from './History';
+require('dotenv').config({path: './.env'});
 
 
 export default function AuthProvider(props) {
@@ -27,7 +28,7 @@ export default function AuthProvider(props) {
     itemsInCart: [], // an array of objects
     myWidgets: []
   })
-  // console.log('state', state)
+  console.log('state', state)
 
   // console.log('@@@', state);
   // document.cookie="line=line26"
@@ -65,9 +66,9 @@ export default function AuthProvider(props) {
   useEffect(() => {
 
     Promise.all([
-      axios.get('/user/1/collections'),
-      axios.get('/widgets'),
-      axios.get('/widgets/owners')
+      axios.get(`/user/1/collections`),
+      axios.get(`/widgets`),
+      axios.get(`/widgets/owners`)
     ])
       .then(all => {
         // Getting response
