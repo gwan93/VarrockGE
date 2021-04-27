@@ -10,9 +10,10 @@ export default function Collections(){
       backgroundPosition: "center center",
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
-      marginTop: '75px'
+      marginTop: '75px',
+      height: '100vh'
     },
     container: {
       backgroundColor: theme.palette.background.paper,
@@ -130,44 +131,64 @@ export default function Collections(){
     });
   }
   
-  return(
+  return (
     <div>
-        <CssBaseline />
-        <main className={classes.main}>
-          <div className={classes.container}>
-            <Typography variant="body2" align="center" color="textSecondary">
-              Viewing
+      <CssBaseline />
+      <main className={classes.main}>
+        <div className={classes.container}>
+          <Typography variant="body2" align="center" color="textSecondary">
+            Viewing
+          </Typography>
+
+          <Typography
+            variant="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            {userProfile.email}
+          </Typography>
+        </div>
+
+        <div className={classes.container}>
+          <Container>
+            <div align="center">
+              <Link
+                className={classes.textLink}
+                to={`/user/${userProfile.id}/collections/new`}
+              >
+                <Typography
+                  variant="h4"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                >
+                  Create A New Collection
+                </Typography>
+              </Link>
+            </div>
+          </Container>
+        </div>
+
+        <div className={classes.container}>
+          <Container className={classes.cardGrid}>
+            <Typography
+              variant="h4"
+              align="center"
+              color="textPrimary"
+              gutterBottom
+            >
+              {userProfile.email}'s collections
             </Typography>
-
-            <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
-              {userProfile.email}
-            </Typography>
-          </div>
-
-          <div className={classes.container}>
-            <Container>
-              <div align="center">
-                  <Link className={classes.textLink} to={`/user/${userProfile.id}/collections/new`}>
-                    <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-                      Create A New Collection
-                    </Typography>
-                  </Link>
-              </div>
-            </Container>
-          </div>
-
-          <div className={classes.container}>
-            <Container className={classes.cardGrid}>
-              <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-                {userProfile.email}'s collections
-              </Typography>
-              <Grid className={classes.collections}>
-                {displayCollections}
-                {(!displayCollections || displayCollections.length === 0) && <h4>User does not have any collections yet</h4>}
-              </Grid>
-            </Container>
-          </div>
-        </main>
+            <Grid className={classes.collections}>
+              {displayCollections}
+              {(!displayCollections || displayCollections.length === 0) && (
+                <h4>User does not have any collections yet</h4>
+              )}
+            </Grid>
+          </Container>
+        </div>
+      </main>
     </div>
   );
 }

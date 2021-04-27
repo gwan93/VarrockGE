@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import {
   CssBaseline,
   Paper,
-  
   Button,
   makeStyles,
   Grid,
@@ -55,16 +54,14 @@ export default function Home({ setNavbar }) {
               alignContent={"flex-end"}
               alignItems={"flex-end"}
               justify={"flex-start"}
-              spacing={"2"}
             >
               <Grid item>
                 <Button
                   className={classes.buttonContainer}
-                  color={"primary"}
+                  color="primary"
                   onClick={redirectLogin}
-                  size={"large"}
-                  variant={"contained"}
-                  textSizeLarge
+                  size='large'
+                  variant="contained"
                 >
                   Login
                 </Button>
@@ -73,8 +70,8 @@ export default function Home({ setNavbar }) {
                 <Button
                   className={classes.marketButton}
                   onClick={redirectWidget}
-                  size={"large"}
-                  variant={"contained"}
+                  size='large'
+                  variant="contained"
                 >
                   MarketPlace
                 </Button>

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
-    // backgroundColor: "#fefeff",
     backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
     // backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
@@ -51,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
   },
   check: {
     fontSize: "20px",
-    backgroundColor: "black",
-    color: "white",
+    // backgroundColor: "black",
+    // color: "white",
     marginTop: "3em",
     marginBottom: "3em",
     display: "flex",
@@ -60,8 +59,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly"
   },
   checkbackground: {
-    backgroundColor: "black",
-    marginBottom: "3em"
+    // backgroundColor: "black",
+    marginBottom: "3em",
+    transition: 'box-shadow .1s',
+    "&:hover": {
+      boxShadow: '0 0 11px rgba(33,33,33,.2)'
+    }
   },
   main: {
     backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
@@ -107,8 +110,7 @@ export default function Widgets() {
   const renderRarityFilters = () => {
     const filterList = filters.filterList.map((filter) => {
       return (
-        <div class="checkbox" key={filter.name}>
-          
+        <div className="checkbox" key={filter.name}>
           <input
             id={filter.name}
             type="checkbox"
@@ -116,9 +118,8 @@ export default function Widgets() {
             onChange={() => onFilterChange(filter.name)} // eg. filter.name = "Pokemon"
           />
           <span>
-          <label htmlFor={filter.name}>  {filter.name}</label>
+            <label htmlFor={filter.name}> {filter.name}</label>
           </span>
-          
         </div>
       );
     });
@@ -194,31 +195,36 @@ export default function Widgets() {
       .map((widget) => {
         return (
           <Grid item key={widget.id} xs={12} sm={6} md={4}>
-          <Card className={classes.card} variant="outlined">
-            <CardMedia className={classes.cardMedia}>
-              <img src={widget.imgurl} width="280" alt="" />
-            </CardMedia>
-            <CardContent>
-              <Typography gutterBottom variant="h5">
-                <Link className={classes.textLink} to={`/widgets/${widget.id}`}>{widget.name}</Link>
-              </Typography>
-              <Typography>
-                NFT # {widget.id}: {widget.description}
-              </Typography>
-            </CardContent>
-            <CardActions className={classes.view}>
-              <Button 
-              size="small" 
-              color="primary"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to={`/widgets/${widget.id}`}
-              >
-                View
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
+            <Card className={classes.card} variant="outlined">
+              <CardMedia className={classes.cardMedia}>
+                <img src={widget.imgurl} width="280" alt="" />
+              </CardMedia>
+              <CardContent>
+                <Typography gutterBottom variant="h5">
+                  <Link
+                    className={classes.textLink}
+                    to={`/widgets/${widget.id}`}
+                  >
+                    {widget.name}
+                  </Link>
+                </Typography>
+                <Typography>
+                  NFT # {widget.id}: {widget.description}
+                </Typography>
+              </CardContent>
+              <CardActions className={classes.view}>
+                <Button
+                  size="small"
+                  color="primary"
+                  style={{ textDecoration: "none" }}
+                  component={Link}
+                  to={`/widgets/${widget.id}`}
+                >
+                  View
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
         );
       });
      return widgetList;
@@ -231,39 +237,29 @@ export default function Widgets() {
       <main className={classes.main}>
         <div className={classes.container}>
           <Container>
-            <Typography
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              <div>
-              <img src="https://bit.ly/3tGL24E" width="200" alt=""></img>
-              </div>
-              <div>
+            <Typography align="center" color="textPrimary" gutterBottom>
               <img src="https://bit.ly/32wJmi7" alt=""></img>
-              </div>
             </Typography>
           </Container>
         </div>
         <div align="left" direction="row">
           <Container>
-            <Card className={classes.checkbackground}>
-            <Grid className={classes.check}>
-              <div class="checkbox">
-              <input
-                id="myInput"
-                type="checkbox"
-                label="All"
-                onChange={() => onFilterChange("ALL")}
-                checked={
-                  filters.activeFilters.length === filters.filterList.length
-                }
-              />
-              <label htmlFor="myInput">All </label>
-              </div>
-              {renderRarityFilters()}
-          
-            </Grid>
+            <Card className={classes.checkbackground} variant="outlined">
+              <Grid className={classes.check}>
+                <div className="checkbox">
+                  <input
+                    id="myInput"
+                    type="checkbox"
+                    label="All"
+                    onChange={() => onFilterChange("ALL")}
+                    checked={
+                      filters.activeFilters.length === filters.filterList.length
+                    }
+                  />
+                  <label htmlFor="myInput">All </label>
+                </div>
+                {renderRarityFilters()}
+              </Grid>
             </Card>
             <Switch>
               <Route path="/widgets/:widgetID" component={Widget} />
@@ -272,15 +268,9 @@ export default function Widgets() {
           </Container>
         </div>
         <p></p>
-        <Typography
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              
-              <img src="https://bit.ly/3syU02E" width="300" alt=""></img>
-              
-            </Typography>
+        <Typography align="center" color="textPrimary" gutterBottom variant="h6">
+          Select an NFT to view
+        </Typography>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {renderWidgetList()}

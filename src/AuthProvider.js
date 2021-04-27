@@ -1,26 +1,16 @@
 import { createContext, useState, useEffect } from 'react';
-import uuid from 'react-uuid';
 import axios from 'axios';
 import history from './History';
+require('dotenv').config({path: './.env'});
 
 
 export default function AuthProvider(props) {
-  // This is the wrapper
-  // This wraps the App component
-  // The wrapper provides all the state for the app
-  const [auth, setAuth] = useState(false);
-
-  // console.log('history is', history);
-  const [id, setId] = useState();
-  const [user, setUser] = useState({ email: "", name: "", });
-  // console.log("initializing auth")
-
   const [state, setState] = useState({
     user: {
       balance: 10000,
-      id: 1,
+      id: 3,
       isadmin: true,
-      email: "jesse@jesse.com"
+      email: "gio@gio.com"
     },
     widgets: [], // an array of objects
     collections: [], // an array of objects
@@ -28,10 +18,6 @@ export default function AuthProvider(props) {
     myWidgets: []
   })
   // console.log('state', state)
-
-  // console.log('@@@', state);
-  // document.cookie="line=line26"
-  // console.log('reading cookie', Cookies.get('session'));
 
   // Perform login process for the user & save authID, etc
   const loginUser = function (email, password) {
@@ -46,8 +32,6 @@ export default function AuthProvider(props) {
             email: response.data.email
           }
         }))
-        setUser({ email, id, name: "Test User" })
-        setAuth(true)
         history.push("/widgets");
       })
       .catch(err => {
@@ -57,21 +41,20 @@ export default function AuthProvider(props) {
 
 
   const logoutUser = function (email, password) {
-    setUser({ email: "", name: "" });
-    setId(uuid()); //// ?? why here
-    setAuth(false);
+    // setUser({ email: "", name: "" });
+    // setId(uuid()); //// ?? why here
+    // setAuth(false);
   };
 
   useEffect(() => {
 
     Promise.all([
-      axios.get('/user/1/collections'),
-      axios.get('/widgets'),
-      axios.get('/widgets/owners')
+      axios.get(`/user/3/collections`),
+      axios.get(`/widgets`),
+      axios.get(`/widgets/owners`)
     ])
       .then(all => {
         // Getting response
-        // console.log('AHHHHHHHIMLOGGING', all)
         const [collectionsData, widgetsData, widgetOwnersData] = all
         // console.log(collectionsData.data);
         // console.log("lewidget", widgetsData)
@@ -80,7 +63,7 @@ export default function AuthProvider(props) {
         const myWidgetsID = [];
         widgetOwnersData.data.filter(widget => {
           if (widget.user_id === state.user.id) {
-            myWidgetsID.push(widget.widget_id)
+            return myWidgetsID.push(widget.widget_id)
           }
         })
         // Set state based on the response
@@ -116,28 +99,15 @@ export default function AuthProvider(props) {
               ...prev,
               collections: stateCollections
             }));
-            // console.log('MYFINALState', state)
           });
-        // for (const id in collectionsData.data) {
-        //   console.log('id is', id)
-        //   axios.get(`/user/1/collections/${collectionsData.id}`)
-        //     .then(response => {
-        //       console.log('idcollectionsthingforgio', response.data)
-        //       // console.log('id[widget]', id[widget_id])
-        //       setState(prev => ({
-        //         ...prev,
-        //         [id["widgets"]]: response.data
-        //       }))
-        //     })
-        // }
       })
       .catch(err => {
-        console.log('@@@@@@@@@@@@@@@@', err)
+        console.log('Error retrieving data:', err)
       })
-  }, []);
+  }, [state.user.id]);
 
   // authContext will expose these items
-  const userData = { state, setState, auth, user, loginUser, logoutUser };  
+  const userData = { state, setState, loginUser, logoutUser };  
 
   // We can use this component to wrap any content we want to share this context
   return (

@@ -44,17 +44,17 @@ const useStyles = makeStyles((theme) => ({
 export default function Admin(props) {
   const classes = useStyles();
   const { setState } = useContext(authContext);
-  const [name, setName] = useState("");
-  const [categoryID, setCategoryID] = useState("");
-  const [description, setDescription] = useState("");
-  const [rarityID, setRarityID] = useState("");
-  const [cost, setCost] = useState("");
-  const [image, setImage] = useState("");
+  const [name, setName] = useState("Mewtwo & Mew");
+  const [categoryID, setCategoryID] = useState(1);
+  const [description, setDescription] = useState("The first generation legendaries.");
+  const [rarityID, setRarityID] = useState(4);
+  const [cost, setCost] = useState(49.99);
+  const [image, setImage] = useState("https://64.media.tumblr.com/2c8d74ad40a09b2cf0d77e722a9c1a79/705fb6ba3c0ca419-b9/s500x750/c69dd2b6c32a589358e7bb897f027ad6d58f17e8.jpg?fbclid=IwAR04G87W6c1W-Kd0FcgNj7QecTPXaPusdOsJ2boJSs_3hjkJQYQa-OFvagw");
 
   //updating input fields to create new widget
   const onCreateName = function (event) {
     setName(event.target.value);
-    console.log("name", name);
+    // console.log("name", name);
   };
 
   const onCreateRarity = function (event) {
@@ -100,8 +100,8 @@ export default function Admin(props) {
           ...prev,
           widgets: [...prev.widgets, response.data],
         }));
-        console.log("Added successfully");
-        console.log("response", response);
+        // console.log("Added successfully");
+        // console.log("response", response);
       })
       .catch((err) => {
         console.log("Something went wrong", err);
@@ -110,105 +110,104 @@ export default function Admin(props) {
 
   return (
     <main className={classes.main}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" class="login">
-          Admin
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                name="nftName"
-                variant="outlined"
-                required
-                fullWidth
-                id="nftName"
-                label="NFT Title"
-                onChange={onCreateName}
-                autoFocus
-              />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" className="login">
+            Admin
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={onSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="nftName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="nftName"
+                  label="NFT Title"
+                  onChange={onCreateName}
+                  value={name}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="category"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="category"
+                  label="Category No."
+                  onChange={onCreateCategory}
+                  value={categoryID}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="rarity"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="rarity"
+                  label="Rarity No."
+                  onChange={onCreateRarity}
+                  value={rarityID}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="cost"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="cost"
+                  label="Cost ($)"
+                  onChange={onCreateCost}
+                  value={cost}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="description"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="description"
+                  label="Description"
+                  onChange={onCreateDescription}
+                  value={description}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="imageUrl"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="imageUrl"
+                  label="Image URL"
+                  onChange={onCreateImage}
+                  value={image}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="category"
-                variant="outlined"
-                required
-                fullWidth
-                id="category"
-                label="Category No."
-                onChange={onCreateCategory}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="rarity"
-                variant="outlined"
-                required
-                fullWidth
-                id="rarity"
-                label="Rarity No."
-                onChange={onCreateRarity}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="cost"
-                variant="outlined"
-                required
-                fullWidth
-                id="cost"
-                label="Cost"
-                onChange={onCreateCost}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="description"
-                variant="outlined"
-                required
-                fullWidth
-                id="description"
-                label="Description"
-                onChange={onCreateDescription}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="imageUrl"
-                variant="outlined"
-                required
-                fullWidth
-                id="imageUrl"
-                label="Image URL"
-                onChange={onCreateImage}
-                autoFocus
-              />
-            </Grid>
-          </Grid>
-              
-              <Button
-                
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => { 
-                  alert('💯 NFT Added Successfully 🔥'); 
-                  window.location.href = "/widgets"
-                }}
-              >
-                Create NFT
-              </Button>
-        </form>
-      </div>
-    </Container>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => {
+                alert("💯 NFT Added Successfully 🔥");
+                window.location.href = "/widgets";
+              }}
+            >
+              Create NFT
+            </Button>
+          </form>
+        </div>
+      </Container>
     </main>
   );
 }
