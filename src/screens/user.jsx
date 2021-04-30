@@ -2,66 +2,44 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
-import { makeStyles, Typography, Card, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
+import { makeStyles, Typography, CssBaseline, Grid, Container } from '@material-ui/core';
+import Product from '../components/Product';
+
+const useStyles = makeStyles((theme) => ({
+  main:{
+    backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
+    backgroundPosition: "center center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '75px'
+  },
+  container: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6, 0, 6),
+    border: 'rgb(224, 224, 224) 2px solid',
+    borderRadius: '5px',
+    width: "960px",
+    margin: '8px 0 8px 0',
+    transition: 'box-shadow .1s',
+    "&:hover": {
+      boxShadow: '0 0 11px rgba(33,33,33,.2)'
+    }
+  },
+  textLink: {
+    color: 'inherit',
+  },
+  cardGrid: {
+    padding: '20px 10px 10px 10px',
+    // border: 'rgb(224, 224, 224) 2px solid',
+    borderRadius: '5px',
+    marginBottom: '20px'
+  },
+}));
 
 export default function User(){
-  const useStyles = makeStyles((theme) => ({
-    main:{
-      backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
-      backgroundPosition: "center center",
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: '75px'
-    },
-    container: {
-      backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(6, 0, 6),
-      border: 'rgb(224, 224, 224) 2px solid',
-      borderRadius: '5px',
-      width: "960px",
-      margin: '8px 0 8px 0',
-      transition: 'box-shadow .1s',
-      "&:hover": {
-        boxShadow: '0 0 11px rgba(33,33,33,.2)'
-      }
-    },
-    button: {
-      marginTop: '40px',
-    },
-    textLink: {
-      color: 'inherit',
-      // textDecoration: 'inherit'
-    },
-    cardGrid: {
-      padding: '20px 10px 10px 10px',
-      // border: 'rgb(224, 224, 224) 2px solid',
-      borderRadius: '5px',
-      marginBottom: '20px'
-    },
-    card: {
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '5px 5px 5px 5px',
-      border: '2px lightgrey solid',
-      transition: 'box-shadow .1s',
-      "&:hover": {
-        boxShadow: '0 0 11px rgba(33,33,33,.2)'
-      }
-    },
-    cardMedia: {
-      display: 'flex',
-      alignItems: 'center',
-      height: '435px'
-    },
-    cardContent: {
-      flexGrow: 1
-    }
-  }));
   const classes = useStyles();
-
   const userID = Number(useParams().id);
   const { state } = useContext(authContext);
   const [ userProfile, setUserProfile ] = useState({
@@ -113,23 +91,21 @@ export default function User(){
     })
   }, [userID, state.widgets]);
 
-  const displayWidgets = userProfile.userWidgets.map(widget => {
-    return(
-      <Grid item key={widget.id} xs={12} sm={6} md={4}>
-        <Card className={classes.card} variant="outlined">
-          <CardMedia className={classes.cardMedia}>
-            <img src={widget.imgurl} width="280" alt=""/>
-          </CardMedia>
-          <CardContent>
-            <Typography gutterBottom variant="h5">
-              <Link className={classes.textLink} to={`/widgets/${widget.id}`}>{widget.name}</Link>
-            </Typography>
-            <Typography>
-              {widget.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+  const displayWidgets = userProfile.userWidgets.map((widget) => {
+    return (
+      <Product
+        key={widget.id}
+        id={widget.id}
+        imgurl={widget.imgurl}
+        description={widget.description}
+        rarity_id={widget.rarity_id}
+        subcategory_id={widget.subcategory_id}
+        name={widget.name}
+        msrp_cents={widget.msrp_cents}
+        for_sale_by_owner={widget.for_sale_by_owner}
+        hash={widget.hash}
+        current_sell_price_cents={widget.current_sell_price_cents}
+      />
     );
   });
 

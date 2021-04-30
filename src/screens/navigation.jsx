@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../AuthProvider";
-import { Typography, AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 
@@ -60,8 +60,8 @@ export default function Navigation() {
             <img src="https://i.imgur.com/hZMZGsi.jpg" className={classes.image}alt=""></img>
             <Link to="/" className={classes.navTitle}>Home</Link>
             {state.user.isadmin && <Link to="/admin" className={classes.navTitle}>Admin</Link>}
-            <Link to={`/user/${userID}/collections`} className={classes.navTitle}>NFT Marketplace</Link>
-            <Link to={`/user/${userID}`} className={classes.navTitle}>My Collections</Link>
+            <Link to="/widgets" className={classes.navTitle}>NFT Marketplace</Link>
+            <Link to={`/user/${userID}/collections`} className={classes.navTitle}>My Collections</Link>
           </div>
 
           <div className={classes.navRight}>
