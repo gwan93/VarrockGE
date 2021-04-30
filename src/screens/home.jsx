@@ -4,12 +4,10 @@ import {
   CssBaseline,
   Paper,
   Button,
-  makeStyles,
-  Grid,
-  
+  makeStyles
 } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   paperContainer: {
     height: "100vh",
     backgroundImage: `url(https://i.imgur.com/dj04uE0.jpg)`,
@@ -19,17 +17,20 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden'
   },
   buttonContainer: {
+    display: "flex",
+    alignContent: "flex-end",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
     marginTop: "1em",
     marginLeft: "1em",
-    backgroundColor: "black",
-    "&:hover": {
-      backgroundColor: "#56144D",
-    },
   },
-  marketButton: {
+  button: {
+    marginRight: "0.3em",
+    opacity: "0.6",
     backgroundColor: "white",
     "&:hover": {
-      backgroundColor: "#56144D",
+      opacity: "0.8",
+      backgroundColor: "#e9ecef",
     },
   },
 }));
@@ -37,49 +38,33 @@ const useStyles = makeStyles((theme) => ({
 export default function Home({ setNavbar }) {
   let classes = useStyles();
   let history = useHistory();
-  const redirectLogin = () => {
-    history.push("/login");
-  };
-  const redirectWidget = () => {
-    history.push("/widgets");
-  };
+
+  const redirectLogin = () => history.push("/login");
+  const redirectWidget = () => history.push("/widgets");
 
   return (
     <div>
-      <CssBaseline>
-        <Paper className={classes.paperContainer}>
-          <div>
-            <Grid
-              container
-              alignContent={"flex-end"}
-              alignItems={"flex-end"}
-              justify={"flex-start"}
-            >
-              <Grid item>
-                <Button
-                  className={classes.buttonContainer}
-                  color="primary"
-                  onClick={redirectLogin}
-                  size='large'
-                  variant="contained"
-                >
-                  Login
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  className={classes.marketButton}
-                  onClick={redirectWidget}
-                  size='large'
-                  variant="contained"
-                >
-                  MarketPlace
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
-        </Paper>
-      </CssBaseline>
+      <CssBaseline />
+      <Paper className={classes.paperContainer}>
+        <div className={classes.buttonContainer}>
+          <Button
+            className={classes.button}
+            onClick={redirectLogin}
+            size="large"
+            variant="contained"
+          >
+            Login
+          </Button>
+          <Button
+            className={classes.button}
+            onClick={redirectWidget}
+            size="large"
+            variant="contained"
+          >
+            MarketPlace
+          </Button>
+        </div>
+      </Paper>
     </div>
   );
 }
