@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../AuthProvider";
-import { Typography, AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 
@@ -13,35 +13,35 @@ const useStyles = makeStyles((theme) => ({
     top: '0',
     height: '70px'
   },
-
-  title: {
-    flexGrow: 1, 
-  },
-
-  user: {
-   flexGrow: 30,
-   display: "flex",
-   justifyContent: "flex-end",
- },
-
- cart: {
-  flexGrow: 0.5,
-   display: "flex",
-   justifyContent: "flex-end",
-  
- },
-
-  login: {
-    flexGrow: 0.5,
+  navBar: {
     display: "flex",
-    justifyContent: "flex-end",
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
-
+  navLeft: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  navRight: {
+    display: "flex",
+    flexdirection: "row",
+  },
+  navTitle: {
+    display: "flex",
+    flexGrow: 1,
+    textDecoration: "none",
+    color: "inherit",
+    fontSize: "1.5em",
+    fontWeight: "500",
+    margin: "0 0.3em 0 0.5em"
+  },
   image: {
     flexGrow: 0.3,
     marginLeft: "-25px",
     marginRight: "25px",
-    background: "black"
+    background: "black",
+    width: 40
     
   },
 }));
@@ -54,102 +54,23 @@ export default function Navigation() {
   return (
     <div>
       <AppBar position="static" className={classes.root}>
-        <Toolbar>
-          <img
-            src="https://i.imgur.com/hZMZGsi.jpg"
-            width="40"
-            className={classes.image}
-            alt=""
-          ></img>
-          <Typography
-            variant="h6"
-            align="inherit"
-            className={classes.title}
-            color="inherit"
-            style={{ textDecoration: "none" }}
-            component={Link}
-            to="/"
-          >
-            Home
-          </Typography>
-          {state.user.isadmin && (
-            <Typography
-              variant="h6"
-              align="inherit"
-              className={classes.title}
-              color="inherit"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to="/admin"
-            >
-              Admin
-            </Typography>
-          )}
-          <Typography
-            variant="h6"
-            align="inherit"
-            className={classes.title}
-            color="inherit"
-            style={{ textDecoration: "none" }}
-            component={Link}
-            to="/widgets"
-          >
-            NFT Marketplace
-          </Typography>
-          <Typography
-            variant="h6"
-            className={classes.title}
-            color="inherit"
-            style={{ textDecoration: "none" }}
-            component={Link}
-            to={`/user/${userID}/collections`}
-          >
-            My Collections
-          </Typography>
-          {state.user.id && (
-            <Typography
-              className={classes.user}
-              color="inherit"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to={`/user/${userID}`}
-            >
-              {state.user.email}
-            </Typography>
-          )}
-          {state.user.id && (
-            <Typography
-              className={classes.cart}
-              color="inherit"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to="/cart"
-            >
-              <ShoppingCartOutlinedIcon /> Cart ({state.itemsInCart.length})
-            </Typography>
-          )}
-          {!state.user.id && (
-            <Typography
-              className={classes.login}
-              color="inherit"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to="/login"
-            >
-              Login
-            </Typography>
-          )}
-          {state.user.id && (
-            <Typography
-              className={classes.login}
-              color="inherit"
-              style={{ textDecoration: "none" }}
-              component={Link}
-              to="/login"
-            >
-              Logout
-            </Typography>
-          )}
+        <Toolbar className={classes.navBar}>
+
+          <div className={classes.navLeft}>
+            <img src="https://i.imgur.com/hZMZGsi.jpg" className={classes.image}alt=""></img>
+            <Link to="/" className={classes.navTitle}>Home</Link>
+            {state.user.isadmin && <Link to="/admin" className={classes.navTitle}>Admin</Link>}
+            <Link to="/widgets" className={classes.navTitle}>NFT Marketplace</Link>
+            <Link to={`/user/${userID}/collections`} className={classes.navTitle}>My Collections</Link>
+          </div>
+
+          <div className={classes.navRight}>
+            {state.user.id && <Link to={`/user/${userID}`} className={classes.navTitle}>{state.user.email}</Link>}
+            {state.user.id && <Link to="/cart" className={classes.navTitle}><ShoppingCartOutlinedIcon /> Cart ({state.itemsInCart.length})</Link>}
+            {!state.user.id && <Link to="/login" className={classes.navTitle}>Login</Link>}
+            {state.user.id && <Link to="/login" className={classes.navTitle}>Logout</Link>}
+          </div>
+          
         </Toolbar>
       </AppBar>
     </div>
