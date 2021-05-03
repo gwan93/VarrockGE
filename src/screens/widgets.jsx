@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "../App.css"
-import Product from '../components/Product';
+import ProductCard from '../components/ProductCard';
 require('dotenv').config({path: './../.env'});
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    margin: '0 25vw 0 25vw',
+    margin: '0 5vw 0 5vw',
   },
   products: {
     border: '3px blue solid',
@@ -75,21 +75,32 @@ export default function Widgets() {
   const classes = useStyles();
   const { state } = useContext(authContext);
   const [filters, setFilters] = useState({
-    filterList: [],
-    activeFilters: [],
+    rarityFilterList: [],
+    activeRarityFilters: [],
+    subcategoryFilterList: [],
+    activeSubcategoryFilters: []
   });
   // console.log("state", state.widgets);
   // console.log('filters', filters)
 
 
   useEffect(() => {
-    Promise.all([axios.get(`${process.env.REACT_APP_API_URL}/rarities`), axios.get(`${process.env.REACT_APP_API_URL}/subcategories`)]).then(
+    Promise.all([
+      axios.get(`${process.env.REACT_APP_API_URL}/rarities`),
+      axios.get(`${process.env.REACT_APP_API_URL}/subcategories`)
+    ])
+      .then(
       (all) => {
         const [rarities, subcategories] = all;
-        const combinedArray = [...rarities.data, ...subcategories.data];
+        const rarityNames = rarities.data.map((rarity) => rarity.name)
+        const subcategoryNames = subcategories.data.map((subcategory) => subcategory.name)
+
         setFilters((prev) => ({
           ...prev,
-          filterList: combinedArray,
+          rarityFilterList: [...rarities.data],
+          activeRarityFilters: rarityNames,
+          subcategoryFilterList: [...subcategories.data],
+          activeSubcategoryFilters: subcategoryNames
         }));
       }
     );
@@ -97,14 +108,14 @@ export default function Widgets() {
 
   // For each filter, render a checkbox and the name of the filter
   const renderRarityFilters = () => {
-    const filterList = filters.filterList.map((filter) => {
+    const filterList = filters.rarityFilterList.map((filter) => {
       return (
         <div className="checkbox" key={filter.name}>
           <input
             id={filter.name}
             type="checkbox"
-            checked={filters.activeFilters.includes(filter.name)}
-            onChange={() => onFilterChange(filter.name)} // eg. filter.name = "Pokemon"
+            checked={filters.activeRarityFilters.includes(filter.name)}
+            onChange={() => onRarityFilterChange(filter.name)} // eg. filter.name = "Pokemon"
           />
           <span>
             <label htmlFor={filter.name}> {filter.name}</label>
@@ -115,38 +126,96 @@ export default function Widgets() {
     return filterList;
   };
 
-  const onFilterChange = (filter) => {
+  const renderSubcategoryFilters = () => {
+    const filterList = filters.subcategoryFilterList.map((filter) => {
+      // console.log('filter', filter, 'filters.activeSubcategoryFilters', filters.activeSubcategoryFilters, filters.activeSubcategoryFilters.includes(filter.name))
+      // console.log('within filters', filter)
+      return (
+        <div className="checkbox" key={filter.name}>
+          <input
+            id={filter.name}
+            type="checkbox"
+            checked={filters.activeSubcategoryFilters.includes(filter.name)}
+            onChange={() => onSubcategoryFilterChange(filter.name)} // eg. filter.name = "Pokemon"
+          />
+          <span>
+            <label htmlFor={filter.name}> {filter.name}</label>
+          </span>
+        </div>
+      );
+    });
+    return filterList;
+  };
+
+  const onRarityFilterChange = (filter) => {
     // If the "all" checkbox is interacted with:
     // Uncheck all filter checkboxes if all filters were originally checked, OR
     // Check all filter checkboxes if at least one filter was not originally checked
-    if (filter === "ALL") {
-      if (filters.activeFilters.length === filters.filterList.length) {
+    if (filter === "ALLRARITIES") {
+      if (filters.activeRarityFilters.length === filters.rarityFilterList.length) {
         setFilters((prev) => ({
           ...prev,
-          activeFilters: [],
+          activeRarityFilters: [],
         }));
       } else {
         setFilters((prev) => ({
           ...prev,
-          activeFilters: filters.filterList.map((filter) => filter.name),
+          activeRarityFilters: filters.rarityFilterList.map((filter) => filter.name),
         }));
       }
     } else {
       // If a filter checkbox is interacted with:
       // Remove it from the filters.activeFilters array if the box is unchecked, OR
       // Add it to the filters.activeFilters array if the box is checked
-      if (filters.activeFilters.includes(filter)) {
-        const filterIndex = filters.activeFilters.indexOf(filter);
-        const newFilter = [...filters.activeFilters];
+      if (filters.activeRarityFilters.includes(filter)) {
+        const filterIndex = filters.activeRarityFilters.indexOf(filter);
+        const newFilter = [...filters.activeRarityFilters];
         newFilter.splice(filterIndex, 1);
         setFilters((prev) => ({
           ...prev,
-          activeFilters: newFilter,
+          activeRarityFilters: newFilter,
         }));
       } else {
         setFilters((prev) => ({
           ...prev,
-          activeFilters: [...filters.activeFilters, filter],
+          activeRarityFilters: [...filters.activeRarityFilters, filter],
+        }));
+      }
+    }
+  };
+
+  const onSubcategoryFilterChange = (filter) => {
+    // If the "all" checkbox is interacted with:
+    // Uncheck all filter checkboxes if all filters were originally checked, OR
+    // Check all filter checkboxes if at least one filter was not originally checked
+    if (filter === "ALLSUBCATEGORIES") {
+      if (filters.activeSubcategoryFilters.length === filters.subcategoryFilterList.length) {
+        setFilters((prev) => ({
+          ...prev,
+          activeSubcategoryFilters: [],
+        }));
+      } else {
+        setFilters((prev) => ({
+          ...prev,
+          activeSubcategoryFilters: filters.subcategoryFilterList.map((filter) => filter.name),
+        }));
+      }
+    } else {
+      // If a filter checkbox is interacted with:
+      // Remove it from the filters.activeFilters array if the box is unchecked, OR
+      // Add it to the filters.activeFilters array if the box is checked
+      if (filters.activeSubcategoryFilters.includes(filter)) {
+        const filterIndex = filters.activeSubcategoryFilters.indexOf(filter);
+        const newFilter = [...filters.activeSubcategoryFilters];
+        newFilter.splice(filterIndex, 1);
+        setFilters((prev) => ({
+          ...prev,
+          activeSubcategoryFilters: newFilter,
+        }));
+      } else {
+        setFilters((prev) => ({
+          ...prev,
+          activeSubcategoryFilters: [...filters.activeSubcategoryFilters, filter],
         }));
       }
     }
@@ -158,19 +227,19 @@ export default function Widgets() {
     // then render every single widget available
     // otherwise, only render the widgets that satisfy the filters in the active filters list
     let filteredList;
-    if (
-      filters.activeFilters.length === 0 ||
-      filters.activeFilters.length === filters.filterList.length
-    ) {
-      filteredList = state.widgets;
-    } else {
+    // if (
+    //   filters.activeRarityFilters.length === 0 ||
+    //   filters.activeRarityFilters.length === filters.rarityFilterList.length
+    // ) {
+    //   filteredList = state.widgets;
+    // } else {
       filteredList = state.widgets.filter((item) => {
         return (
-          filters.activeFilters.includes(item.rarity_id) &&
-          filters.activeFilters.includes(item.subcategory_id)
+          filters.activeRarityFilters.includes(item.rarity_id) &&
+          filters.activeSubcategoryFilters.includes(item.subcategory_id)
         );
       });
-    }
+    // }
 
     // The filteredList may be showing widgets out of order.
     // Sort the filteredList by their widget id numbers, lowest id numbers first
@@ -183,7 +252,7 @@ export default function Widgets() {
       .filter((widget) => widget.for_sale_by_owner)
       .map((widget) => {
         return (
-          <Product
+          <ProductCard
             key={widget.id}
             id={widget.id}
             imgurl={widget.imgurl}
@@ -212,6 +281,10 @@ export default function Widgets() {
               <img src="https://bit.ly/32wJmi7" alt=""></img>
             </Typography>
           </Container>
+          <Switch>
+            <Route path="/widgets/:widgetID" component={Widget} />
+            <Route path="/widgets"></Route>
+          </Switch>
         </div>
 
         <div className={classes.marketplace}>
@@ -223,23 +296,33 @@ export default function Widgets() {
                   <Grid className={classes.check}>
                     <div className="checkbox">
                       <input
-                        id="myInput"
+                        id="allRarities"
                         type="checkbox"
                         label="All"
-                        onChange={() => onFilterChange("ALL")}
+                        onChange={() => onRarityFilterChange("ALLRARITIES")}
                         checked={
-                          filters.activeFilters.length === filters.filterList.length
+                          filters.activeRarityFilters.length === filters.rarityFilterList.length
                         }
                       />
-                      <label htmlFor="myInput">All </label>
+                      <label htmlFor="allRarities">All Rarities</label>
                     </div>
                     {renderRarityFilters()}
+                    <div className="checkbox">
+                      <input
+                        id="allSubcategories"
+                        type="checkbox"
+                        label="All"
+                        onChange={() => onSubcategoryFilterChange("ALLSUBCATEGORIES")}
+                        checked={
+                          filters.activeSubcategoryFilters.length === filters.subcategoryFilterList.length
+                        }
+                      />
+                      <label htmlFor="allSubcategories">All Subcategories</label>
+                    </div>
+                    {renderSubcategoryFilters()}
                   </Grid>
                 </Card>
-                <Switch>
-                  <Route path="/widgets/:widgetID" component={Widget} />
-                  <Route path="/widgets"></Route>
-                </Switch>
+                
               </Container>
             </div>
           </div>

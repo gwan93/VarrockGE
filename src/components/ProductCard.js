@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Product(props) {
+export default function ProductCard(props) {
   const classes = useStyles();
 
   return (
