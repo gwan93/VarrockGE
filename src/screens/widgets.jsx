@@ -25,28 +25,50 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     padding: "40px 0",
   },
-
   check: {
     fontSize: "20px",
-
     marginTop: "3em",
     marginBottom: "3em",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-evenly"
   },
-  checkbackground: {
+  sidebar: {
     marginBottom: "3em",
     transition: 'box-shadow .1s',
     "&:hover": {
       boxShadow: '0 0 11px rgba(33,33,33,.2)'
-    }
+    },
+    border: '3px purple solid',
+    padding: '0 1em 0 1em'
   },
   main: {
     backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
     backgroundPosition: "center center",
-    marginTop: '75px'
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '75px',
+    minHeight: 'calc(100vh - 75px)',
+    border: '3px yellow solid',
   },
+  marketplace: {
+    border: '3px red solid',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    margin: '0 25vw 0 25vw',
+  },
+  products: {
+    border: '3px blue solid',
+    padding: '0 1em 0 1em',
+    flexGrow: 1
+  },
+  filterList: {
+    border: '3px green solid',
+    width: '25%'
+    // padding: '0 1em 0 1em'
+
+  }
 }));
 
 export default function Widgets() {
@@ -191,40 +213,49 @@ export default function Widgets() {
             </Typography>
           </Container>
         </div>
-        <div align="left" direction="row">
-          <Container>
-            <Card className={classes.checkbackground} variant="outlined">
-              <Grid className={classes.check}>
-                <div className="checkbox">
-                  <input
-                    id="myInput"
-                    type="checkbox"
-                    label="All"
-                    onChange={() => onFilterChange("ALL")}
-                    checked={
-                      filters.activeFilters.length === filters.filterList.length
-                    }
-                  />
-                  <label htmlFor="myInput">All </label>
-                </div>
-                {renderRarityFilters()}
+
+        <div className={classes.marketplace}>
+          <div className={classes.filterList}>
+            <div align="left" direction="column">
+              <Container>
+                <Card className={classes.sidebar} variant="outlined">
+                  <Typography>Filters</Typography>
+                  <Grid className={classes.check}>
+                    <div className="checkbox">
+                      <input
+                        id="myInput"
+                        type="checkbox"
+                        label="All"
+                        onChange={() => onFilterChange("ALL")}
+                        checked={
+                          filters.activeFilters.length === filters.filterList.length
+                        }
+                      />
+                      <label htmlFor="myInput">All </label>
+                    </div>
+                    {renderRarityFilters()}
+                  </Grid>
+                </Card>
+                <Switch>
+                  <Route path="/widgets/:widgetID" component={Widget} />
+                  <Route path="/widgets"></Route>
+                </Switch>
+              </Container>
+            </div>
+          </div>
+
+          <div className={classes.products}>
+            <Typography align="center" color="textPrimary" gutterBottom variant="h6">
+              Select an NFT to view
+            </Typography>
+            <Container className={classes.cardGrid} maxWidth="md">
+              <Grid container spacing={4}>
+                {renderWidgetList()}
               </Grid>
-            </Card>
-            <Switch>
-              <Route path="/widgets/:widgetID" component={Widget} />
-              <Route path="/widgets"></Route>
-            </Switch>
-          </Container>
+            </Container>
+          </div>
         </div>
-        <p></p>
-        <Typography align="center" color="textPrimary" gutterBottom variant="h6">
-          Select an NFT to view
-        </Typography>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4}>
-            {renderWidgetList()}
-          </Grid>
-        </Container>
+
       </main>
     </div>
   );
