@@ -5,13 +5,14 @@ import Admin from './screens/admin';
 import Login from './screens/login';
 import Home from './screens/home';
 import Widgets from './screens/widgets';
+import Widget from './screens/widget';
 import User from './screens/user';
 import history from './History';
 import Navigation from './screens/navigation';
 import Cart from './screens/cart';
 import Collections from './screens/collections';
 import Collection from './screens/collection';
-import ProductDetails from './components/ProductCard';
+import ProductCard from './components/ProductCard';
 
 
 export default function App() {
@@ -26,8 +27,8 @@ export default function App() {
           <div>
             <Navigation />
             <Route path="/admin" component={Admin}></Route>
-            <Route path="/widgets" component={Widgets}></Route>
-            <Route path="/widgets/:widgetID" component={ProductDetails}></Route>
+            <Route path="/widgets/:widgetID" component={Widget}></Route>
+            <Route exact path="/widgets" component={Widgets}></Route>
             <Route path="/user/:id" component={User}></Route>
             <Route path="/user/:id/collections" component={Collections}></Route>
             <Route path="/user/:id/collections/:collectionID" component={Collection}></Route>

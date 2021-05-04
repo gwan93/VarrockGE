@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   filterList: {
     border: '3px green solid',
-    width: '25%'
+    width: '15%'
     // padding: '0 1em 0 1em'
 
   }
@@ -281,10 +281,10 @@ export default function Widgets() {
               <img src="https://bit.ly/32wJmi7" alt=""></img>
             </Typography>
           </Container>
-          <Switch>
-            <Route path="/widgets/:widgetID" component={Widget} />
-            <Route path="/widgets"></Route>
-          </Switch>
+          {/* <Switch> */}
+            {/* <Route path="/widgets/:widgetID" component={Widget} /> */}
+            {/* <Route path="/widgets"></Route> */}
+          {/* </Switch> */}
         </div>
 
         <div className={classes.marketplace}>
