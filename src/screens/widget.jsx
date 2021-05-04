@@ -13,6 +13,9 @@ import {
   CssBaseline,
   Grid,
   Container,
+  AppBar,
+  Tabs,
+  Tab
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
-    border: 'red 3px solid'
+    // border: 'red 3px solid'
   },
   historyCard: {
     flexDirection: "column",
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar-thumb": {
       backgroundColor: "rgba(33,33,33,.1)",
     },
-    border: 'green 3px solid',
+    // border: 'green 3px solid',
 
   },
   card: {
@@ -54,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     margin: "25px 0 50px 0",
-    border: 'orange 3px solid'
+    // border: 'orange 3px solid'
   },
   cardContent: {
     flexGrow: 0.5,
@@ -64,6 +67,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0em",
     display: "flex",
     justifyContent: "center",
+    // border: 'purple 3px solid'
+
   },
   close: {
     flexGrow: 1,
@@ -73,17 +78,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "center",
     topMargin: "2em",
-    border: 'lightblue 3px solid'
+    // border: 'lightblue 3px solid'
   },
   background: {
     backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(https://i.imgur.com/WEBV8Q1.gif)`,
     backgroundPosition: "center center",
-    border: 'darkgreen 3px solid',
+    // border: 'darkgreen 3px solid',
     marginTop: '75px',
     minHeight: 'calc(100vh - 75px)',
   },
   productDetails: {
-    border: 'red 3px solid',
+    // border: 'red 3px solid',
     margin: '0 5vw 0 5vw',
   }
 }));
@@ -96,6 +101,11 @@ export default function Widget(props) {
     details: {},
     history: [],
   });
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   // Axios request using widgetID from params to get
   // widget details and widget history
@@ -201,12 +211,19 @@ export default function Widget(props) {
             </Grid>
 
             <Grid item xs={12} sm={6} md={6}>
-              <Typography className={classes.history} variant="h5">
-                Purchase History
-              </Typography>
-              <Container className={classes.historyContainer}>
-                {displayWidgetHistory}
-              </Container>
+              <AppBar position="static" color="transparent">
+                <Tabs value={selectedTab} onChange={handleChange} centered>
+                  <Tab label="Details" />
+                  <Tab label="Purchase History" />
+                </Tabs>
+              </AppBar>
+              {selectedTab === 0 && "Hello"}
+              {selectedTab === 1 && (
+                <Container className={classes.historyContainer}>
+                  {displayWidgetHistory}
+                </Container>
+              )}
+              
             </Grid>
           </main>
         </div>

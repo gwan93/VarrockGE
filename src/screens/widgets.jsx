@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
-import Widget from "./widget";
+// import { Route, Switch } from "react-router-dom";
+// import Widget from "./widget";
 import { authContext } from "../AuthProvider";
 import axios from "axios";
 import {
