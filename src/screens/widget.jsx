@@ -217,7 +217,7 @@ export default function Widget(props) {
                   <Tab label="Purchase History" />
                 </Tabs>
               </AppBar>
-              {selectedTab === 0 && "Hello"}
+              {selectedTab === 0 && "Product details here"}
               {selectedTab === 1 && (
                 <Container className={classes.historyContainer}>
                   {displayWidgetHistory}
