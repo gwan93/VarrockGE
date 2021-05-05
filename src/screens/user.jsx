@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
 import { makeStyles, Typography, CssBaseline, Grid, Container } from '@material-ui/core';
-import Product from '../components/Product';
+import ProductCard from '../components/ProductCard';
 
 const useStyles = makeStyles((theme) => ({
   main:{
@@ -93,7 +93,7 @@ export default function User(){
 
   const displayWidgets = userProfile.userWidgets.map((widget) => {
     return (
-      <Product
+      <ProductCard
         key={widget.id}
         id={widget.id}
         imgurl={widget.imgurl}
