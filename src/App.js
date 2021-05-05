@@ -12,7 +12,6 @@ import Navigation from './screens/navigation';
 import Cart from './screens/cart';
 import Collections from './screens/collections';
 import Collection from './screens/collection';
-import ProductCard from './components/ProductCard';
 
 
 export default function App() {
@@ -29,9 +28,9 @@ export default function App() {
             <Route path="/admin" component={Admin}></Route>
             <Route path="/widgets/:widgetID" component={Widget}></Route>
             <Route exact path="/widgets" component={Widgets}></Route>
-            <Route path="/user/:id" component={User}></Route>
-            <Route path="/user/:id/collections" component={Collections}></Route>
-            <Route path="/user/:id/collections/:collectionID" component={Collection}></Route>
+            <Route exact path="/user/:id" component={User}></Route>
+            <Route exact path="/user/:id/collections" component={Collections}></Route>
+            <Route exact path="/user/:id/collections/:collectionID" component={Collection}></Route>
             <Route path="/cart" component={Cart}></Route>
           </div>
         </Switch>

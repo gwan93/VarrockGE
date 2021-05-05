@@ -7,7 +7,6 @@ import {
   Typography,
   Card,
   Button,
-  CardActions,
   CardMedia,
   CssBaseline,
   Grid,

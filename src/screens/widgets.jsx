@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center center",
   },
   cardGrid: {
-    padding: "40px 0",
+    // padding: "40px 0",
   },
   check: {
     fontSize: "20px",
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       boxShadow: '0 0 11px rgba(33,33,33,.2)'
     },
-    border: '3px purple solid',
+    // border: '3px purple solid',
     padding: '0 1em 0 1em'
   },
   main: {
@@ -49,25 +49,24 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     marginTop: '75px',
     minHeight: 'calc(100vh - 75px)',
-    border: '3px yellow solid',
+    // border: '3px yellow solid',
   },
   marketplace: {
-    border: '3px red solid',
+    // border: '3px red solid',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     margin: '0 5vw 0 5vw',
   },
   products: {
-    border: '3px blue solid',
+    // border: '3px blue solid',
     padding: '0 1em 0 1em',
     flexGrow: 1
   },
   filterList: {
-    border: '3px green solid',
-    width: '15%'
+    // border: '3px green solid',
+    width: '20%'
     // padding: '0 1em 0 1em'
-
   }
 }));
 
@@ -328,9 +327,9 @@ export default function Widgets() {
           </div>
 
           <div className={classes.products}>
-            <Typography align="center" color="textPrimary" gutterBottom variant="h6">
+            {/* <Typography align="center" color="textPrimary" gutterBottom variant="h6">
               Select an NFT to view
-            </Typography>
+            </Typography> */}
             <Container className={classes.cardGrid} maxWidth="md">
               <Grid container spacing={4}>
                 {renderWidgetList()}

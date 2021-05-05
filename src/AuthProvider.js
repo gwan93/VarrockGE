@@ -95,10 +95,10 @@ export default function AuthProvider(props) {
                 stateCollections.push(collection);
               }
             }
-            setState(prev => ({
-              ...prev,
-              collections: stateCollections
-            }));
+            // setState(prev => ({
+            //   ...prev,
+            //   collections: stateCollections
+            // }));
           });
       })
       .catch(err => {
