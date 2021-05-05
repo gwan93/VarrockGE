@@ -8,7 +8,6 @@ import {
   Card,
   Button,
   CardActions,
-  CardContent,
   CardMedia,
   CssBaseline,
   Grid,
@@ -17,6 +16,7 @@ import {
   Tabs,
   Tab
 } from "@material-ui/core";
+import ProductTabDetails from './../components/ProductTabDetails';
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    margin: "25px 0 50px 0",
+    margin: "0em 0 0.4em 0",
     // border: 'orange 3px solid'
   },
   cardContent: {
@@ -68,16 +68,22 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     // border: 'purple 3px solid'
-
   },
   close: {
-    flexGrow: 1,
+    // flexGrow: 1,
+    fontSize: '2em'
+  },
+  back: {
+    // border: '2px purple solid',
+    display: 'flex',
+    justifyContent: 'center',
+    margin: 'calc(75px + 1em) 0 1em 0'
   },
   main: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    topMargin: "2em",
+    paddingTop: "1em",
     // border: 'lightblue 3px solid'
   },
   background: {
@@ -88,9 +94,17 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 'calc(100vh - 75px)',
   },
   productDetails: {
-    // border: 'red 3px solid',
-    margin: '0 5vw 0 5vw',
-  }
+    // border: 'brown 3px solid',
+    margin: '3em 5vw 0 5vw',
+  },
+  tab: {
+    fontSize: '2.5em',
+    whiteSpace: 'nowrap'
+  },
+  productImage: {
+    width: 306,
+    margin: '2em 0 2em 0'
+  },
 }));
 
 export default function Widget(props) {
@@ -111,19 +125,25 @@ export default function Widget(props) {
   // widget details and widget history
   useEffect(() => {
     window.scrollTo(0, 0);
+    let widgetInfo;
+    for (const widget of state.widgets) {
+      if (widget.id === Number(widgetID)) {
+        widgetInfo = widget;
+      }
+    }
     axios
       .get(`${process.env.REACT_APP_API_URL}/widgets/${widgetID}`)
       .then((all) => {
-        const [detailsResponse, historyResponse] = all.data;
+        const historyResponse = all.data[1];
         // Order the history objects by id (oldest first, newest last)
-        const sortedResponseData = historyResponse.sort((a, b) => b.id - a.id);
+        const sortedHistory = historyResponse.sort((a, b) => b.id - a.id);
         setWidget((prev) => ({
           ...prev,
-          details: detailsResponse,
-          history: sortedResponseData,
+          details: {...widgetInfo},
+          history: sortedHistory,
         }));
       });
-  }, [widgetID]);
+  }, [widgetID, state.widgets]);
 
   const addToCart = () => {
     // Add this widget's id to state.itemsInCart
@@ -165,69 +185,61 @@ export default function Widget(props) {
       <CssBaseline />
       <div className={classes.background}>
         <div className={classes.productDetails}>
-          <Typography variant="h2" className={classes.title}>
-            {widget.details.name}
-          </Typography>
-
+          <div className={classes.back}>
+            <Button
+              className={classes.close}
+              size="small"
+              color="primary"
+              style={{ textDecoration: "none" }}
+              component={Link}
+              to="/widgets"
+            >
+              Back to Marketplace
+            </Button>
+          </div>
           <main className={classes.main}>
             <Grid item key={widgetID} xs={12} sm={6} md={6}>
+              <Typography variant="h2" className={classes.title}>
+                {widget.details.name}
+              </Typography>
               <Card className={classes.card} variant="outlined">
                 <CardMedia title="Image title">
-                  <img src={widget.details.imgurl} width="306" alt="" />
+                  <img src={widget.details.imgurl} className={classes.productImage} alt="" />
                 </CardMedia>
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    {widget.details.name}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    Current Price: $
-                    {(widget.details.current_sell_price_cents / 100).toFixed(2)}
-                  </Typography>
-                  <Typography>
-                    NFT # {widget.details.id}: {widget.details.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    className={classes.cardContent}
-                    size="small"
-                    color="primary"
-                    onClick={addToCart}
-                  >
-                    Add to Cart
-                  </Button>
-                  <Button
-                    className={classes.close}
-                    size="small"
-                    color="primary"
-                    style={{ textDecoration: "none" }}
-                    component={Link}
-                    to="/widgets"
-                  >
-                    Back to Marketplace
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
 
             <Grid item xs={12} sm={6} md={6}>
               <AppBar position="static" color="transparent">
-                <Tabs value={selectedTab} onChange={handleChange} centered>
-                  <Tab label="Details" />
-                  <Tab label="Purchase History" />
+                <Tabs
+                  value={selectedTab}
+                  onChange={handleChange}
+                  centered
+                  variant="fullWidth"
+                >
+                  <Tab className={classes.tab} label="Details" />
+                  <Tab className={classes.tab} label="Purchase History" />
                 </Tabs>
               </AppBar>
-              {selectedTab === 0 && "Product details here"}
+              {selectedTab === 0 && (
+                <ProductTabDetails
+                  name={widget.details.name}
+                  description={widget.details.description}
+                  current_sell_price_cents={widget.details.current_sell_price_cents}
+                  for_sale_by_owner={widget.details.for_sale_by_owner}
+                  rarity={widget.details.rarity_id}
+                  subcategory={widget.details.subcategory_id}
+                  addToCart={addToCart}
+                />
+              )}
               {selectedTab === 1 && (
                 <Container className={classes.historyContainer}>
                   {displayWidgetHistory}
                 </Container>
               )}
-              
             </Grid>
           </main>
         </div>
-
       </div>
     </div>
   );
