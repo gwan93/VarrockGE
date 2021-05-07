@@ -9,6 +9,7 @@ import {
   CssBaseline,
   Grid,
   Container,
+  Divider
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "../App.css"
@@ -291,8 +292,9 @@ export default function Widgets() {
             <div align="left" direction="column">
               <Container>
                 <Card className={classes.sidebar} variant="outlined">
-                  <Typography>Filters</Typography>
                   <Grid className={classes.check}>
+                  <Divider />
+                  <Typography variant="h6">Filter by Rarity</Typography>
                     <div className="checkbox">
                       <input
                         id="allRarities"
@@ -303,9 +305,12 @@ export default function Widgets() {
                           filters.activeRarityFilters.length === filters.rarityFilterList.length
                         }
                       />
-                      <label htmlFor="allRarities">All Rarities</label>
+                      <label htmlFor="allRarities"> All</label>
                     </div>
                     {renderRarityFilters()}
+                    <Divider />
+
+                    <Typography variant="h6">Filter by Subcategory</Typography>
                     <div className="checkbox">
                       <input
                         id="allSubcategories"
@@ -316,9 +321,10 @@ export default function Widgets() {
                           filters.activeSubcategoryFilters.length === filters.subcategoryFilterList.length
                         }
                       />
-                      <label htmlFor="allSubcategories">All Subcategories</label>
+                      <label htmlFor="allSubcategories"> All</label>
                     </div>
                     {renderSubcategoryFilters()}
+                    <Divider />
                   </Grid>
                 </Card>
                 
