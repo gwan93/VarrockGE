@@ -56,8 +56,9 @@ This project was completed by [Jesse Mcdermott](https://github.com/mcdermottjess
 ## Future Development
 
 - Search bar functionality
-- Stripe checkout
+- Stripe checkout (Added May 7, 2021)
 - Subtract funds from user's account upon checkout
+- Add funds to user's account after Stripe checkout
 - Implement lootboxes for users to acquire random video game collectibles
 - Host images
 - YouTube video support to purchase video game moments
@@ -67,7 +68,6 @@ This project was completed by [Jesse Mcdermott](https://github.com/mcdermottjess
 ## Known Bugs/Issues
 
 - When a video game collectible is sold on the marketplace, it is not removed from their collections
-- Users are able to add video game collectibles to their cart that they already own
 
 ## Dependencies
 
