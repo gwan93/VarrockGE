@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
-import { makeStyles, Typography, TextField, Card, Button, CardContent, CardMedia, CssBaseline, Grid, Container } from '@material-ui/core';
-
+import { makeStyles, Typography, TextField, Button, CssBaseline, Grid, Container } from '@material-ui/core';
+import ProductCard from '../components/ProductCard';
 
 export default function Collection(){
   const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ export default function Collection(){
     cardGrid: {
       padding: '0px 10px 10px 10px',
       borderRadius: '5px',
-      // border: 'green 1px solid'
+      // border: 'green 1px solid',
     },
     formGrid: {
       // border: 'red 1px solid',
@@ -78,16 +78,18 @@ export default function Collection(){
     },
     updateForm: {
       margin: theme.spacing(2, 0, 0),
+    },
+    productCards: {
+      // display: 'flex',
+      // flexDirection: 'row',
+      justifyContent: 'center'
     }
   }));
   const classes = useStyles();
-  // const { widgetID } = useParams();
-  // console.log('--------', useParams())
   const userID = useParams().id;
   let history = useHistory();
   const { collectionID } = useParams();
   const { state } = useContext(authContext);
-  const [sellPrice, setSellPrice] = useState("");
   const [ collection, setCollection ] = useState({
     userProfile: {},
     collectionName: "",
@@ -111,34 +113,7 @@ export default function Collection(){
       collectionDesc: event.target.value
     }));
   };
-  const onSetSellPrice = (event) => {
-    setSellPrice(event.target.value)
-  };
 
-  const onUpdateSellPrice = (widgetID, event) => {
-    event.preventDefault();
-    // console.log('1. onUpdateSellPrice clicked 118')
-    updateSellPrice(widgetID)
-  };
-
-  const updateSellPrice = (widgetID) => {
-    // console.log('2. updateSellPrice called by onUpdateSellPrice')
-    
-    // Sell price * 100 to convert it from decimal to integer
-    // eg Convert 15.25 dollars to 1525 cents to prevent floating point conflicts in database
-    axios.post(`${process.env.REACT_APP_API_URL}/widgets/${widgetID}`,  {sellPrice: sellPrice * 100} )
-    .then((response) => {
-      // console.log('3. Axios Post response', response)
-      history.go(0);
-      // setSellPrice(
-      
-
-      // )
-  })
-  .catch((err) => {
-    console.log("Something went wrong", err);
-  });
-  }
   // Retrieve collections from user
   // update userProfile to an object that includes the user's email,
   // user id, and a collection array
@@ -203,15 +178,6 @@ export default function Collection(){
 
   // Adds or removes the id integer from collection.checkedItems array
   const checkToggleWidget = (id) => {
-    // if (collection.checkedItems.includes(id)) {
-    //   const index = collection.checkedItems.indexOf(id);
-    //   if (index > -1) {
-    //     collection.checkedItems.splice(index, 1);
-    //   }
-    // } else {
-    //   collection.checkedItems.push(id);
-    // }
-    // console.log('collection.checkedItems after toggling', collection.checkedItems)
     const newCheckedItems = [...collection.checkedItems];
     if (newCheckedItems.includes(id)) {
       const index = newCheckedItems.indexOf(id);
@@ -221,19 +187,15 @@ export default function Collection(){
     } else {
       newCheckedItems.push(id);
     }
-    // console.log('newCheckedItems', newCheckedItems);
     setCollection(prev => ({
       ...prev,
       checkedItems:newCheckedItems
     }))
   };
-
   
   const usersWidgetsDetails = state.widgets
     .filter(widget => state.myWidgets.includes(widget.id))
     .sort((a, b) => a.id - b.id);
-
-
 
   const displayWidgets = usersWidgetsDetails.map(widget => {
     return(
@@ -246,51 +208,23 @@ export default function Collection(){
 
   let displayCollections = [];
   if (collection.collectionItems.length !== 0) {
-    displayCollections = collection.collectionItems.map(item => {
+    displayCollections = collection.collectionItems.map(widget => {
       // console.log('Item name:', item)
       return (
-        <div key={item.widget_id}>
-          <Grid item key={item.widget_id} /* xs={12} sm={6} md={4} */>
-            <Card className={classes.card} variant="outlined">
-              <CardMedia className={classes.cardMedia}>
-                <img src={item.imgurl} width="280" alt=""/>
-              </CardMedia>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
-                  <Link className={classes.textLink} to={`/widgets/${item.widget_id}`}>{item.name}</Link>
-                </Typography>
-                <div>
-                  {/* {item.description} */}
-                  {/* <li>Name: <Link to={`/widgets/${item.widget_id}`}>{item.name}</Link></li> */}
-                  <li>Selling for: ${(item.current_sell_price_cents / 100).toFixed(2)}</li>
-                  {/* <li>Description: {item.description}</li> */}
-                  <li>Listed for sale: {String(item.for_sale_by_owner)}</li>
-                  {/* <li>hash:{item.hash}</li> */}
-                  {/* <li>MSRP_cents: {item.msrp_cents}</li> */}
-                  <li>Rarity: {item.rarity_id}</li>
-                  <li>Game: {item.subcategory_id}</li>
-
-                  <form onSubmit={(event) => onUpdateSellPrice(item.widget_id, event)}>
-                    <Grid className={classes.updateForm}>
-                      <Grid item xs={8}>
-                        <TextField
-                          variant="outlined"
-                          fullWidth
-                          label="Update Price ($)"
-                          onChange={onSetSellPrice}
-                          placeholder={String(item.current_sell_price_cents / 100)}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Button type="submit" size="small" variant="contained" color="primary" className={classes.submit}>
-                      Update
-                    </Button>
-                  </form>
-
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
+        <div key={widget.id}>
+          <ProductCard
+            key={widget.id}
+            id={widget.id}
+            imgurl={widget.imgurl}
+            description={widget.description}
+            rarity_id={widget.rarity_id}
+            subcategory_id={widget.subcategory_id}
+            name={widget.name}
+            msrp_cents={widget.msrp_cents}
+            for_sale_by_owner={widget.for_sale_by_owner}
+            hash={widget.hash}
+            current_sell_price_cents={widget.current_sell_price_cents}
+          />
         </div>
       );
     });
@@ -356,7 +290,7 @@ export default function Collection(){
             <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
               NFTs in this collection
             </Typography>
-            <Grid className={classes.grid} container spacing={3}>
+            <Grid /* container spacing={4} */ className={classes.productCards}>
               {displayCollections}
               {(!displayCollections || displayCollections.length === 0) && <h4>This collection does not have any widgets yet</h4>}
             </Grid>

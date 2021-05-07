@@ -222,6 +222,7 @@ export default function Widget(props) {
               </AppBar>
               {selectedTab === 0 && (
                 <ProductTabDetails
+                  id={widget.details.id}
                   name={widget.details.name}
                   description={widget.details.description}
                   current_sell_price_cents={widget.details.current_sell_price_cents}
