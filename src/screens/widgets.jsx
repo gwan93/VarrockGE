@@ -79,7 +79,7 @@ export default function Widgets() {
     subcategoryFilterList: [],
     activeSubcategoryFilters: []
   });
-  console.log("state", state);
+  // console.log("state", state);
   // console.log('filters', filters)
 
 
