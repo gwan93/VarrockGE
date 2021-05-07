@@ -6,9 +6,13 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  Chip
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { authContext } from "../AuthProvider";
+
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -39,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductCard(props) {
   const classes = useStyles();
+  const { state } = useContext(authContext);
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -57,6 +62,7 @@ export default function ProductCard(props) {
           </Typography>
         </CardContent>
         <CardActions className={classes.view}>
+          {state.myWidgets.includes(props.id) && <Chip label="Owned" />}
           <Button
             size="small"
             color="primary"
@@ -65,6 +71,7 @@ export default function ProductCard(props) {
             to={`/widgets/${props.id}`}
           >
             View
+
           </Button>
         </CardActions>
       </Card>

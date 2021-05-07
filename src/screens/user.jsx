@@ -172,25 +172,28 @@ export default function User(){
               Admin Status: {String(userProfile.isadmin)}
             </Typography> */}
 
-            <div className={classes.stripe}>
-              <TextField
-                name="addFunds"
-                variant="outlined"
-                id="addFunds"
-                label="Add Funds (USD)"
-                onChange={onAddFunds}
-                value={funds}
-                className={classes.addFundsField}
-              />
+            {userID === state.user.id && (
+              <div className={classes.stripe}>
+                <TextField
+                  name="addFunds"
+                  variant="outlined"
+                  id="addFunds"
+                  label="Add Funds (USD)"
+                  onChange={onAddFunds}
+                  value={funds}
+                  className={classes.addFundsField}
+                />
 
-              <StripeCheckout
-                stripeKey="pk_test_51IamnjFwXn4jeBtFf1tQuKriC0qtGTLP07pIBZAHDF3cxRFovdsFFKhmjH69kbHFFnnioXuVPwBypO7Jpf5OFrlt00nXqDLqww"
-                token={handleToken}
-                amount={funds * 100}
-                name="Stripe Add Funds"
-                className={classes.stripeBtn}
-              />
-            </div>
+                <StripeCheckout
+                  stripeKey="pk_test_51IamnjFwXn4jeBtFf1tQuKriC0qtGTLP07pIBZAHDF3cxRFovdsFFKhmjH69kbHFFnnioXuVPwBypO7Jpf5OFrlt00nXqDLqww"
+                  token={handleToken}
+                  amount={funds * 100}
+                  name="Stripe Add Funds"
+                  className={classes.stripeBtn}
+                />
+              </div>
+            )}
+
 
           </Container>
         </div>
