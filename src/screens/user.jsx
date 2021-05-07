@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authContext } from '../AuthProvider';
-import { makeStyles, Typography, CssBaseline, Grid, Container } from '@material-ui/core';
+import { makeStyles, Typography, CssBaseline, Grid, Container, TextField } from '@material-ui/core';
 import ProductCard from '../components/ProductCard';
+import StripeCheckout from "react-stripe-checkout";
 
 const useStyles = makeStyles((theme) => ({
   main:{
@@ -36,12 +37,28 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     marginBottom: '20px'
   },
+  stripe: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: '2em 0 2em 0'
+  },
+  addFundsField: {
+    display: 'block',
+    width: '12em',
+    margin: '1em 0 1em 0'
+  },
+  stripeBtn: {
+    display: 'block',
+    width: '10em'
+  }
 }));
 
 export default function User(){
   const classes = useStyles();
   const userID = Number(useParams().id);
   const { state } = useContext(authContext);
+  const [funds, setFunds] = useState();
   const [ userProfile, setUserProfile ] = useState({
     id: null,
     email: "",
@@ -53,6 +70,11 @@ export default function User(){
 
   // console.log('state', state)
   // console.log('userProfile', userProfile)
+
+  const onAddFunds = function (event) {
+    setFunds(event.target.value);
+    // console.log("name", name);
+  };
   
   useEffect(() => {
     Promise.all([
@@ -109,7 +131,21 @@ export default function User(){
     );
   });
 
-  return(
+  const handleToken = (token) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/stripe_add_funds`, { token, funds })
+    .then(response => {
+      // console.log('stripe response', response);
+      const { status } = response.data;
+      // console.log('status', status);
+      if (status === "success") {
+        alert("Success! Funds successfully added", { type: "success" });
+      } else {
+        alert("Something went wrong", { type: "error" });
+      }
+    })
+  };
+
+  return (
     <div>
       <CssBaseline />
       <main className={classes.main}>
@@ -119,37 +155,74 @@ export default function User(){
               Viewing
             </Typography>
 
-            <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Typography
+              variant="h2"
+              align="center"
+              color="textPrimary"
+              gutterBottom
+            >
               {userProfile.email}
             </Typography>
 
-            {/* <Typography variant="body2" align="center" color="textSecondary">
+            <Typography variant="body2" align="center" color="textSecondary">
               Wallet Balance: ${userProfile.balance / 100}
             </Typography>
 
-            <Typography variant="body2" align="center" color="textSecondary">
+            {/* <Typography variant="body2" align="center" color="textSecondary">
               Admin Status: {String(userProfile.isadmin)}
             </Typography> */}
 
+            <div className={classes.stripe}>
+              <TextField
+                name="addFunds"
+                variant="outlined"
+                id="addFunds"
+                label="Add Funds (USD)"
+                onChange={onAddFunds}
+                value={funds}
+                className={classes.addFundsField}
+              />
+
+              <StripeCheckout
+                stripeKey="pk_test_51IamnjFwXn4jeBtFf1tQuKriC0qtGTLP07pIBZAHDF3cxRFovdsFFKhmjH69kbHFFnnioXuVPwBypO7Jpf5OFrlt00nXqDLqww"
+                token={handleToken}
+                amount={funds * 100}
+                name="Stripe Add Funds"
+                className={classes.stripeBtn}
+              />
+            </div>
+
           </Container>
-          
         </div>
 
         <div className={classes.container}>
           <Container>
             <div align="center">
-                <Link className={classes.textLink} to={`/user/${userID}/collections`}>
-                  <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-                    View Collections
-                  </Typography>
-                </Link>
+              <Link
+                className={classes.textLink}
+                to={`/user/${userID}/collections`}
+              >
+                <Typography
+                  variant="h4"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                >
+                  View Collections
+                </Typography>
+              </Link>
             </div>
           </Container>
         </div>
 
         <div className={classes.container}>
           <Container className={classes.cardGrid} maxWidth="md">
-            <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
+            <Typography
+              variant="h4"
+              align="center"
+              color="textPrimary"
+              gutterBottom
+            >
               {userProfile.email}'s NFTs
             </Typography>
             <Grid container spacing={3}>
@@ -157,7 +230,6 @@ export default function User(){
             </Grid>
           </Container>
         </div>
-
       </main>
     </div>
   );
