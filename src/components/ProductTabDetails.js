@@ -13,7 +13,6 @@ import { authContext } from "../AuthProvider";
 import axios from 'axios';
 
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -136,7 +135,10 @@ export default function ProductTabDetails(props) {
         </Typography>
         <div>
           <Chip className={classes.chip} label={String(for_sale_by_owner)} />
-          <Chip className={classes.chip} label={"$" + (current_sell_price_cents / 100).toFixed(2)} />
+          <Chip
+            className={classes.chip}
+            label={"$" + (current_sell_price_cents / 100).toFixed(2)}
+          />
         </div>
       </div>
       <Divider variant="middle" />
@@ -149,7 +151,9 @@ export default function ProductTabDetails(props) {
           </div>
         )}
         {!state.myWidgets.includes(props.id) && (
-          <Button color="primary" onClick={() => addToCart()} size="large">Add to cart</Button>
+          <Button color="primary" onClick={() => addToCart()} size="large" disabled={state.itemsInCart.includes(props.id)}>
+            {!state.itemsInCart.includes(props.id) ? "Add to cart" : "Added to cart"}
+          </Button>
         )}
       </div>
     </div>

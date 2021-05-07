@@ -147,11 +147,13 @@ export default function Widget(props) {
   const addToCart = () => {
     // Add this widget's id to state.itemsInCart
     const currentCart = [...state.itemsInCart];
-    currentCart.push(widget.details.id);
-    setState((prev) => ({
-      ...prev,
-      itemsInCart: currentCart,
-    }));
+    if (!currentCart.includes(widget.details.id)) {
+      currentCart.push(widget.details.id);
+      setState((prev) => ({
+        ...prev,
+        itemsInCart: currentCart,
+      }));
+    }
   };
 
   const displayWidgetHistory = widget.history.map((historyData, index) => {
