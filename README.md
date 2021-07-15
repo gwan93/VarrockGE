@@ -5,7 +5,7 @@ VarrockGE is a full stack web application built with React, Express, and Postgre
 
 This project was completed by [Jesse Mcdermott](https://github.com/mcdermottjesse), [Ray Yiu](https://github.com/rayyiu), & [Gio Wan](https://github.com/gwan93) for the final project at Lighthouse Labs.
 
-[Hosted on Heroku](https://varrockge-gw.herokuapp.com/) - Please wait 30-60 seconds for the Heroku server to start up after clicking the link.
+[Hosted on Netlify](https://varrockge.netlify.app/) - Please wait up to 30 seconds for the Netlify server to start up after clicking the link.
 
 ## Features
 
