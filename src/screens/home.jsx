@@ -6,6 +6,7 @@ import {
   Button,
   makeStyles
 } from "@material-ui/core";
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   paperContainer: {
@@ -41,6 +42,11 @@ export default function Home({ setNavbar }) {
 
   const redirectLogin = () => history.push("/login");
   const redirectWidget = () => history.push("/widgets");
+
+  useEffect(() => {
+    // Wakes up Heroku API server
+    axios.get(`${process.env.REACT_APP_API_URL}/widgets`)
+  }, []);
 
   return (
     <div>
